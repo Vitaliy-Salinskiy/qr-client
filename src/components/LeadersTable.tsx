@@ -32,7 +32,6 @@ const LeadersTable = ({ isExtended = true }: { isExtended?: boolean }) => {
 											<td>last scan: {item.lastScanned?.slice(0, 10).split("-").reverse().join("/")}</td>
 										)
 									}
-									<td>id: {item.id}</td>
 									<td>scans: {item.timesScanned}</td>
 								</tr>
 							)

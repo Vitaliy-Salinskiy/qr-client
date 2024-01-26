@@ -1,5 +1,7 @@
+import React from 'react';
 import { createRequest } from '../utils';
 import { IProduct } from '../interfaces';
+
 const baseUlr = import.meta.env.VITE_APP_SERVER_URL;
 
 export const GoodItem = ({ product, userId, setIsLoading }: { product: IProduct, userId: string | null, setIsLoading: React.Dispatch<React.SetStateAction<boolean>> }) => {
@@ -9,7 +11,7 @@ export const GoodItem = ({ product, userId, setIsLoading }: { product: IProduct,
 			setIsLoading(true)
 			const response = await createRequest(userId, productId)
 				.then(() => alert("Request has been successfully send"))
-				.catch((error) => alert(error.response.data.message))
+				.catch((error) => alert("Product not found"))
 				.finally(() => setIsLoading(false))
 			return response;
 		}
@@ -23,10 +25,16 @@ export const GoodItem = ({ product, userId, setIsLoading }: { product: IProduct,
 		>
 
 			<div className='w-full h-[130px] px-2 py-0'>
-				<img src={`${baseUlr}/${product.image}`} alt="good img" className='object-cover h-full w-full' />
-			</div>
+				<img
+					src={`${baseUlr}/${product.image}`}
+					alt="good img"
+					className='object-cover h-full w-full'
+					onError={(e) => {
+						(e.target as HTMLImageElement).src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEcTP7Xdiuel5OammWjMZJwcerzXu7D0DZaw&usqp=CAU';
+					}}
+				/>			</div>
 
-			<h3 className='w-full bg-red-400 text-white text-xl flex justify-center'>{product.name}</h3>
+			<h3 className='w-full bg-red-400 text-white text-xl flex justify-center text-center'>{product.name}</h3>
 			<h2 className='text-2xl text-red-500 font-bold'>{product.price} points</h2>
 		</div>
 	);

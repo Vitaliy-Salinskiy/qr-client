@@ -8,7 +8,6 @@ import { getProducts } from '../utils';
 import { useMyContext } from '../providers/ContextProvider';
 import Loader from '../components/Loader';
 
-
 const ShopPage: React.FC = (): JSX.Element => {
 
 	const [products, setProducts] = useState<IProduct[]>([]);
@@ -33,24 +32,15 @@ const ShopPage: React.FC = (): JSX.Element => {
 	}, [id])
 
 	useEffect(() => {
-		if (initialRender) {
+		if (initialRender.current) {
 			initialRender.current = false;
 			fetchData();
 		}
 	}, []);
 
-	useEffect(() => {
-		if (isLoading) {
-			setTimeout(() => {
-				fetchData();
-			}, 100)
-		}
-	}, [isLoading]);
-
 	const fetchData = async () => {
 		setIsLoading(true);
-		await getProducts().then(data => setProducts(data))
-		setIsLoading(false);
+		await getProducts().then(data => setProducts(data)).finally(() => setIsLoading(false));
 	}
 
 	return (

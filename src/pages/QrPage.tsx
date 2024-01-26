@@ -4,11 +4,12 @@ import QRCode from 'qrcode.react';
 import Cookies from 'js-cookie';
 import scansHistory from '../assets/images/scans-history.png'
 import shopIcon from '../assets/images/shop.png'
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { createUser, getScansValue } from "../utils";
+import { createUser, getScansValue, getUser } from "../utils";
 import { useMyContext } from "../providers/ContextProvider";
 import LinkButton from "../components/LinkButton";
+import { IUser } from "../interfaces";
 // import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
 
 function QrPage() {
@@ -16,15 +17,17 @@ function QrPage() {
 	const [scans, setScans] = useState<string[]>([]);
 	const { message, setMessage, id, setId } = useMyContext();
 
-	const navigate = useNavigate();
-
 	// const { isLoading, error, data, getData } = useVisitorData(
 	// 	{ extendedResult: true },
 	// 	{ immediate: true }
 	// )
 
 	useEffect(() => {
-		getScansValue().then(scans => setScans(scans));
+		if (id) {
+			getUser(id).then((data: IUser) => {
+				setScans(data.timesScanned.toString().split(""))
+			})
+		}
 	}, [id, message])
 
 	useEffect(() => {
@@ -106,30 +109,26 @@ function QrPage() {
 						</div>
 
 						<div className="flex flex-col gap-[20px]">
-							
+
 							<div className="flex flex-col gap-[10px]">
 								<div className="gap-3 flex justify-center">
-									{scans.map((item, index) => (
+									{scans ? scans.map((item, index) => (
 										<div key={`${index}-${item}`} className="text-[72px] xl:text-[110px] h-[90px] xl:h-[140px] w-[90px] xl:w-[140px] bg-[#a50d05] flex justify-center items-center rounded-xl">
 											<p>{item}</p>
 										</div>
-									))}
+									)) : <p>Wait a minutew</p>}
 								</div>
-								<h4 className="text-[32px] text-center">Total ScPoints</h4>
+								<h4 className="text-[32px] text-center">Your ScPoints</h4>
 							</div>
 							<div className="flex justify-center gap-[40px]">
-								<div className="h-[150px] w-[150px] bg-white rounded-xl flex flex-col justify-around items-center transition-all duration-200 cursor-pointer hover:scale-105"
-									onClick={() => { navigate('/history-scans'); }}
-								>
+								<Link to={`statistic/${id}`} className="h-[150px] w-[150px] bg-white rounded-xl flex flex-col justify-around items-center transition-all duration-200 cursor-pointer hover:scale-105">
 									<img height={80} width={80} src={scansHistory} alt="icon" />
 									<p className="text-black">History Scans</p>
-								</div>
-								<div className="h-[150px] w-[150px] bg-white rounded-xl flex flex-col justify-around items-center transition-all duration-200 cursor-pointer hover:scale-105"
-									onClick={() => { navigate('/shop'); }}
-								>
+								</Link>
+								<Link to="shop" className="h-[150px] w-[150px] bg-white rounded-xl flex flex-col justify-around items-center transition-all duration-200 cursor-pointer hover:scale-105">
 									<img height={80} width={80} src={shopIcon} alt="icon" />
 									<p className="text-black">QR Shop</p>
-								</div>
+								</Link>
 							</div>
 							<div className="flex justify-center mx-auto items-center w-[310px] sm:w-[340px]">
 								<LinkButton to="/users">See users</LinkButton>
