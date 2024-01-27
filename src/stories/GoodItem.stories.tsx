@@ -24,7 +24,7 @@ type Story = StoryObj<typeof GoodItem>
 export const Default: Story = {
 	args: {
 		userId: '9c46814aaf58f43eb1ad1bbc94c63e81',
-		product: { _id: '65afcd27775bea5debb91833', __v: 1, image: "uploads/d10dbc9d90eccd707d3f26b527342935.webp", name: "new jeans", price: 19.99 }
+		product: { "_id": "65b52c1d09b9befb5dedcc69", "name": "Pen 🖋", "price": 1, "image": "uploads\\822beaffc491abfcd2c8586efe3afa21.webp", "__v": 0 }
 	}
 }
 
@@ -38,6 +38,7 @@ export const WrongId: Story = {
 export const WithDefaultImage: Story = {
 	args: {
 		userId: "9c46814aaf58f43eb1ad1bbc94c63e81",
-		product: { _id: '65afcd27775bea5debb91833', __v: 1, image: "", name: "random title of the product", price: 215 }
+		product: { _id: '65b52c1d09b9befb5dedcc69', __v: 1, image: "", name: "random title of the product", price: 215 }
 	}
-} 
+}
+

@@ -23,7 +23,7 @@ export const Default: Story = {
 			_id: "610e11f36b2f1d002272c6f2",
 			userId: {
 				_id: "610e11f36b2f1d002272c6f3",
-				id: "user123",
+				id: "9c46814aaf58f43eb1ad1bbc94c63e81",
 				lastScanned: "2022-08-08T10:00:00.000Z",
 				timesScanned: 5,
 				requests: [],
@@ -54,7 +54,7 @@ export const PendingExtended: Story = {
 			_id: "610e11f36b2f1d002272c6f2",
 			userId: {
 				_id: "610e11f36b2f1d002272c6f3",
-				id: "user123",
+				id: "9c46814aaf58f43eb1ad1bbc94c63e81",
 				lastScanned: "2022-08-08T10:00:00.000Z",
 				timesScanned: 5,
 				requests: [],
@@ -85,7 +85,7 @@ export const AllowedExtended: Story = {
 			_id: "610e11f36b2f1d002272c6f2",
 			userId: {
 				_id: "610e11f36b2f1d002272c6f3",
-				id: "user123",
+				id: "9c46814aaf58f43eb1ad1bbc94c63e81",
 				lastScanned: "2022-08-08T10:00:00.000Z",
 				timesScanned: 5,
 				requests: [],
@@ -116,7 +116,7 @@ export const DeniedExtended: Story = {
 			_id: "610e11f36b2f1d002272c6f2",
 			userId: {
 				_id: "610e11f36b2f1d002272c6f3",
-				id: "user123",
+				id: "9c46814aaf58f43eb1ad1bbc94c63e81",
 				lastScanned: "2022-08-08T10:00:00.000Z",
 				timesScanned: 5,
 				requests: [],
