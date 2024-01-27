@@ -6,7 +6,7 @@ import scansHistory from '../assets/images/scans-history.png'
 import shopIcon from '../assets/images/shop.png'
 import { Link } from "react-router-dom";
 
-import { createUser, getScansValue, getUser } from "../utils";
+import { createUser, getUser } from "../utils";
 import { useMyContext } from "../providers/ContextProvider";
 import LinkButton from "../components/LinkButton";
 import { IUser } from "../interfaces";
