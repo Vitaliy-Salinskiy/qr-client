@@ -21,7 +21,7 @@ export const RequestItem = ({ req, changeable = false, setIsLoading }: { req: IR
 	return (
 		<div className="w-full h-[120px] bg-white rounded-xl p-6 flex flex-col justify-between items-center">
 			<div className="w-full flex justify-between gap-[10px]">
-				<h2 className='text-lg font-medium'>{req.userId.name + req.userId.surname}</h2>
+				<h2 className='text-lg font-medium'>{req.userId.name + " " + req.userId.surname}</h2>
 				<h3 className='text-md text-gray-500'>
 					id: {req.userId.id}
 				</h3>

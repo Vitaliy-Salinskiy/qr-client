@@ -1,17 +1,26 @@
 import React from 'react';
 import { createRequest } from '../utils';
 import { IProduct } from '../interfaces';
+import { useMyContext } from '../providers/ContextProvider';
 
 const baseUlr = import.meta.env.VITE_APP_SERVER_URL;
 
 export const GoodItem = ({ product, userId, setIsLoading }: { product: IProduct, userId: string | null, setIsLoading: React.Dispatch<React.SetStateAction<boolean>> }) => {
 
+	const { setResponse } = useMyContext();
+
 	const handleRequestSend = async (userId: string | null, productId: string) => {
 		if (userId) {
 			setIsLoading(true)
 			const response = await createRequest(userId, productId)
-				.then(() => alert("Request has been successfully send"))
-				.catch((error) => alert("Product not found"))
+				.then(() => {
+					setResponse(null)
+					setResponse("Request has been successfully send")
+				})
+				.catch(() => {
+					setResponse(null)
+					setResponse("You do not have enough points")
+				})
 				.finally(() => setIsLoading(false))
 			return response;
 		}

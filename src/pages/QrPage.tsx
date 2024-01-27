@@ -10,12 +10,13 @@ import { createUser, getScansValue, getUser } from "../utils";
 import { useMyContext } from "../providers/ContextProvider";
 import LinkButton from "../components/LinkButton";
 import { IUser } from "../interfaces";
+import Popup from "../components/Popup";
 // import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
 
 function QrPage() {
 	const [size, setSize] = useState<number>(310);
 	const [scans, setScans] = useState<string[]>([]);
-	const { message, setMessage, id, setId } = useMyContext();
+	const { message, setMessage, id, setId, response, setResponse } = useMyContext();
 
 	// const { isLoading, error, data, getData } = useVisitorData(
 	// 	{ extendedResult: true },
@@ -35,7 +36,7 @@ function QrPage() {
 
 		if (message !== null) {
 			timeoutId = setTimeout(() => {
-				alert(message);
+				setResponse(message);
 				setMessage(null)
 			}, 200);
 		}
@@ -83,6 +84,8 @@ function QrPage() {
 				</button>
 				<p>VisitorId: {isLoading ? 'Loading...' : data?.visitorId}</p>
 			</div> */}
+
+			{response && <Popup />}
 
 			<div className="container mx-auto px-[20px] max-w-screen-lg">
 				<div className="min-h-screen flex flex-col items-center py-16 gap-10 text-white font-bold">

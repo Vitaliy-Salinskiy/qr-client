@@ -5,15 +5,16 @@ import { ILoginDto } from '../interfaces';
 import { login } from '../utils';
 import { useNavigate } from 'react-router-dom';
 import { useMyContext } from '../providers/ContextProvider';
+import Popup from '../components/Popup';
 
 const LoginPage = () => {
 
-	const { admin } = useMyContext()
+	const { admin, response, setResponse } = useMyContext()
 	const navigate = useNavigate()
 
 	const loginSchema = z.object({
 		username: z.string().min(1, 'Username is required'),
-		password: z.string().min(6, { message: 'Password must be at least 6 characters long' }),
+		password: z.string().min(4, { message: 'Password must be at least 4 characters long' }),
 	});
 
 	const { register, handleSubmit, formState: { errors } } = useForm<ILoginDto>({ resolver: zodResolver(loginSchema), mode: 'onChange' });
@@ -24,14 +25,14 @@ const LoginPage = () => {
 				admin.current = true;
 				navigate('/admin/requests')
 			})
-			.catch(err => alert(err.response.data.message))
+			.catch(err => setResponse(err.response.data.message))
 	}
 
 	return (
 		<div className="bg-red-500">
 			<div className="container mx-auto px-[20px] max-w-screen-lg">
 				<div className="min-h-screen flex flex-col justify-center items-center py-16 gap-10 text-white font-bold">
-					
+
 					<div className='bg-white p-4 flex flex-col gap-3 rounded-lg w-[320px]'>
 						<h2 className='text-red-500 text-center text-xl font-medium'>Login</h2>
 						<form onSubmit={handleSubmit(onSubmit)} className='w-full flex flex-col gap-3'>
@@ -47,6 +48,7 @@ const LoginPage = () => {
 						</form>
 					</div>
 
+					{response && <Popup />}
 				</div>
 			</div>
 		</div>

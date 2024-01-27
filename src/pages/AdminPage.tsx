@@ -6,6 +6,7 @@ import { getRequests } from '../utils';
 
 import Loader from '../components/Loader';
 import { useMyContext } from '../providers/ContextProvider';
+import Popup from '../components/Popup';
 
 const AdminPage: React.FC = (): JSX.Element => {
 
@@ -17,13 +18,13 @@ const AdminPage: React.FC = (): JSX.Element => {
 	const [pendingRequests, setPendingRequests] = useState<IRequest[]>([]);
 	const initialRender = useRef(true)
 
-	const { admin } = useMyContext();
+	const { admin, response, setResponse } = useMyContext();
 
 	useEffect(() => {
 		if (initialRender.current) {
 			initialRender.current = false;
 			if (!admin.current) {
-				alert("You are not authorized to view this page");
+				setResponse("You are not authorized to view this page");
 				navigate('/login')
 			}
 			fetchData();
@@ -90,6 +91,8 @@ const AdminPage: React.FC = (): JSX.Element => {
 			{isLoading &&
 				<Loader />
 			}
+
+			{response && <Popup />}
 
 		</div>
 	)
