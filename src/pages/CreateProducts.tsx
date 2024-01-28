@@ -4,21 +4,26 @@ import { Link } from 'react-router-dom';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from 'zod'
+
+import { useMyContext } from '../providers/ContextProvider';
+import Popup from '../components/Popup';
 import { IProductDto } from '../interfaces';
 import { createProduct } from '../utils';
 
 const CreateProducts = () => {
 
 	const productSchema = z.object({
-		name: z.string().min(2, "Name must contain at least 2 character").max(30, "Name can't exceed 30 characters"),
+		name: z.string().min(2, "Name must contain at least 2 character").max(30, "Name can't exceed 30 characters").transform(str => str.trim()),
 		price: z.string().transform(parseFloat).refine(value => !isNaN(value) && Number.isInteger(value) && value >= 1 && value <= 125, {
 			message: "Price must be an integer between 1 and 125",
 		}),
 	});
 
+	const { response, setResponse } = useMyContext();
 	const [selectedFileUrl, setSelectedFileUrl] = useState<string | null>(null);
 	const [error, setError] = useState<string>();
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop: (acceptedFiles) => {
 			setError('')
@@ -37,7 +42,7 @@ const CreateProducts = () => {
 		}
 	});
 
-	const { register, handleSubmit, formState: { errors } } = useForm<IProductDto>({ resolver: zodResolver(productSchema), mode: 'onChange' })
+	const { register, handleSubmit, formState: { errors }, reset } = useForm<IProductDto>({ resolver: zodResolver(productSchema), mode: 'onChange' })
 
 	const onSubmit = (data: IProductDto) => {
 		setError('')
@@ -51,11 +56,21 @@ const CreateProducts = () => {
 			formData.append('price', data.price.toString());
 
 			createProduct(formData)
+				.then(() => {
+					setResponse('Product created successfully')
+					setSelectedFile(null)
+					setSelectedFileUrl(null)
+					reset();
+				}).catch(() => {
+					setResponse('Something went wrong, please try again later')
+				})
 		}
 	}
 
 	return (
 		<div className='bg-red-500 flex flex-col'>
+
+			{response && <Popup />}
 
 			<div className='appContainer py-2 mt-5'>
 				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500  p-2 rounded-xl top-0 left-0 cursor-pointer"> Back to QR-page</Link>
