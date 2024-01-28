@@ -48,7 +48,7 @@ const AdminPage: React.FC = (): JSX.Element => {
 
 	return (
 		<div className="w-full max-h-[800px] h-screen flex justify-center items-center bg-red-500">
-			<h2 className="text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500 absolute mt-16 top-0 py-[20px]">Admin page</h2>
+			<h2 className="text-[42px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500 absolute mt-16 top-0 py-[20px]">Admin page</h2>
 			<div className="max-w-screen-lg w-full h-full flex flex-col justify-around items-center px-[10px] relative">
 
 				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500 absolute p-2 rounded-xl m-4 top-0 left-0 cursor-pointer"> Back to QR-page</Link>
@@ -66,7 +66,7 @@ const AdminPage: React.FC = (): JSX.Element => {
 
 				<Routes>
 					<Route path="/requests" element={
-						<div className="w-full flex flex-col justify-start gap-[20px] h-[400px] pr-2 overflow-y-auto">
+						<div className="w-full flex flex-col justify-start gap-[20px] max-h-[525px] pr-2 overflow-y-auto">
 							{pendingRequests && pendingRequests.length !== 0 ?
 								pendingRequests.map((item, index) => (
 									<RequestItem key={index + item._id} req={item} setIsLoading={setIsLoading} />
@@ -76,7 +76,7 @@ const AdminPage: React.FC = (): JSX.Element => {
 						</div>
 					} />
 					<Route path="history" element={
-						<div className="w-full flex flex-col justify-start gap-[20px] h-[400px] pr-2 overflow-y-auto">
+						<div className="w-full flex flex-col justify-start gap-[20px] max-h-[525px] pr-2 overflow-y-auto">
 							{requests && requests.length !== 0 ?
 								requests.map((item, index) => (
 									<RequestItem key={index + item._id} req={item} changeable={true} />
