@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
 import QRCode from 'qrcode.react';
-import Cookies from 'js-cookie';
 import scansHistory from '../assets/images/scans-history.png'
 import shopIcon from '../assets/images/shop.png'
 import { Link } from "react-router-dom";
@@ -52,15 +51,8 @@ function QrPage() {
 		FingerprintJS.load()
 			.then(fp => fp.get())
 			.then(result => {
-				const existingCookie = Cookies.get('qr_unique_user_id');
-				if (!existingCookie) {
-					Cookies.set('qr_unique_user_id', result.visitorId, { expires: 1200 });
-					createUser(result.visitorId);
-					setId(result.visitorId);
-				} else {
-					createUser(existingCookie);
-					setId(existingCookie);
-				}
+				createUser(result.visitorId);
+				setId(result.visitorId);
 			})
 	}, [])
 
@@ -103,12 +95,11 @@ function QrPage() {
 							<div className="h-[310px] w-[310px] lg:h-[420px] lg:w-[420px] bg-white rounded-xl flex justify-center items-center border-[4px] border-gray-300">
 								<QRCode
 									size={size}
-									value={`${window.location.origin}/user/${id}`}
+									value={`${window.location.origin}/redirect`}
 									bgColor="#fff"
 									fgColor="#ef4444"
 								/>
 							</div>
-							<p className="text-[15px] sm:text-[18px]">id: {id}</p>
 						</div>
 
 						<div className="flex flex-col gap-[20px]">
@@ -144,4 +135,4 @@ function QrPage() {
 	)
 }
 
-export default QrPage
+export default QrPage;

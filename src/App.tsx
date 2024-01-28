@@ -14,7 +14,7 @@ function App() {
 		<Router>
 			<Routes>
 				<Route path="/" element={<QrPage />} />
-				<Route path="/user/:id" element={<RedirectPage />} />
+				<Route path="/redirect" element={<RedirectPage />} />
 				<Route path="/users" element={<UsersPage />} />
 				<Route path="/shop" element={<ShopPage />} />
 				<Route path="/statistic/:id" element={<StatisticPage />} />
