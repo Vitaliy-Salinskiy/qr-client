@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
 
@@ -6,11 +6,9 @@ import { addCredentials, addScan, createUser, getUser } from "../utils";
 import { useMyContext } from "../providers/ContextProvider";
 
 const RedirectPage = () => {
-	const initialRender = useRef<boolean>(true);
 	const navigate = useNavigate();
 
 	const { setResponse, response, setId } = useMyContext();
-
 
 	useEffect(() => {
 		FingerprintJS.load()
@@ -18,16 +16,12 @@ const RedirectPage = () => {
 			.then(async (result: any) => {
 				await createUser(result.visitorId);
 				setId(result.visitorId);
-				console.log("asdfas", result.visitorId);
 				await fetchData(result.visitorId);
 			})
 	}, [])
 
-
 	const fetchData = async (id: string) => {
-		console.log(id);
 		if (id) {
-			initialRender.current = false;
 			try {
 				const data = await getUser(id)
 				if (data && data.name && data.surname) {

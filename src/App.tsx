@@ -7,6 +7,7 @@ import ShopPage from './pages/ShopPage';
 import AdminPage from './pages/AdminPage';
 import LoginPage from './pages/LoginPage';
 import StatisticPage from './pages/StatisticPage';
+import CreateProducts from './pages/CreateProducts';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
 					{/* <Route path="*" element={<Navigate to="/admin/requests" replace />} /> */}
 				</Route>
 				<Route path="*" element={<Navigate to="/" />} />
+				<Route path="products/create" element={<CreateProducts />} />
 			</Routes>
 		</Router>
 	);

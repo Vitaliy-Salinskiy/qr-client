@@ -44,3 +44,8 @@ export interface ILoginDto {
 	username: string;
 	password: string;
 }
+
+export interface IProductDto {
+	name: string;
+	price: number;
+}

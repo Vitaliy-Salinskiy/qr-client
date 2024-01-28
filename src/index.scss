@@ -3,19 +3,42 @@
 @tailwind utilities;
 
 body {
-    background: #ef4444;
+	background: #ef4444;
 }
+
 ::selection {
-    background: #ffffff;
-    color: #ef4444;
+	background: #ffffff;
+	color: #ef4444;
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+	width: 10px;
 }
+
 ::-webkit-scrollbar-thumb {
-    background-color: #dc2626;
+	background-color: #dc2626;
 }
+
 ::-webkit-scrollbar-track {
-    background-color: #dcdcdc;
+	background-color: #dcdcdc;
+}
+
+@layer components {
+	.appContainer {
+		@apply container px-4 mx-auto
+	}
+
+	.product-input {
+		@apply w-full px-4 py-2 mt-2 text-red-500 font-bold bg-white border-[2px] rounded-lg shadow-sm appearance-none focus:outline-none
+	}
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type="number"] {
+	-moz-appearance: textfield;
 }
