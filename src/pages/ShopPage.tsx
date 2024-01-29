@@ -59,7 +59,7 @@ const ShopPage = () => {
 			<div className='appContainer flex justify-between items-center'>
 				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500 p-2 rounded-xl  cursor-pointer"> Back to QR-page</Link>
 
-				{user &&
+				{user?.name && user?.surname &&
 					<div className='text-white text-lg'>{user?.name} {user?.surname}: {user?.timesScanned} points</div>
 				}
 
@@ -67,7 +67,7 @@ const ShopPage = () => {
 
 			<h2 className="text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500  mt-6 py-[20px]">Shop</h2>
 
-			<div className='appContainer mt-20'>
+			<div className='appContainer mt-20 mb-10'>
 
 				<div className="flex flex-wrap justify-center items-center gap-[20px] md:gap-[30px]">
 					{products && products.length !== 0 ? products.map((item: IProduct, index: number) => (

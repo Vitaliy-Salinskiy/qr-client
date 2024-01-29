@@ -10,6 +10,7 @@ import { useMyContext } from "../providers/ContextProvider";
 import LinkButton from "../components/LinkButton";
 import Popup from "../components/Popup";
 import { createUser, getScansValue } from "../utils";
+import Timer from "../components/Timer";
 
 function QrPage() {
 
@@ -90,13 +91,14 @@ function QrPage() {
 
 						<div className="flex flex-col justify-center items-center gap-2">
 							<h3 className="text-[30px] text-center max-w-[225px]">Scan this code to get a point</h3>
-							<div className="h-[300px] w-[300px] lg:h-[400px] lg:w-[400px] bg-white rounded-xl flex justify-center items-center border-[4px] border-gray-300">
+							<div className="h-[300px] w-[300px] lg:h-[400px] lg:w-[400px] bg-white rounded-xl flex justify-center items-center border-[4px] border-gray-300 relative">
 								<QRCode
 									size={size}
 									value={`${window.location.origin}/redirect`}
 									bgColor="#fff"
 									fgColor="#ef4444"
 								/>
+								<Timer />
 							</div>
 						</div>
 
