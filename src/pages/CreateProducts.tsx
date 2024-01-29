@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone'
-import { Link } from 'react-router-dom';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from 'zod'
@@ -68,15 +67,9 @@ const CreateProducts = () => {
 	}
 
 	return (
-		<div className='bg-red-500 flex flex-col'>
+		<div className='flex flex-col'>
 
 			{response && <Popup />}
-
-			<div className='appContainer py-2 mt-5'>
-				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500  p-2 rounded-xl top-0 left-0 cursor-pointer"> Back to QR-page</Link>
-			</div>
-
-			<h1 className='w-full bg-white py-5 px-2 text-center text-[50px] leading-[110%] font-bold text-red-500 mt-5 mb-20'>Create Product</h1>
 
 			<div className='appContainer flex flex-col gap-5 pb-10'>
 

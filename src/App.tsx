@@ -20,11 +20,7 @@ function App() {
 				<Route path="/shop" element={<ShopPage />} />
 				<Route path="/statistic/:id" element={<StatisticPage />} />
 				<Route path="/login" element={<LoginPage />} />
-				<Route path="/admin/*" element={<AdminPage />}>
-					<Route path="requests" element={<></>} />
-					<Route path="history" element={<></>} />
-					{/* <Route path="*" element={<Navigate to="/admin/requests" replace />} /> */}
-				</Route>
+				<Route path="/admin/*" element={<AdminPage />} />
 				<Route path="*" element={<Navigate to="/" />} />
 				<Route path="products/create" element={<CreateProducts />} />
 			</Routes>

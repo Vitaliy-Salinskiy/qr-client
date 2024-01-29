@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ILoginDto, IProductDto, IUser } from "../interfaces";
+import { ILoginDto, IUser } from "../interfaces";
 
 const baseUlr = import.meta.env.VITE_APP_SERVER_URL;
 
@@ -67,5 +67,10 @@ export const login = async (credentials: ILoginDto) => {
 
 export const createProduct = async (product: FormData) => {
 	const response = await axios.post(`${baseUlr}/products`, product);
+	return response.data;
+}
+
+export const deleteProduct = async (id: string) => {
+	const response = await axios.delete(`${baseUlr}/products/${id}`);
 	return response.data;
 }
