@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react"
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
 import QRCode from 'qrcode.react';
+import { Link } from "react-router-dom";
+// import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
+
 import scansHistory from '../assets/images/scans-history.png'
 import shopIcon from '../assets/images/shop.png'
-import { Link } from "react-router-dom";
-
-import { createUser, getUser } from "../utils";
 import { useMyContext } from "../providers/ContextProvider";
 import LinkButton from "../components/LinkButton";
-import { IUser } from "../interfaces";
 import Popup from "../components/Popup";
-// import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
+import { createUser, getScansValue } from "../utils";
 
 function QrPage() {
 	const [size, setSize] = useState<number>(310);
@@ -24,9 +23,7 @@ function QrPage() {
 
 	useEffect(() => {
 		if (id) {
-			getUser(id).then((data: IUser) => {
-				setScans(data.timesScanned.toString().split(""))
-			})
+			getScansValue().then((data) => setScans(data))
 		}
 	}, [id, message])
 
@@ -58,7 +55,7 @@ function QrPage() {
 
 	useEffect(() => {
 		const handleResize = () => {
-			setSize(window.innerWidth >= 1024 ? 350 : 240);
+			setSize(window.innerWidth >= 1024 ? 340 : 230);
 		};
 		window.addEventListener('resize', handleResize);
 		handleResize();
@@ -92,7 +89,7 @@ function QrPage() {
 
 						<div className="flex flex-col justify-center items-center gap-2">
 							<h3 className="text-[30px] text-center max-w-[225px]">Scan this code to get a point</h3>
-							<div className="h-[310px] w-[310px] lg:h-[420px] lg:w-[420px] bg-white rounded-xl flex justify-center items-center border-[4px] border-gray-300">
+							<div className="h-[300px] w-[300px] lg:h-[400px] lg:w-[400px] bg-white rounded-xl flex justify-center items-center border-[4px] border-gray-300">
 								<QRCode
 									size={size}
 									value={`${window.location.origin}/redirect`}
@@ -112,14 +109,14 @@ function QrPage() {
 										</div>
 									)) : <p>Wait a minutew</p>}
 								</div>
-								<h4 className="text-[32px] text-center">Your ScPoints</h4>
+								<h4 className="text-[32px] text-center">Total ScPoints</h4>
 							</div>
 							<div className="flex justify-center gap-[40px]">
-								<Link to={`statistic/${id}`} className="h-[150px] w-[150px] bg-white rounded-xl flex flex-col justify-around items-center transition-all duration-200 cursor-pointer hover:scale-105">
+								<Link to={`statistic/${id}`} className="h-[135px] sm:h-[150px] w-[135px] sm:w-[150px] bg-white rounded-xl flex flex-col justify-around items-center transition-all duration-200 cursor-pointer hover:scale-105">
 									<img height={80} width={80} src={scansHistory} alt="icon" />
 									<p className="text-black">History Scans</p>
 								</Link>
-								<Link to="shop" className="h-[150px] w-[150px] bg-white rounded-xl flex flex-col justify-around items-center transition-all duration-200 cursor-pointer hover:scale-105">
+								<Link to="shop" className="h-[135px] sm:h-[150px] w-[135px] sm:w-[150px] bg-white rounded-xl flex flex-col justify-around items-center transition-all duration-200 cursor-pointer hover:scale-105">
 									<img height={80} width={80} src={shopIcon} alt="icon" />
 									<p className="text-black">QR Shop</p>
 								</Link>

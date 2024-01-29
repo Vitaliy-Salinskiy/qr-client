@@ -7,7 +7,7 @@ import ShopPage from './pages/ShopPage';
 import AdminPage from './pages/AdminPage';
 import LoginPage from './pages/LoginPage';
 import StatisticPage from './pages/StatisticPage';
-import CreateProducts from './pages/CreateProducts';
+import CreateProducts from './components/CreateProducts';
 
 function App() {
 

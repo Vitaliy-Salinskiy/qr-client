@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
-import Cookies from 'js-cookie';
 
 import { useMyContext } from "../providers/ContextProvider"
 import { getUser } from "../utils"
@@ -16,12 +15,7 @@ const HistoryTable = () => {
 			FingerprintJS.load()
 				.then(fp => fp.get())
 				.then(result => {
-					const existingCookie = Cookies.get('qr_unique_user_id');
-					if (!existingCookie) {
-						setId(result.visitorId);
-					} else {
-						setId(existingCookie);
-					}
+					setId(result.visitorId);
 				})
 		}
 	}, [id])

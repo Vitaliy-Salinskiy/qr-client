@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
 
+import { useMyContext } from '../providers/ContextProvider';
 import LeadersTable from '../components/LeadersTable'
 import LinkButton from '../components/LinkButton'
-import { useMyContext } from '../providers/ContextProvider';
 
 const UsersPage = () => {
 

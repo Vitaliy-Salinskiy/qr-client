@@ -17,7 +17,6 @@
     "@hookform/resolvers": "^3.3.4",
     "@types/react-dropzone": "^5.1.0",
     "axios": "^1.6.5",
-    "js-cookie": "^3.0.5",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

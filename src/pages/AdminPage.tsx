@@ -1,16 +1,16 @@
 import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+
+import { useMyContext } from '../providers/ContextProvider';
 import { RequestItem } from '../components/RequestItem';
+import ProductsItem from '../components/ProductsItem';
+import CreateProducts from '../components/CreateProducts';
+import Loader from '../components/Loader';
+import Popup from '../components/Popup';
 import { IProduct, IRequest } from '../interfaces';
 import { getRequests, getProducts } from '../utils';
 
-import Loader from '../components/Loader';
-import { useMyContext } from '../providers/ContextProvider';
-import Popup from '../components/Popup';
-import CreateProducts from './CreateProducts';
-import ProductsItem from '../components/ProductsItem';
-
-const AdminPage: React.FC = (): JSX.Element => {
+const AdminPage = () => {
 
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -37,14 +37,20 @@ const AdminPage: React.FC = (): JSX.Element => {
 
 	useEffect(() => {
 		setIsLoading(true);
-		if (location.pathname.includes("admin/products") && isLoading) {
-			setTimeout(() => {
-				fetchProducts();
-			}, 500)
-		} else if (location.pathname.includes("admin/requests") || location.pathname.includes("admin/history") && isLoading) {
-			setTimeout(() => {
-				fetchRequests();
-			}, 500)
+		switch (true) {
+			case location.pathname.includes('products'):
+				setTimeout(() => {
+					fetchProducts();
+				}, 100)
+				break;
+			case location.pathname.includes('requests'):
+			case location.pathname.includes('history'):
+				setTimeout(() => {
+					fetchRequests();
+				}, 100)
+				break;
+			default:
+				break;
 		}
 		setIsLoading(false);
 	}, [location.pathname, isLoading]);
@@ -64,6 +70,10 @@ const AdminPage: React.FC = (): JSX.Element => {
 
 	return (
 		<div className="w-full min-h-screen flex flex-col pt-10 bg-red-500">
+
+			{isLoading && <Loader />}
+
+			{response && <Popup />}
 
 			<div className='appContainer'>
 				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500 p-2 rounded-xl m-4 top-0 left-0 cursor-pointer"> Back to QR-page</Link>
@@ -117,15 +127,10 @@ const AdminPage: React.FC = (): JSX.Element => {
 						</div>
 					} />
 					<Route path="products/create" element={
-						<CreateProducts />
+						<CreateProducts setIsLoading={setIsLoading} />
 					} />
 				</Routes>
 			</div>
-
-			{isLoading && <Loader />}
-
-			{response && <Popup />}
-
 		</div>
 	)
 }

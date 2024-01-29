@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+
 import HistoryTable from "../components/HIstoryTable"
 
 const StatisticPage = () => {

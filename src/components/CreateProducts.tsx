@@ -5,11 +5,15 @@ import { useForm } from "react-hook-form"
 import { z } from 'zod'
 
 import { useMyContext } from '../providers/ContextProvider';
-import Popup from '../components/Popup';
+import Popup from './Popup';
 import { IProductDto } from '../interfaces';
 import { createProduct } from '../utils';
 
-const CreateProducts = () => {
+interface CreateProductsProps {
+	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const CreateProducts = ({ setIsLoading }: CreateProductsProps) => {
 
 	const productSchema = z.object({
 		name: z.string().min(2, "Name must contain at least 2 character").max(30, "Name can't exceed 30 characters").transform(str => str.trim()),
@@ -49,6 +53,7 @@ const CreateProducts = () => {
 			setError("Please select a file")
 		}
 		if (data && selectedFile) {
+			setIsLoading(true);
 			const formData = new FormData();
 			formData.append('image', selectedFile);
 			formData.append('name', data.name);
