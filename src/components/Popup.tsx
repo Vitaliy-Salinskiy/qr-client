@@ -21,7 +21,7 @@ const Popup = () => {
 	}, []);
 
 	return (
-		<div className='w-[80%] sm:w-[320px] min-h-[85px] p-[10px] cursor-pointer bg-white fixed transition-all overflow-hidden duration-500 bottom-[30px] right-[-100%] rounded-lg shadow-black drop-shadow-md shadow-md flex items-center gap-[20px]'
+		<div className='z-20 w-[80%] sm:w-[320px] min-h-[85px] p-[10px] cursor-pointer bg-white fixed transition-all overflow-hidden duration-500 bottom-[30px] right-[-100%] rounded-lg shadow-black drop-shadow-md shadow-md flex items-center gap-[20px]'
 			style={!isVisible ? { right: '-100%' } : { right: '20px' }}>
 			<div>
 				<img height={50} width={50} src={message_icon} alt="mail" />
