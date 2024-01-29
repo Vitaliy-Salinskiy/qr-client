@@ -1,10 +1,12 @@
-import message_icon from '../assets/images/mail.png'
 import { useState, useEffect } from 'react';
+
+import message_icon from '../assets/images/mail.png'
 import { useMyContext } from '../providers/ContextProvider';
 
 const Popup = () => {
-	const [isVisible, setIsVisible] = useState(false);
+
 	const { response, setResponse } = useMyContext();
+	const [isVisible, setIsVisible] = useState(false);
 
 	useEffect(() => {
 		setTimeout(() => {

@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
-import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
 
 import { useMyContext } from '../providers/ContextProvider';
 import { GoodItem } from '../components/GoodItem';
 import Loader from '../components/Loader';
 import Popup from '../components/Popup';
-import { IProduct } from '../interfaces';
-import { getProducts } from '../utils';
+import { IProduct, IUser } from '../interfaces';
+import { getProducts, getUser } from '../utils';
 
 const ShopPage = () => {
 
 	const [products, setProducts] = useState<IProduct[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const initialRender = useRef<boolean>(true);
+	const [user, setUser] = useState<IUser>();
 
 	const { id, setId, response } = useMyContext();
 
@@ -24,9 +24,16 @@ const ShopPage = () => {
 				.then(fp => fp.get())
 				.then(result => {
 					setId(result.visitorId);
+					getUserData(result.visitorId);
 				})
 		}
 	}, [id])
+
+	useEffect(() => {
+		if (id) {
+			getUserData(id);
+		}
+	}, [isLoading])
 
 	useEffect(() => {
 		if (initialRender.current) {
@@ -40,11 +47,22 @@ const ShopPage = () => {
 		await getProducts().then(data => setProducts(data)).finally(() => setIsLoading(false));
 	}
 
+	const getUserData = async (id: string) => {
+		await getUser(id)
+			.then((data) => setUser(data))
+			.catch(() => { })
+	}
+
 	return (
 		<div className="bg-red-500 pt-5">
 
-			<div className='appContainer'>
-				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500 p-2 rounded-xl m-4 top-0 left-0 cursor-pointer"> Back to QR-page</Link>
+			<div className='appContainer flex justify-between items-center'>
+				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500 p-2 rounded-xl  cursor-pointer"> Back to QR-page</Link>
+
+				{user &&
+					<div className='text-white text-lg'>{user?.name} {user?.surname}: {user?.timesScanned} points</div>
+				}
+
 			</div>
 
 			<h2 className="text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500  mt-6 py-[20px]">Shop</h2>
@@ -67,7 +85,7 @@ const ShopPage = () => {
 
 			{response && <Popup />}
 
-		</div >
+		</div>
 	)
 }
 

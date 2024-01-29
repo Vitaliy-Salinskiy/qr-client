@@ -6,7 +6,14 @@ import { useMyContext } from '../providers/ContextProvider';
 
 const baseUlr = import.meta.env.VITE_APP_SERVER_URL;
 
-export const GoodItem = ({ product, userId, setIsLoading }: { product: IProduct, userId: string | null, setIsLoading: React.Dispatch<React.SetStateAction<boolean>> }) => {
+interface GoodItemProps {
+	product: IProduct;
+	userId: string | null;
+	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+
+}
+
+export const GoodItem = ({ product, userId, setIsLoading }: GoodItemProps) => {
 
 	const { setResponse } = useMyContext();
 

@@ -6,6 +6,7 @@ import { getUser } from "../utils"
 import { IScanHistory, IUser } from "../interfaces"
 
 const HistoryTable = () => {
+
 	const [data, setData] = useState<IScanHistory[]>([])
 
 	const { id, setId, message } = useMyContext();

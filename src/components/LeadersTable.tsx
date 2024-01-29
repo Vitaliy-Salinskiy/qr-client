@@ -4,7 +4,11 @@ import { useMyContext } from "../providers/ContextProvider"
 import { fetchData } from "../utils"
 import { IUser } from "../interfaces"
 
-const LeadersTable = ({ isExtended = true }: { isExtended?: boolean }) => {
+interface LeadersTableProps {
+	isExtended?: boolean
+}
+
+const LeadersTable = ({ isExtended = true }: LeadersTableProps) => {
 	const [data, setData] = useState<IUser[]>([])
 	const { id, message } = useMyContext()
 

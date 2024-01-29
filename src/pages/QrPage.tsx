@@ -12,6 +12,7 @@ import Popup from "../components/Popup";
 import { createUser, getScansValue } from "../utils";
 
 function QrPage() {
+
 	const [size, setSize] = useState<number>(310);
 	const [scans, setScans] = useState<string[]>([]);
 	const { message, setMessage, id, setId, response, setResponse } = useMyContext();

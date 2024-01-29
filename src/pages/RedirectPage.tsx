@@ -6,6 +6,7 @@ import { addCredentials, addScan, createUser, getUser } from "../utils";
 import { useMyContext } from "../providers/ContextProvider";
 
 const RedirectPage = () => {
+
 	const navigate = useNavigate();
 
 	const { setResponse, response, setId } = useMyContext();
