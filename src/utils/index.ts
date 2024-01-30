@@ -45,8 +45,21 @@ export const createRequest = async (userId: string, requestsId: string) => {
 	return response.data;
 }
 
-export const getRequests = async () => {
-	const response = await axios.get(`${baseUlr}/requests`);
+export const getAllRequests = async (requiredPage?: number) => {
+	const response = await axios.get(`${baseUlr}/requests`, {
+		params: {
+			page: requiredPage
+		}
+	});
+	return response.data;
+}
+
+export const getPendingRequests = async (requiredPage?: number) => {
+	const response = await axios.get(`${baseUlr}/requests/pending`, {
+		params: {
+			page: requiredPage
+		}
+	});
 	return response.data;
 }
 
@@ -61,7 +74,12 @@ export const denyRequest = async (id: string) => {
 }
 
 export const login = async (credentials: ILoginDto) => {
-	const response = await axios.post(`${baseUlr}/auth/login`, credentials);
+	const response = await axios.post(`${baseUlr}/auth/login`, credentials, { withCredentials: true });
+	return response.data;
+}
+
+export const getProfile = async () => {
+	const response = await axios.get(`${baseUlr}/auth/profile`, { withCredentials: true });
 	return response.data;
 }
 

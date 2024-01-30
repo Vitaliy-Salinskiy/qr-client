@@ -28,7 +28,7 @@ const CreateProducts = ({ setIsLoading }: CreateProductsProps) => {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
-		onDrop: (acceptedFiles) => {
+		onDrop: (acceptedFiles: File[]) => {
 			setError('')
 			if (acceptedFiles[0]) {
 				const fileUrl = URL.createObjectURL(acceptedFiles[0])

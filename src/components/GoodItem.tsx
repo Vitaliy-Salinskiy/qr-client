@@ -1,6 +1,8 @@
-import { IProduct } from '../interfaces';
-const baseUlr = import.meta.env.VITE_APP_SERVER_URL;
 import { Dispatch } from 'react';
+
+import { IProduct } from '../interfaces';
+
+const baseUlr = import.meta.env.VITE_APP_SERVER_URL;
 
 interface GoodItemProps {
 	product: IProduct;

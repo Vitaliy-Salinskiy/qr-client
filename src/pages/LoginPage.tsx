@@ -1,6 +1,7 @@
-import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
 import { ILoginDto } from '../interfaces';
 import { login } from '../utils';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +10,7 @@ import Popup from '../components/Popup';
 
 const LoginPage = () => {
 
-	const { admin, response, setResponse } = useMyContext()
+	const { response, setResponse } = useMyContext()
 	const navigate = useNavigate()
 
 	const loginSchema = z.object({
@@ -22,7 +23,6 @@ const LoginPage = () => {
 	const onSubmit = async (data: ILoginDto) => {
 		await login(data)
 			.then(() => {
-				admin.current = true;
 				navigate('/admin/requests')
 			})
 			.catch(err => setResponse(err.response.data.message))

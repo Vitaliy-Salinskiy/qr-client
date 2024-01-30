@@ -40,6 +40,13 @@ export interface IRequest {
 	__v: number;
 }
 
+export interface IRequestResponse {
+	requests: IRequest[]
+	currentPage: number
+	totalPages: number
+	totalPendingRequest?: number
+}
+
 export interface ILoginDto {
 	username: string;
 	password: string;
