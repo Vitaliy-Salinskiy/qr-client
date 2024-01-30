@@ -78,17 +78,26 @@ const CreateProducts = ({ setIsLoading }: CreateProductsProps) => {
 
 			<div className='appContainer flex flex-col gap-5 pb-10'>
 
-				<div className='flex flex-col gap-2'>
-
-					<div {...getRootProps({ className: "w-full border-dashed border-[3px] cursor-pointer border-white rounded-xl h-[400px] lg:h-[600px] flex justify-center items-center text-white p-5 overflow-y-auto" })}>
+				<div className='flex justify-center items-center gap-2 bg-white rounded-2xl sm:rounded-md text-black border-dashed border-4 border-gray-500 relative'>
+					<div {...getRootProps({ className: "w-full h-full flex flex-col gap-[25px] justify-center border-dashed border-[3px] cursor-pointer border-white rounded-xl h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] flex justify-center items-center text-white p-2 sm:p-5 overflow-y-auto" })}>
 						<input {...getInputProps()} />
-
 						{selectedFileUrl ? (
-							<img src={selectedFileUrl} alt="Selected file" className=' h-full w-full object-cover rounded-md' />
+							<>
+								<div className='h-[200px] w-[200px] md:w-[300px] md:h-[300px] border-[5px] border-dashed rounded-xl flex justify-center items-center border-red-500 p-2'>
+									<img src={selectedFileUrl} alt="Selected file" className='max-h-[200px] max-w-[200px] object-cover' />
+								</div>
+								<p className='w-[240px] sm:w-[400px] text-center text-[18px] font-bold sm:text-3xl text-gray-500'>Your selected photo</p>
+							</>
 						) : isDragActive ? (
-							<p>Drop the file here ...</p>
+							<>
+								<p className='w-[240px] sm:w-[400px] text-center font-medium text-[26px] sm:text-5xl text-gray-500'>Select a photo or drag it here</p>
+								<p className='w-[240px] sm:w-[400px] text-center text-[14px] font-medium sm:text-xl text-gray-500'>Drop the file here ...</p>
+							</>
 						) : (
-							<p className='w-[275px] text-center'>Only *.jpeg, *.jpg, *.webp and *.png images will be accepted</p>
+							<>
+								<p className='w-[240px] sm:w-[400px] text-center font-medium text-[26px] sm:text-5xl text-gray-500'>Select a photo or drag it here</p>
+								<p className='w-[240px] sm:w-[400px] text-center text-[14px] font-medium sm:text-xl text-gray-500'>Only *.jpeg, *.jpg, *.webp and *.png images will be accepted</p>
+							</>
 						)}
 					</div>
 
@@ -97,14 +106,14 @@ const CreateProducts = ({ setIsLoading }: CreateProductsProps) => {
 
 				<form className='flex flex-col gap-5' onSubmit={handleSubmit(onSubmit)}>
 					<div className='w-full'>
-						<label htmlFor='name' className='text-white text-lg cursor-pointer'>Name</label>
-						<input {...register("name")} id='name' type="text" className='product-input' />
-						{errors.name?.message && <p className='text-white font-medium text-[14px] mt-2'>{errors.name?.message}</p>}
+						{/* <label htmlFor='name' className='text-white text-lg cursor-pointer'>Name</label> */}
+						<input placeholder='Name' {...register("name")} id='name' type="text" className='product-input' />
+						{errors.name?.message && <p className='font-medium text-[14px] mt-2 text-white ml-2'>{errors.name?.message}</p>}
 					</div>
 					<div className='w-full flex-col gap-3'>
-						<label htmlFor='price' className='text-white text-lg cursor-pointer'>Price</label>
-						<input {...register("price")} type="number" className='product-input' id='price' min={1} max={125} />
-						{errors.price?.message && <p className='text-white font-medium text-[14px] mt-2'>{errors.price?.message}</p>}
+						{/* <label htmlFor='price' className='text-white text-lg cursor-pointer'>Price</label> */}
+						<input placeholder='Price' {...register("price")} type="number" className='product-input' id='price' min={1} max={125} />
+						{errors.price?.message && <p className='font-medium text-[14px] mt-2 text-white ml-2'>{errors.price?.message}</p>}
 					</div>
 					<button className='bg-white text-red-500 font-bold px-4 py-2 rounded shadow'>Create Product</button>
 				</form>

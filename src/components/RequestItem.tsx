@@ -33,12 +33,12 @@ export const RequestItem = ({ req, changeable = false, setIsLoading }: RequestIt
 		}
 	};
 	return (
-		<div className="w-full h-[120px] bg-white rounded-xl p-6 flex flex-col justify-between items-center">
+		<div className="w-full h-[120px] bg-white rounded-xl p-4 flex flex-col justify-between items-center">
 			<div className="w-full flex justify-between gap-[10px]">
 				<h2 className='text-base sm:text-lg font-medium'>{req.userId?.name + " " + req.userId?.surname}</h2>
 				<h3 className={`hidden  ${changeable ? "lg:flex" : "md:flex"} text-md text-gray-500`}>id: {req.userId.id}</h3>
-				<div className='flex flex-col gap-1 md:flex-row md:gap-5 text-center whitespace-nowrap'>
-					<h2 className='text-base sm:text-lg'>{req.productId?.name}</h2>
+				<div className='flex flex-col gap-[5px] sm:flex-row sm:gap-[20px] text-center whitespace-nowrap'>
+					<h2 className='text-base sm:text-xl font-bold'>{req.productId?.name}</h2>
 					<h2 className='font-bold text-base sm:text-xl text-red-500'>{req.productId?.price} Points</h2>
 				</div>
 				{changeable &&
@@ -48,7 +48,7 @@ export const RequestItem = ({ req, changeable = false, setIsLoading }: RequestIt
 					</div>
 				}
 			</div>
-			<div className={`${changeable && "hidden"} w-full flex justify-end gap-[10px] mt-[5px]`}>
+			<div className={`${changeable && "hidden"} w-full flex justify-center sm:justify-end gap-[10px] mt-[5px]`}>
 				<button
 					disabled={isDisabled}
 					className='w-[100px] sm:w-[120px] h-[26px] sm:h-[30px] border border-red-500 bg-red-500 hover:bg-transparent outline-none text-white hover:text-red-500 rounded-md transition-colors disabled:opacity-75'

@@ -79,7 +79,7 @@ const AdminPage = () => {
 				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500 p-2 rounded-xl m-4 top-0 left-0 cursor-pointer"> Back to QR-page</Link>
 			</div>
 
-			<h2 className="text-[42px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500  mt-10 mb-8 py-[20px]">Admin page</h2>
+			<h2 className="text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500  mt-10 mb-8 py-[20px]">Admin page</h2>
 
 			<div className="appContainer flex flex-col gap-10 px-4 sm:px-3">
 				<div className='flex gap-[20px] text-xl text-white justify-end'>

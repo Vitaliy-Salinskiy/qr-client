@@ -81,7 +81,7 @@ function QrPage() {
 			<div className="container mx-auto px-[20px] max-w-screen-lg">
 				<div className="min-h-screen flex flex-col items-center py-16 gap-10 text-white font-bold">
 
-					<h1 className="text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500 absolute py-[20px]">ScPoints Farmer</h1>
+					<h1 className="text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500 absolute py-[20px]">ScPoints Farmer</h1>
 
 					<div className="text-[50px] text-transparent select-none">
 						empty

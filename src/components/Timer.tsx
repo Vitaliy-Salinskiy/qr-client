@@ -34,7 +34,7 @@ const Timer = () => {
 	return (
 		<>
 			{userScanTime && userScanTime === time && timeLeft ?
-				<div className="absolute inset-0 bg-white-opacity-80 flex justify-center items-center">
+				<div className="absolute bg-white-opacity-40 inset-0 rounded-xl flex justify-center items-center backdrop-blur-sm bg-white-opacity-50">
 					{timeLeft && <p className='text-2xl xl:text-3xl text-red-500 max-w-[250px] text-center'>You have already scanned today: {timeLeft}</p>}
 				</div>
 				: null
