@@ -10,6 +10,8 @@ import LinkButton from "../components/LinkButton";
 import Popup from "../components/Popup";
 import { useCreateUser, useGetScansValue } from "../utils";
 import Timer from "../components/Timer";
+import qrWhite from "../assets/images/qr-code-white.png";
+import shopWhite from "../assets/images/shop-white.png";
 
 function QrPage() {
 
@@ -109,20 +111,19 @@ function QrPage() {
 								</div>
 								<h4 className="text-[32px] text-center">Total ScPoints</h4>
 							</div>
-							<div className="flex justify-center gap-[40px]">
-								<Link to={`statistic/${id}`} className="h-[135px] sm:h-[150px] w-[135px] sm:w-[150px] bg-white rounded-xl flex flex-col justify-around items-center transition-all duration-200 cursor-pointer hover:scale-105">
-									<img height={80} width={80} src={scansHistory} alt="icon" />
-									<p className="text-black">History Scans</p>
-								</Link>
-								<Link to="shop" className="h-[135px] sm:h-[150px] w-[135px] sm:w-[150px] bg-white rounded-xl flex flex-col justify-around items-center transition-all duration-200 cursor-pointer hover:scale-105">
-									<img height={80} width={80} src={shopIcon} alt="icon" />
-									<p className="text-black">QR Shop</p>
-								</Link>
-							</div>
 							<div className="flex justify-center mx-auto items-center w-[310px] sm:w-[340px]">
 								<LinkButton to="/users">See users</LinkButton>
 							</div>
 						</div>
+					</div>
+
+					<div className="w-[95px] flex justify-center gap-[5px] p-[5px] bg-white fixed shadow-red-500 drop-shadow-lg rounded-t-3xl shadow-sm md:rounded-3xl bottom-0 left-[50%] ml-[-47.5px] md:bottom-[40px] md:right-[40px] md:left-auto">
+						<Link to={`statistic/${id}`} className="h-[40px] w-[40px] flex justify-center items-center bg-red-500 rounded-full shadow-red-500 shadow-sm cursor-pointer border-2 border-white transition-all duration-300 hover:scale-125 hover:translate-y-[-15px] hover:translate-x-[-8px]">
+							<img height={25} width={25} src={qrWhite} alt="qr image" />
+						</Link>
+						<Link to="shop" className="h-[40px] w-[40px] flex justify-center items-center bg-red-500 rounded-full shadow-red-500 shadow-sm cursor-pointer border-2 border-white transition-all duration-300 hover:scale-125 hover:translate-y-[-15px] hover:translate-x-[8px]">
+							<img height={25} width={25} src={shopWhite} alt="shop image" />
+						</Link>
 					</div>
 				</div>
 			</div>

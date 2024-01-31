@@ -69,6 +69,7 @@ const ShopPage = () => {
 
 	const handleYesClick = () => {
 		handleRequestSend(user?.id as string, currentItem?._id as string);
+		setCurrentItem(null);
 	};
 
 	const handleNoClick = () => {
@@ -88,7 +89,7 @@ const ShopPage = () => {
 				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500 p-2 rounded-xl cursor-pointer"> Back to QR-page</Link>
 
 				{user?.name && user?.surname &&
-					<div className='text-white text-lg'>{user?.name} {user?.surname}: {user?.timesScanned} points</div>
+					<div className='text-red-500 text-lg bg-white py-1 px-2 rounded-lg font-bold shadow-white shadow-sm	'>{user?.name} {user?.surname}: {user?.timesScanned} points</div>
 				}
 			</div>
 
