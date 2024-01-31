@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { useMyContext } from '../providers/ContextProvider';
 import Popup from './Popup';
 import { IProductDto } from '../interfaces';
-import { createProduct } from '../utils';
+import { useCreateProduct } from '../utils';
 
 interface CreateProductsProps {
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -47,6 +47,8 @@ const CreateProducts = ({ setIsLoading }: CreateProductsProps) => {
 
 	const { register, handleSubmit, formState: { errors }, reset } = useForm<IProductDto>({ resolver: zodResolver(productSchema), mode: 'onChange' })
 
+	const { mutate: createProduct } = useCreateProduct()
+
 	const onSubmit = (data: IProductDto) => {
 		setError('')
 		if (!selectedFile) {
@@ -59,15 +61,17 @@ const CreateProducts = ({ setIsLoading }: CreateProductsProps) => {
 			formData.append('name', data.name);
 			formData.append('price', data.price.toString());
 
-			createProduct(formData)
-				.then(() => {
+			createProduct(formData, {
+				onSuccess: () => {
 					setResponse('Product created successfully')
 					setSelectedFile(null)
 					setSelectedFileUrl(null)
 					reset();
-				}).catch(() => {
+				},
+				onError: () => {
 					setResponse('Something went wrong, please try again later')
-				})
+				},
+			})
 		}
 	}
 

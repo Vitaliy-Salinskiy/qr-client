@@ -1,18 +1,18 @@
 import ReactDOM from 'react-dom/client'
+import { QueryClient, QueryClientProvider } from "react-query"
+import { ReactQueryDevtools } from 'react-query/devtools'
+
 import App from './App.tsx'
 import './index.scss'
 import { ContextProvider } from './providers/ContextProvider.tsx'
-// import { FpjsProvider } from '@fingerprintjs/fingerprintjs-pro-react'
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-	<ContextProvider>
-		{/* <FpjsProvider
-				loadOptions={{
-					apiKey: "Sxo5ybLHCSKalzI9SWpu",
-					region: "eu"
-				}}
-			> */}
-		<App />
-		{/* </FpjsProvider> */}
-	</ContextProvider>
+	<QueryClientProvider client={queryClient}>
+		<ContextProvider>
+			<App />
+		</ContextProvider>
+		<ReactQueryDevtools initialIsOpen={false} />
+	</QueryClientProvider>
 )

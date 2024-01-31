@@ -24,6 +24,11 @@ export interface IUser {
 	surname: string;
 }
 
+export interface IAddCredentialsDto {
+	name: string;
+	surname: string;
+}
+
 export enum RequestStatus {
 	ALLOWED = "allowed",
 	DENIED = "denied",

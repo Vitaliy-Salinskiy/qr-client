@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { IRequest } from '../interfaces';
-import { allowRequest, denyRequest } from '../utils';
+import { useAllowRequest, useDenyRequest } from '../utils';
 
 interface RequestItemProps {
 	req: IRequest,
@@ -12,6 +12,9 @@ interface RequestItemProps {
 export const RequestItem = ({ req, changeable = false, setIsLoading }: RequestItemProps) => {
 
 	const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+	const { mutateAsync: allowRequest } = useAllowRequest();
+	const { mutateAsync: denyRequest } = useDenyRequest();
 
 	const handleAllow = async () => {
 		if (setIsLoading) {

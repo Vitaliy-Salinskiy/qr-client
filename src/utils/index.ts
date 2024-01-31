@@ -1,94 +1,186 @@
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 
-import { ILoginDto, IUser } from "../interfaces";
+import { IAddCredentialsDto, ILoginDto, IProduct, IRequest, IRequestResponse, IUser } from "../interfaces";
+
+const enum QueryKeys {
+	Users = "users",
+	User = "user",
+	Products = "products",
+	Requests = "requests",
+	PendingRequests = "pendingRequests",
+	Profile = "profile",
+	Scans = "scans"
+}
 
 const baseUlr = import.meta.env.VITE_APP_SERVER_URL;
 
-export const createUser = async (id: string): Promise<any> => {
-	const res = await axios.post(`${baseUlr}/users`, { id: id })
-	return res.data;
-}
+export const useCreateUser = () => {
+	const queryClient = useQueryClient();
 
-export const getUser = async (id: string): Promise<any> => {
-	const res = await axios.get(`${baseUlr}/users/${id}`)
-	return res.data;
-}
-
-export const addCredentials = async (id: string, credentials: any): Promise<any> => {
-	const res = await axios.put(`${baseUlr}/users/${id}/credentials`, { data: credentials })
-	return res.data;
-}
-
-export const addScan = async (id: string): Promise<any> => {
-	const res = await axios.put(`${baseUlr}/users/${id}`)
-	return res.data;
-}
-
-export const getScansValue = async (): Promise<string[]> => {
-	const res = await axios.get(`${baseUlr}/users/scans`)
-	return res.data.toString().split("")
-}
-
-export const fetchData = async () => {
-	const response = await axios.get(`${baseUlr}/users`);
-	const sortedData = response.data.sort((a: IUser, b: IUser) => b.timesScanned - a.timesScanned).filter((user: IUser) => user.timesScanned > 0);
-	return sortedData;
-}
-
-export const getProducts = async () => {
-	const response = await axios.get(`${baseUlr}/products`);
-	return response.data;
-}
-
-export const createRequest = async (userId: string, requestsId: string) => {
-	const response = await axios.post(`${baseUlr}/requests/${userId}/${requestsId}`);
-	return response.data;
-}
-
-export const getAllRequests = async (requiredPage?: number) => {
-	const response = await axios.get(`${baseUlr}/requests`, {
-		params: {
-			page: requiredPage
+	return useMutation(async (id: string) => {
+		const res = await axios.post<IUser | { message: string }>(`${baseUlr}/users`, { id })
+		return res.data;
+	}, {
+		onSuccess: () => {
+			queryClient.invalidateQueries(QueryKeys.Users)
 		}
-	});
-	return response.data;
+	})
 }
 
-export const getPendingRequests = async (requiredPage?: number) => {
-	const response = await axios.get(`${baseUlr}/requests/pending`, {
-		params: {
-			page: requiredPage
+export const useGetUser = (id?: string | null) => {
+	return useQuery([id], async () => {
+		const res = await axios.get<IUser>(`${baseUlr}/users/${id}`)
+		return res.data;
+	}, { enabled: id !== null && id !== undefined && typeof id === "string" })
+}
+
+export const useAddCredentials = () => {
+	return useMutation(async ({ id, credentials }: { id: string, credentials: IAddCredentialsDto }) => {
+		const res = await axios.put<IUser>(`${baseUlr}/users/${id}/credentials`, { data: credentials })
+		return res.data;
+	})
+}
+
+export const useAddScan = () => {
+	const queryClient = useQueryClient();
+
+	return useMutation(async (id: string) => {
+		const res = await axios.put<IUser | { message: string }>(`${baseUlr}/users/${id}`)
+		return res.data;
+	}, {
+		onSuccess: () => {
+			queryClient.invalidateQueries(QueryKeys.Scans)
 		}
-	});
-	return response.data;
+	})
 }
 
-export const allowRequest = async (id: string) => {
-	const response = await axios.post(`${baseUlr}/requests/${id}/allow`);
-	return response.data;
+export const useGetScansValue = () => {
+	return useQuery([QueryKeys.Scans], async () => {
+		const res = await axios.get<number>(`${baseUlr}/users/scans`)
+		return res.data.toString().split("")
+	})
 }
 
-export const denyRequest = async (id: string) => {
-	const response = await axios.post(`${baseUlr}/requests/${id}/deny`);
-	return response.data;
+export const useFetchUsers = () => {
+	return useQuery([QueryKeys.Users], async () => {
+		const response = await axios.get<IUser[]>(`${baseUlr}/users`);
+		const sortedData = response.data.sort((a: IUser, b: IUser) => b.timesScanned - a.timesScanned).filter((user: IUser) => user.timesScanned > 0);
+		return sortedData;
+	})
 }
 
-export const login = async (credentials: ILoginDto) => {
-	const response = await axios.post(`${baseUlr}/auth/login`, credentials, { withCredentials: true });
-	return response.data;
+export const useFetchProducts = () => {
+	return useQuery([QueryKeys.Products], async () => {
+		const response = await axios.get<IProduct[]>(`${baseUlr}/products`);
+		return response.data;
+	})
 }
 
-export const getProfile = async () => {
-	const response = await axios.get(`${baseUlr}/auth/profile`, { withCredentials: true });
-	return response.data;
+export const useCreateProduct = () => {
+	const queryClient = useQueryClient();
+	return useMutation(async (productDto: FormData) => {
+		const response = await axios.post(`${baseUlr}/products`, productDto);
+		return response.data;
+	}, {
+		onSuccess: () => {
+			queryClient.invalidateQueries([QueryKeys.Products, QueryKeys.Requests, QueryKeys.PendingRequests])
+		}
+	})
 }
 
-export const createProduct = async (product: FormData) => {
-	const response = await axios.post(`${baseUlr}/products`, product);
-	return response.data;
+export const useDeleteProduct = () => {
+	const queryClient = useQueryClient();
+
+	return useMutation(async (id: string) => {
+		const response = await axios.delete(`${baseUlr}/products/${id}`);
+		return response.data;
+	}, {
+		onSuccess: () => {
+			queryClient.invalidateQueries([QueryKeys.Products, QueryKeys.Requests, QueryKeys.PendingRequests])
+		}
+	})
 }
 
-export const deleteProduct = async (id: string) => {
-	const response = await axios.delete(`${baseUlr}/products/${id}`);
-	return response.data;
+export const useCreateRequest = () => {
+	const queryClient = useQueryClient();
+
+	return useMutation(async ({ userId, productId }: { userId: string, productId: string }) => {
+		const response = await axios.post<IRequest>(`${baseUlr}/requests/${userId}/${productId}`);
+		return response.data;
+	}, {
+		onSuccess: () => {
+			queryClient.invalidateQueries([QueryKeys.Requests, QueryKeys.PendingRequests])
+		}
+	})
+}
+
+export const useGetAllRequests = (page?: number) => {
+	return useQuery([QueryKeys.Requests], async () => {
+		const response = await axios.get<IRequestResponse>(`${baseUlr}/requests`, {
+			params: {
+				page
+			}
+		});
+		return response.data;
+	})
+}
+
+export const useGetPendingRequests = (page?: number) => {
+	return useQuery([QueryKeys.PendingRequests], async () => {
+		const response = await axios.get<IRequestResponse>(`${baseUlr}/requests/pending`, {
+			params: {
+				page
+			}
+		});
+		return response.data;
+	})
+}
+
+export const useAllowRequest = () => {
+	const queryClient = useQueryClient();
+
+	return useMutation(async (id: string) => {
+		const response = await axios.post(`${baseUlr}/requests/${id}/allow`);
+		return response.data;
+	}, {
+		onSuccess: () => {
+			queryClient.invalidateQueries([QueryKeys.Requests, QueryKeys.PendingRequests])
+		}
+	})
+
+}
+
+export const useDenyRequest = () => {
+	const queryClient = useQueryClient();
+
+	return useMutation(async (id: string) => {
+		const response = await axios.post(`${baseUlr}/requests/${id}/deny`);
+		return response.data;
+	}, {
+		onSuccess: () => {
+			queryClient.invalidateQueries([QueryKeys.Requests, QueryKeys.PendingRequests])
+		}
+	})
+
+}
+
+export const useLogin = () => {
+	const queryClient = useQueryClient();
+
+	return useMutation(async (credentials: ILoginDto) => {
+		const response = await axios.post(`${baseUlr}/auth/login`, credentials, { withCredentials: true });
+		return response.data;
+	}, {
+		onSuccess: () => {
+			queryClient.invalidateQueries(QueryKeys.Profile)
+		}
+	})
+}
+
+export const useGetProfile = () => {
+	return useQuery([QueryKeys.Profile], async () => {
+		const response = await axios.get<IUser>(`${baseUlr}/auth/profile`, { withCredentials: true });
+		return response.data;
+	})
 }

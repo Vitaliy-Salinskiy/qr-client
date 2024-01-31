@@ -2,29 +2,41 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
 
-import { addCredentials, addScan, createUser, getUser } from "../utils";
+import { useAddCredentials, useAddScan, useCreateUser, useGetUser } from "../utils";
 import { useMyContext } from "../providers/ContextProvider";
+import { IAddCredentialsDto } from "../interfaces";
 
 const RedirectPage = () => {
 
 	const navigate = useNavigate();
 
-	const { setResponse, response, setId } = useMyContext();
+	const { setResponse, response, setId, id } = useMyContext();
+
+	const { mutate: createUser } = useCreateUser();
+	const { mutateAsync: addCredentials } = useAddCredentials();
+	const { mutateAsync: addScan } = useAddScan();
+	const { data, refetch } = useGetUser(id);
+
 
 	useEffect(() => {
 		FingerprintJS.load()
 			.then(fp => fp.get())
 			.then(async (result: any) => {
-				await createUser(result.visitorId);
+				createUser(result.visitorId);
 				setId(result.visitorId);
-				await fetchData(result.visitorId);
+				refetch()
 			})
 	}, [])
+
+	useEffect(() => {
+		if (data && id) {
+			fetchData(id);
+		}
+	}, [data])
 
 	const fetchData = async (id: string) => {
 		if (id) {
 			try {
-				const data = await getUser(id)
 				if (data && data.name && data.surname) {
 					await handleScan(id);
 					return;
@@ -58,19 +70,23 @@ const RedirectPage = () => {
 			setResponse("You have to enter valid name and surname to get a point");
 			return false;
 		}
-		const credentials = { name: userDetails[0], surname: userDetails[1] };
-		const userData = await addCredentials(id, credentials);
-		return userData;
+		const credentials: IAddCredentialsDto = { name: userDetails[0], surname: userDetails[1] };
+		try {
+			addCredentials({ id, credentials });
+			return true
+		} catch (error) {
+			return false
+		}
 	}
 
 	const handleScan = async (id: string): Promise<any> => {
 		try {
-			const data = await addScan(id);
-			if (data?.message && response === null) {
-				setResponse(data.message);
+			const result = await addScan(id);
+			if ('message' in result && response === null) {
+				setResponse(result.message);
 			}
 			navigate("/");
-			return data;
+			return result;
 		} catch (err) {
 			setResponse("You have already scanned today");
 			navigate("/");

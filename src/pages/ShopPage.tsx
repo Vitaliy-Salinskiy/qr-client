@@ -1,65 +1,62 @@
 import { useEffect, useRef, useState } from 'react';
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
 import { Link } from 'react-router-dom';
-import { createRequest } from '../utils';
-import { useMyContext } from '../providers/ContextProvider';
 
+import { useMyContext } from '../providers/ContextProvider';
 import { GoodItem } from '../components/GoodItem';
 import Loader from '../components/Loader';
 import Popup from '../components/Popup';
-import { IProduct, IUser } from '../interfaces';
-import { getProducts, getUser } from '../utils';
+import { IProduct } from '../interfaces';
+import { useFetchProducts, useGetUser, useCreateRequest } from '../utils';
 
 const ShopPage = () => {
 
-	const [products, setProducts] = useState<IProduct[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const initialRender = useRef<boolean>(true);
-	const [user, setUser] = useState<IUser>();
 	const { setResponse } = useMyContext();
 	const [currentItem, setCurrentItem] = useState<IProduct | null>();
 
 	const { id, setId, response } = useMyContext();
 
+	const { data: user, refetch: refetchUser } = useGetUser(id);
+	const { data: products, refetch: refetchProducts, isLoading: isProductsLoading } = useFetchProducts();
+	const { mutate: createRequest } = useCreateRequest();
+
 	useEffect(() => {
-		if (!id) {
-			FingerprintJS.load()
-				.then(fp => fp.get())
-				.then(result => {
-					setId(result.visitorId);
-					getUserData(result.visitorId);
-				})
-		}
+		FingerprintJS.load()
+			.then(fp => fp.get())
+			.then(result => {
+				setId(result.visitorId);
+				getUserData();
+			})
 	}, [id])
 
 	useEffect(() => {
 		if (id) {
-			getUserData(id);
+			getUserData();
 		}
-	}, [isLoading])
+	}, [isLoading, isProductsLoading])
 
 	useEffect(() => {
 		if (initialRender.current) {
 			initialRender.current = false;
 			fetchData();
+			refetchUser()
 		}
 	}, []);
 
 	const fetchData = async () => {
-		setIsLoading(true);
-		await getProducts().then(data => setProducts(data)).finally(() => setIsLoading(false));
+		await refetchProducts()
 	}
 
-	const getUserData = async (id: string) => {
-		await getUser(id)
-			.then((data) => setUser(data))
-			.catch(() => { })
+	const getUserData = async () => {
+		await refetchUser()
 	}
 
 	const handleRequestSend = async (userId: string | null, productId: string) => {
 		if (userId) {
 			try {
-				await createRequest(userId, productId);
+				createRequest({ userId, productId });
 				setResponse("Request has been successfully sent");
 			} catch (error) {
 				setResponse("You do not have enough points");
@@ -80,6 +77,12 @@ const ShopPage = () => {
 
 	return (
 		<div className="bg-red-500 pt-5">
+
+			{isLoading || isProductsLoading &&
+				<Loader />
+			}
+
+			{response && <Popup />}
 
 			<div className='w-full appContainer flex justify-between items-center px-2'>
 				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500 p-2 rounded-xl cursor-pointer"> Back to QR-page</Link>
@@ -118,12 +121,6 @@ const ShopPage = () => {
 				</div>
 
 			</div>
-
-			{isLoading &&
-				<Loader />
-			}
-
-			{response && <Popup />}
 
 		</div>
 	)

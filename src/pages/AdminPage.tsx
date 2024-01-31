@@ -1,4 +1,4 @@
-import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 
 import { useMyContext } from '../providers/ContextProvider';
@@ -8,109 +8,79 @@ import CreateProducts from '../components/CreateProducts';
 import Pagination from '../components/Pagination';
 import Loader from '../components/Loader';
 import Popup from '../components/Popup';
-import { IProduct, IRequest, IRequestResponse } from '../interfaces';
-import { getProducts, getProfile, getAllRequests, getPendingRequests } from '../utils';
+import { useGetProfile, useGetAllRequests, useGetPendingRequests, useFetchProducts } from '../utils';
 
 const AdminPage = () => {
 
 	const location = useLocation();
 	const navigate = useNavigate();
 
-	const [requests, setRequests] = useState<IRequest[]>([]);
-	const [pendingRequests, setPendingRequests] = useState<IRequest[]>([]);
-	const [totalPendingRequests, setTotalPendingRequests] = useState(0)
-
-	const [currentPage, setCurrentPage] = useState(1);
-	const [totalPages, setTotalPages] = useState(1)
-
-	const [products, setProducts] = useState<IProduct[]>([]);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-
 	const { response, setResponse } = useMyContext();
 
+	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [totalPages, setTotalPages] = useState<number>(1)
+
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
+	const { refetch: refetchProfile } = useGetProfile();
+
+	const { data: products, refetch: refetchProducts, isLoading: isProductsLoading } = useFetchProducts();
+	const { data: allRequestsResponse, refetch: refetchAllRequests, } = useGetAllRequests(currentPage);
+	const { data: pendingRequestsResponse, refetch: refetchPendingRequests } = useGetPendingRequests(currentPage);
+
 	useEffect(() => {
-		getProfile()
+		refetchProfile()
 			.then(() => {
-				fetchRequests(currentPage);
-				fetchProducts();
+				setCurrentPage(1)
+				refetchProducts();
 			})
 			.catch(() => {
-				setResponse("You are not authorized to view this page");
-				navigate('/login')
+				setResponse("You are not authorized to visit this page");
+				navigate("/login");
 			})
 	}, []);
 
 
 	useEffect(() => {
-		fetchRequests(currentPage);
-	}, [currentPage, location.pathname])
+		fetchRequests();
+	}, [currentPage, isLoading]);
 
 	useEffect(() => {
-		setIsLoading(true);
-		switch (true) {
-			case location.pathname.includes('products'):
-				setTimeout(() => {
-					fetchProducts();
-				}, 100)
-				break;
-			case location.pathname.includes('requests'):
-			case location.pathname.includes('history'):
-				setTimeout(() => {
-					fetchRequests(1);
-				}, 100)
-				break;
-			default:
-				break;
+		if (location.pathname.includes('products') && !location.pathname.includes('create')) {
+			refetchProducts()
+		} else {
+			setCurrentPage(1)
+			fetchRequests();
 		}
-		setIsLoading(false);
-	}, [location.pathname, isLoading]);
+	}, [location.pathname]);
 
-	const fetchRequests = async (requiredPage: number = 1) => {
+	const fetchRequests = async () => {
 
-		let response: Promise<IRequestResponse> | null = null;
+		await refetchPendingRequests()
 
-		if (location.pathname.includes('requests')) {
-			response = getPendingRequests(requiredPage)
-		} else if (location.pathname.includes('history')) {
-			response = getAllRequests(requiredPage)
-		}
-
-		if (response) {
-			const data = await response;
-
-			if (location.pathname.includes('requests')) {
-				setPendingRequests(data.requests);
-				if (data.totalPendingRequest) {
-					setTotalPendingRequests(data.totalPendingRequest)
-				}
-			} else if (location.pathname.includes('history')) {
-				setRequests(data.requests.sort((a: IRequest, b: IRequest) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()));
-			}
-
-
-			if (currentPage !== data.currentPage) {
-				setCurrentPage(data.currentPage)
-			}
-
-			setTotalPages(data.totalPages)
+		if (location.pathname.includes('history')) {
+			await refetchAllRequests().then((result) => {
+				setCurrentPage(result.data?.currentPage || 1);
+				setTotalPages(result.data?.totalPages || 0);
+			})
+		} else if (location.pathname.includes('requests')) {
+			await refetchPendingRequests().then((result) => {
+				setCurrentPage(result.data?.currentPage || 1);
+				setTotalPages(result.data?.totalPages || 0)
+			})
 		}
 
 	};
 
-	const fetchProducts = async () => {
-		await getProducts().then((data) => {
-			setProducts(data);
-		})
-	};
-
-	const handlePageClick = ({ selected }: { selected: number }) => {
-		setCurrentPage(++selected);
+	const handlePageClick = async ({ selected }: { selected: number }) => {
+		const newPage = ++selected;
+		setCurrentPage(newPage);
 	}
 
 	return (
 		<div className="w-full min-h-screen flex flex-col pt-10 bg-red-500">
 
-			{isLoading && <Loader />}
+			{isLoading || isProductsLoading && <Loader />}
 
 			{response && <Popup />}
 
@@ -124,23 +94,23 @@ const AdminPage = () => {
 				<div className='flex gap-[20px] text-xl text-white justify-end'>
 					<Link to='requests' className={`${location.pathname === '/admin/requests' && "font-bold"} admin-link`}>
 						Requests
-						<span className='absolute bg-red-900 h-[18px] w-[18px] text-[10px] flex items-center justify-center top-[-2px] right-[-12px] rounded-full'>{totalPendingRequests}</span>
+						<span className='absolute bg-red-900 h-[18px] w-[18px] text-[10px] flex items-center justify-center top-[-2px] right-[-12px] rounded-full'>{pendingRequestsResponse?.totalPendingRequest}</span>
 					</Link>
 					<Link to="history" className={`${location.pathname === '/admin/history' && "font-bold"} admin-link`}>History</Link>
 					<Link to="products" className={`${location.pathname === '/admin/products' && "font-bold"} admin-link`}>
 						Products
-						<span className='absolute bg-red-900 h-[18px] w-[18px] text-[10px] flex items-center justify-center top-[-2px] right-[-12px] rounded-full'>{products.length}</span>
+						<span className='absolute bg-red-900 h-[18px] w-[18px] text-[10px] flex items-center justify-center top-[-2px] right-[-12px] rounded-full'>{products?.length}</span>
 					</Link>
 					<Link to="products/create" className={`${location.pathname === '/admin/products/create' && "font-bold"} admin-link`}>Create</Link>
 				</div>
 
 				<Routes>
 					<Route path="/requests" element={
-						<div className={`w-full flex flex-col justify-start ${!totalPendingRequests && "justify-center items-center"} gap-[20px] min-h-[525px] max-h-[525px] overflow-y-auto`}>
-							{pendingRequests && pendingRequests.length !== 0 ?
+						<div className={`w-full flex flex-col justify-start ${!pendingRequestsResponse?.totalPendingRequest && "justify-center items-center"} gap-[20px] min-h-[525px] max-h-[525px] overflow-y-auto`}>
+							{pendingRequestsResponse && pendingRequestsResponse?.requests.length !== 0 ?
 								(
 									<>
-										{pendingRequests.map((item, index) => (
+										{pendingRequestsResponse?.requests.map((item, index) => (
 											<RequestItem key={index + item._id} req={item} setIsLoading={setIsLoading} />
 										))}
 										<Pagination
@@ -156,11 +126,11 @@ const AdminPage = () => {
 						</div>
 					} />
 					<Route path="history" element={
-						<div className={`w-full flex flex-col justify-start ${!pendingRequests || pendingRequests.length === 0 && "justify-center items-center"} gap-[20px] min-h-[525px] max-h-[525px] overflow-y-auto`}>
-							{requests && requests.length !== 0 ?
+						<div className={`w-full flex flex-col justify-start ${!allRequestsResponse?.requests || allRequestsResponse?.requests.length === 0 && "justify-center items-center"} gap-[20px] min-h-[525px] max-h-[525px] overflow-y-auto`}>
+							{allRequestsResponse && allRequestsResponse?.requests.length !== 0 ?
 								(
 									<>
-										{requests.map((item, index) => (
+										{allRequestsResponse?.requests.map((item, index) => (
 											<RequestItem key={index + item._id} req={item} changeable={true} />
 										))}
 										<Pagination
@@ -187,6 +157,7 @@ const AdminPage = () => {
 					<Route path="products/create" element={
 						<CreateProducts setIsLoading={setIsLoading} />
 					} />
+					<Route path="*" element={<Navigate to="/admin/requests" />} />
 				</Routes>
 			</div>
 		</div>

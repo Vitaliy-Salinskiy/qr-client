@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import { ILoginDto } from '../interfaces';
-import { login } from '../utils';
+import { useLogin } from '../utils';
 import { useNavigate } from 'react-router-dom';
 import { useMyContext } from '../providers/ContextProvider';
 import Popup from '../components/Popup';
@@ -12,6 +12,8 @@ const LoginPage = () => {
 
 	const { response, setResponse } = useMyContext()
 	const navigate = useNavigate()
+
+	const { mutateAsync: login } = useLogin();
 
 	const loginSchema = z.object({
 		username: z.string().min(1, 'Username is required'),

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { IProduct } from "../interfaces"
 import { useMyContext } from "../providers/ContextProvider";
-import { deleteProduct } from "../utils";
+import { useDeleteProduct } from "../utils";
 
 interface ProductsItemProps {
 	product: IProduct;
@@ -14,13 +14,23 @@ const ProductsItem = ({ product, setIsLoading }: ProductsItemProps) => {
 	const { setResponse } = useMyContext();
 	const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
+	const { mutateAsync: deleteProduct } = useDeleteProduct();
+
 	const handleRemove = async () => {
 		setIsLoading(true);
 		setIsDisabled(true);
-		await deleteProduct(product._id)
-			.then(() => setResponse("Product deleted successfully"))
-			.catch(() => setResponse("Something went wrong"))
-			.finally(() => setIsDisabled(false));
+		deleteProduct(product._id, {
+			onSuccess: () => {
+				setResponse("Product deleted successfully");
+				setIsDisabled(false)
+			},
+			onError: () => {
+				setResponse("Something went wrong");
+				setIsDisabled(false)
+			},
+
+
+		})
 		setIsLoading(false);
 	}
 

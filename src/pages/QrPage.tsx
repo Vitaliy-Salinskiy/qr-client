@@ -2,32 +2,27 @@ import { useEffect, useState } from "react"
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
 import QRCode from 'qrcode.react';
 import { Link } from "react-router-dom";
-// import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
 
 import scansHistory from '../assets/images/scans-history.png'
 import shopIcon from '../assets/images/shop.png'
 import { useMyContext } from "../providers/ContextProvider";
 import LinkButton from "../components/LinkButton";
 import Popup from "../components/Popup";
-import { createUser, getScansValue } from "../utils";
+import { useCreateUser, useGetScansValue } from "../utils";
 import Timer from "../components/Timer";
 
 function QrPage() {
 
+
 	const [size, setSize] = useState<number>(310);
-	const [scans, setScans] = useState<string[]>([]);
 	const { message, setMessage, id, setId, response, setResponse } = useMyContext();
 
-	// const { isLoading, error, data, getData } = useVisitorData(
-	// 	{ extendedResult: true },
-	// 	{ immediate: true }
-	// )
+	const { mutate: createUser } = useCreateUser();
+	const { data: scansResponse, refetch: refetchScans, isLoading: isScansLoading } = useGetScansValue();
 
 	useEffect(() => {
-		if (id) {
-			getScansValue().then((data) => setScans(data))
-		}
-	}, [id, message])
+		refetchScans()
+	}, [scansResponse])
 
 	useEffect(() => {
 		let timeoutId: any;
@@ -106,7 +101,7 @@ function QrPage() {
 
 							<div className="flex flex-col gap-[10px]">
 								<div className="gap-3 flex justify-center">
-									{scans ? scans.map((item, index) => (
+									{scansResponse && !isScansLoading ? scansResponse.map((item: string, index: number) => (
 										<div key={`${index}-${item}`} className="text-[72px] xl:text-[110px] h-[90px] xl:h-[140px] w-[90px] xl:w-[140px] bg-[#a50d05] flex justify-center items-center rounded-xl">
 											<p>{item}</p>
 										</div>
