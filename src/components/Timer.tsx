@@ -13,7 +13,11 @@ const Timer = () => {
 		FingerprintJS.load()
 			.then(fp => fp.get())
 			.then(result => {
-				getUser(result.visitorId).then((data: IUser) => setUserScanTime(data.lastScanned.split("T")[0]));
+				getUser(result.visitorId).then((data: IUser) => {
+					if (data.lastScanned) {
+						setUserScanTime(data.lastScanned.split("T")[0])
+					}
+				});
 			})
 	}, [])
 
@@ -50,7 +54,7 @@ const Timer = () => {
 		<>
 			{userScanTime && userScanTime === time && timeLeft ?
 				<div className="absolute bg-white-opacity-40 inset-0 rounded-xl flex justify-center items-center backdrop-blur-sm bg-white-opacity-50">
-					{timeLeft && <p className='text-2xl xl:text-3xl text-red-500 max-w-[250px] text-center'>You have already scanned today: {timeLeft}</p>}
+					{timeLeft && <p className='text-2xl xl:text-3xl text-red-500 max-w-[270px] text-center'>You have already scanned today: {timeLeft}</p>}
 				</div>
 				: null
 			}

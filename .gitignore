@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+.storybook
+src/stories/*.stories.tsx
 
 # Editor directories and files
 .vscode/*

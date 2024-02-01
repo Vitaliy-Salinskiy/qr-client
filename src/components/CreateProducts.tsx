@@ -61,12 +61,11 @@ const CreateProducts = ({ setIsLoading }: CreateProductsProps) => {
 
 			createProduct(formData)
 				.then(() => {
-					setResponse('Product created successfully')
 					setSelectedFile(null)
 					setSelectedFileUrl(null)
 					reset();
 				}).catch(() => {
-					setResponse('Something went wrong, please try again later')
+					setResponse((prevState) => [...prevState, 'Something went wrong, please try again later'])
 				})
 		}
 	}

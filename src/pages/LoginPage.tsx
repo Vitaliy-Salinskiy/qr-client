@@ -10,7 +10,7 @@ import Popup from '../components/Popup';
 
 const LoginPage = () => {
 
-	const { response, setResponse } = useMyContext()
+	const { setResponse } = useMyContext()
 	const navigate = useNavigate()
 
 	const loginSchema = z.object({
@@ -25,11 +25,14 @@ const LoginPage = () => {
 			.then(() => {
 				navigate('/admin/requests')
 			})
-			.catch(err => setResponse(err.response.data.message))
+			.catch(err => setResponse((prevState) => [...prevState, err.response.data.message]))
 	}
 
 	return (
 		<div className="bg-red-500">
+
+			<Popup />
+
 			<div className="container mx-auto px-[20px] max-w-screen-lg">
 				<div className="min-h-screen flex flex-col justify-center items-center py-16 gap-10 text-white font-bold">
 
@@ -47,8 +50,6 @@ const LoginPage = () => {
 							<button type='submit' className='bg-red-500 text-white rounded-md py-[1px] font-medium'>Submit</button>
 						</form>
 					</div>
-
-					{response && <Popup />}
 				</div>
 			</div>
 		</div>

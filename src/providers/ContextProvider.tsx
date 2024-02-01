@@ -1,25 +1,22 @@
 import React, { createContext, useContext, useState } from 'react';
 
 interface IContextType {
-	message: string | null;
-	setMessage: React.Dispatch<React.SetStateAction<string | null>>;
 	id: string | null;
 	setId: React.Dispatch<React.SetStateAction<string | null>>;
-	response: string | null;
-	setResponse: React.Dispatch<React.SetStateAction<string | null>>;
+	response: string[];
+	setResponse: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const MyContext = createContext<IContextType | null>(null);
 
 export function ContextProvider({ children }: { children: React.ReactNode }) {
 
-	const [message, setMessage] = useState<null | string>(null);
 	const [id, setId] = useState<string | null>(null);
-	const [response, setResponse] = useState<string | null>(null);
+	const [response, setResponse] = useState<string[]>([]);
 
 
 	return (
-		<MyContext.Provider value={{ message, setMessage, id, setId, response, setResponse }}>
+		<MyContext.Provider value={{ id, setId, response, setResponse }}>
 			{children}
 		</MyContext.Provider>
 	);

@@ -4,20 +4,20 @@ import { Link } from 'react-router-dom';
 
 import { useMyContext } from '../providers/ContextProvider';
 import { GoodItem } from '../components/GoodItem';
-import Popup from '../components/Popup';
 import { IProduct, IUser } from '../interfaces';
 import { getProducts, getUser, createRequest } from '../utils';
+import Popup from '../components/Popup';
 
 const ShopPage = () => {
 
-	const [products, setProducts] = useState<IProduct[]>([]);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const initialRender = useRef<boolean>(true);
-	const [user, setUser] = useState<IUser>();
-	const { setResponse } = useMyContext();
-	const [currentItem, setCurrentItem] = useState<IProduct | null>();
+	const { setResponse, id, setId } = useMyContext();
 
-	const { id, setId, response } = useMyContext();
+	const [user, setUser] = useState<IUser>();
+	const [products, setProducts] = useState<IProduct[]>([]);
+	const [currentItem, setCurrentItem] = useState<IProduct | null>();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
+	const initialRender = useRef<boolean>(true);
 
 	useEffect(() => {
 		if (!id) {
@@ -58,9 +58,9 @@ const ShopPage = () => {
 		if (userId) {
 			try {
 				await createRequest(userId, productId);
-				setResponse("Request has been successfully sent");
+				setResponse((prevState) => [...prevState, "Request has been successfully sent"]);
 			} catch (error) {
-				setResponse("You do not have enough points");
+				setResponse((prevState) => [...prevState, "You do not have enough points"]);
 				setCurrentItem(null);
 			} finally {
 				setIsLoading(false);
@@ -80,6 +80,8 @@ const ShopPage = () => {
 
 	return (
 		<div className="bg-red-500 pt-5">
+
+			<Popup />
 
 			<div className='w-full appContainer flex justify-between items-center px-2'>
 				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500 p-2 rounded-xl cursor-pointer"> Back to QR-page</Link>
@@ -115,8 +117,6 @@ const ShopPage = () => {
 						: <h2 className='text-[34px] text-white font-bold'>There are no products so far</h2>}
 				</div>
 			</div>
-
-			{response && <Popup />}
 
 		</div>
 	)

@@ -25,7 +25,7 @@ const AdminPage = () => {
 	const [products, setProducts] = useState<IProduct[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const { response, setResponse } = useMyContext();
+	const { setResponse } = useMyContext();
 
 	useEffect(() => {
 		getProfile()
@@ -34,7 +34,7 @@ const AdminPage = () => {
 				fetchProducts();
 			})
 			.catch(() => {
-				setResponse("You are not authorized to view this page");
+				setResponse((prevState) => [...prevState, "You are not authorized to view this page"])
 				navigate('/login')
 			})
 	}, []);
@@ -109,7 +109,7 @@ const AdminPage = () => {
 	return (
 		<div className="w-full min-h-screen flex flex-col pt-10 bg-red-500">
 
-			{response && <Popup />}
+			<Popup />
 
 			<div className='appContainer'>
 				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500 p-2 rounded-xl m-4 top-0 left-0 cursor-pointer"> Back to QR-page</Link>

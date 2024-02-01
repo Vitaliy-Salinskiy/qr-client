@@ -10,11 +10,11 @@ interface LeadersTableProps {
 
 const LeadersTable = ({ isExtended = true }: LeadersTableProps) => {
 	const [data, setData] = useState<IUser[]>([])
-	const { id, message } = useMyContext()
+	const { id, response } = useMyContext()
 
 	useEffect(() => {
 		fetchData().then(data => setData(data))
-	}, [message, id])
+	}, [id, response])
 
 	return (
 		<div className='rounded-xl bg-white w-full py-5 px-3 flex gap-4 flex-col items-center border-[8px] border-white'>

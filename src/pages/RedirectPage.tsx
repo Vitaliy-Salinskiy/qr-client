@@ -35,14 +35,16 @@ const RedirectPage = () => {
 						return;
 					} else {
 						if (data && (!data?.name && !data?.surname)) {
-							setResponse("You have to enter valid name and surname to get a point");
+							setResponse((prevState) => [...prevState, "You have to enter valid name and surname to get a point"]);
 						}
 						navigate("/");
 						return;
 					}
 				}
 			} catch (error: any) {
-				setResponse(error.message);
+				if (error.message) {
+					setResponse((prevState) => [...prevState, error.message]);
+				}
 				navigate("/");
 				return;
 			}
@@ -55,7 +57,6 @@ const RedirectPage = () => {
 	const getCredentials = async (id: string) => {
 		const userDetails = prompt("Enter your name and surname")?.trim().split(" ");
 		if (userDetails?.length !== 2) {
-			setResponse("You have to enter valid name and surname to get a point");
 			return false;
 		}
 		const credentials = { name: userDetails[0], surname: userDetails[1] };
@@ -66,13 +67,13 @@ const RedirectPage = () => {
 	const handleScan = async (id: string): Promise<any> => {
 		try {
 			const data = await addScan(id);
-			if (data?.message && response === null) {
-				setResponse(data.message);
+			if (data?.message && response) {
+				setResponse((prevState) => [...prevState, data.message]);
 			}
 			navigate("/");
 			return data;
 		} catch (err) {
-			setResponse("You have already scanned today");
+			setResponse((prevState) => [...prevState, "You have already scanned today"]);
 			navigate("/");
 			return err;
 		}

@@ -9,7 +9,7 @@ const HistoryTable = () => {
 
 	const [data, setData] = useState<IScanHistory[]>([])
 
-	const { id, setId, message } = useMyContext();
+	const { id, setId } = useMyContext();
 
 	useEffect(() => {
 		if (!id) {
@@ -25,7 +25,7 @@ const HistoryTable = () => {
 		if (id) {
 			getUser(id).then((data: IUser) => setData((data.scanHistory).reverse()))
 		}
-	}, [message, id])
+	}, [id])
 
 	return (
 		<div className='rounded-xl bg-white w-full py-5 px-3 flex gap-4 flex-col items-center border-[8px] border-white'>

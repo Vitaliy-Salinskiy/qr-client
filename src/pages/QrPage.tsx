@@ -16,30 +16,13 @@ function QrPage() {
 
 	const [size, setSize] = useState<number>(310);
 	const [scans, setScans] = useState<string[]>([]);
-	const { message, setMessage, id, setId, response, setResponse } = useMyContext();
+	const { id, setId, response } = useMyContext();
 
 	useEffect(() => {
 		if (id) {
 			getScansValue().then((data) => setScans(data))
 		}
-	}, [id, message])
-
-	useEffect(() => {
-		let timeoutId: any;
-
-		if (message !== null) {
-			timeoutId = setTimeout(() => {
-				setResponse(message);
-				setMessage(null)
-			}, 200);
-		}
-
-		return () => {
-			if (timeoutId) {
-				clearTimeout(timeoutId);
-			}
-		};
-	}, [message]);
+	}, [id, response])
 
 	useEffect(() => {
 		FingerprintJS.load()
@@ -62,23 +45,19 @@ function QrPage() {
 	}, []);
 
 	return (
-		<div className="bg-red-500 relative">
+		<div className="bg-red-500 pt-20">
 
-			{response && <Popup />}
+			<Popup />
 
-			<div className="container mx-auto px-[20px] max-w-screen-lg">
-				<div className="min-h-screen flex flex-col items-center py-16 gap-10 text-white font-bold">
+			<h1 className="text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500  py-[20px]">ScPoints Farmer</h1>
 
-					<h1 className="text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500 absolute py-[20px]">ScPoints Farmer</h1>
+			<div className="container mx-auto  max-w-screen-lg">
+				<div className="min-h-[calc(100vh-175px)] flex flex-col items-center py-16 gap-10 text-white font-bold">
 
-					<div className="text-[50px] text-transparent select-none">
-						empty
-					</div>
 
-					<div className="flex gap-10 flex-col w-full items-center mt-[40px] lg:flex-row lg:items-center lg:justify-between">
+					<div className="flex gap-10 flex-col w-full items-center  lg:flex-row lg:items-center lg:justify-between">
 
 						<div className="flex flex-col justify-center items-center gap-2">
-							<h3 className="text-[30px] text-center max-w-[225px]">Scan this code to get a point</h3>
 							<div className="h-[300px] w-[300px] lg:h-[400px] lg:w-[400px] bg-white rounded-xl flex justify-center items-center border-[4px] border-gray-300 relative">
 								<QRCode
 									size={size}
@@ -108,7 +87,7 @@ function QrPage() {
 								</div>
 								<h4 className="text-[32px] text-center">Total ScPoints</h4>
 							</div>
-							<div className="flex justify-center mx-auto items-center w-[310px] sm:w-[340px]">
+							<div className="flex justify-center mx-auto items-center w-[300px] sm:w-[340px]">
 								<LinkButton to="/users">See users</LinkButton>
 							</div>
 						</div>
