@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
 import { Link } from 'react-router-dom';
-import { createRequest } from '../utils';
-import { useMyContext } from '../providers/ContextProvider';
+import Skeleton from 'react-loading-skeleton';
 
+import { useMyContext } from '../providers/ContextProvider';
 import { GoodItem } from '../components/GoodItem';
-import Loader from '../components/Loader';
 import Popup from '../components/Popup';
 import { IProduct, IUser } from '../interfaces';
-import { getProducts, getUser } from '../utils';
+import { getProducts, getUser, createRequest } from '../utils';
 
 const ShopPage = () => {
 
@@ -109,21 +108,14 @@ const ShopPage = () => {
 				</div>
 			) : null}
 
-
 			<div className='appContainer mt-20 mb-10'>
 				<div className="flex flex-wrap justify-around items-center gap-[20px] md:gap-[30px]">
 					{products && products.length !== 0 ? products.map((item: IProduct, index: number) => (
 						<GoodItem key={index} product={item} setCurrItem={setCurrentItem} />
-					)) : (
-						<h2 className='text-[34px] text-white font-bold'>There are no products so far</h2>
-					)}
+					))
+						: <h2 className='text-[34px] text-white font-bold'>There are no products so far</h2>}
 				</div>
-
 			</div>
-
-			{isLoading &&
-				<Loader />
-			}
 
 			{response && <Popup />}
 

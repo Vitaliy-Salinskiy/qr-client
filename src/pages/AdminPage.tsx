@@ -110,8 +110,6 @@ const AdminPage = () => {
 	return (
 		<div className="w-full min-h-screen flex flex-col pt-10 bg-red-500">
 
-			{isLoading && <Loader />}
-
 			{response && <Popup />}
 
 			<div className='appContainer'>

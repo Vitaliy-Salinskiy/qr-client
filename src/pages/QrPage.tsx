@@ -2,10 +2,7 @@ import { useEffect, useState } from "react"
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
 import QRCode from 'qrcode.react';
 import { Link } from "react-router-dom";
-// import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
 
-import scansHistory from '../assets/images/scans-history.png'
-import shopIcon from '../assets/images/shop.png'
 import { useMyContext } from "../providers/ContextProvider";
 import LinkButton from "../components/LinkButton";
 import Popup from "../components/Popup";
@@ -13,17 +10,13 @@ import { createUser, getScansValue } from "../utils";
 import Timer from "../components/Timer";
 import qrWhite from "../assets/images/qr-code-white.png";
 import shopWhite from "../assets/images/shop-white.png";
+import Skeleton from "react-loading-skeleton";
 
 function QrPage() {
 
 	const [size, setSize] = useState<number>(310);
 	const [scans, setScans] = useState<string[]>([]);
 	const { message, setMessage, id, setId, response, setResponse } = useMyContext();
-
-	// const { isLoading, error, data, getData } = useVisitorData(
-	// 	{ extendedResult: true },
-	// 	{ immediate: true }
-	// )
 
 	useEffect(() => {
 		if (id) {
@@ -71,13 +64,6 @@ function QrPage() {
 	return (
 		<div className="bg-red-500 relative">
 
-			{/* <div>
-				<button onClick={() => getData({ ignoreCache: true })}>
-					Reload data
-				</button>
-				<p>VisitorId: {isLoading ? 'Loading...' : data?.visitorId}</p>
-			</div> */}
-
 			{response && <Popup />}
 
 			<div className="container mx-auto px-[20px] max-w-screen-lg">
@@ -108,13 +94,17 @@ function QrPage() {
 
 							<div className="flex flex-col gap-[10px]">
 								<div className="gap-3 flex justify-center">
-									{scans ? scans.map((item, index) => (
-										<div key={`${index}-${item}`} className={`text-[72px] xl:text-[110px] h-[90px] xl:h-[140px] w-[90px] xl:w-[140px] bg-[#a50d05] flex justify-center items-center rounded-xl
-											${scans.length>3? "text-[35px] h-[50px] w-[50px] lg:text-[60px] xl:text-[60px] lg:h-[90px] xl:h-[90px] lg:w-[90px] xl:w-[90px]": ""}
+									{scans && scans.length !== 0 ? scans.map((item, index) => (
+										<div key={`${index}-${item}`} className={`bg-[#a50d05] flex justify-center items-center rounded-xl
+											${scans.length > 3 ? "text-[35px] h-[50px] w-[50px] lg:text-[60px] xl:text-[60px] lg:h-[90px] xl:h-[90px] lg:w-[90px] xl:w-[90px]" : "text-[72px] xl:text-[110px] h-[90px] xl:h-[140px] w-[90px] xl:w-[140px]"}
 										`}>
 											<p>{item}</p>
 										</div>
-									)) : <p>Wait a minutew</p>}
+									)) : (
+										Array(3).fill(0).map((_, index) => <Skeleton
+											className="text-[72px] xl:text-[110px] h-[90px] xl:h-[140px] w-[90px] xl:w-[140px]  rounded-xl"
+											key={index} />
+										))}
 								</div>
 								<h4 className="text-[32px] text-center">Total ScPoints</h4>
 							</div>
