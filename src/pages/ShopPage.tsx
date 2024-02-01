@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
 import { Link } from 'react-router-dom';
-import Skeleton from 'react-loading-skeleton';
 
 import { useMyContext } from '../providers/ContextProvider';
 import { GoodItem } from '../components/GoodItem';

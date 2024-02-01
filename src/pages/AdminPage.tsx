@@ -6,7 +6,6 @@ import { RequestItem } from '../components/RequestItem';
 import ProductsItem from '../components/ProductsItem';
 import CreateProducts from '../components/CreateProducts';
 import Pagination from '../components/Pagination';
-import Loader from '../components/Loader';
 import Popup from '../components/Popup';
 import { IProduct, IRequest, IRequestResponse } from '../interfaces';
 import { getProducts, getProfile, getAllRequests, getPendingRequests } from '../utils';
