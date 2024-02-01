@@ -6,10 +6,11 @@ import { deleteProduct } from "../utils";
 
 interface ProductsItemProps {
 	product: IProduct;
+	invalidateFns?: Array<() => void>;
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ProductsItem = ({ product, setIsLoading }: ProductsItemProps) => {
+const ProductsItem = ({ product, setIsLoading, invalidateFns }: ProductsItemProps) => {
 
 	const { setResponse } = useMyContext();
 	const [isDisabled, setIsDisabled] = useState<boolean>(false);
@@ -20,7 +21,10 @@ const ProductsItem = ({ product, setIsLoading }: ProductsItemProps) => {
 		await deleteProduct(product._id)
 			.then(() => setResponse("Product deleted successfully"))
 			.catch(() => setResponse("Something went wrong"))
-			.finally(() => setIsDisabled(false));
+			.finally(() => {
+				invalidateFns && invalidateFns.forEach((fn) => fn());
+				setIsDisabled(false)
+			});
 		setIsLoading(false);
 	}
 

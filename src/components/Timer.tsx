@@ -18,18 +18,33 @@ const Timer = () => {
 	}, [])
 
 	useEffect(() => {
-		if (userScanTime === time) {
-			const timer = setInterval(() => {
-				const now = new Date();
-				const hoursLeft = 23 - now.getHours();
-				const minutesLeft = 59 - now.getMinutes();
-				const secondsLeft = 59 - now.getSeconds();
-				setTimeLeft(`${hoursLeft.toString().padStart(2, '0')}:${minutesLeft.toString().padStart(2, '0')}:${secondsLeft.toString().padStart(2, '0')}`);
-			}, 1000);
+		let delay: number = 0;
+		let timeoutId: NodeJS.Timeout | null = null;
 
-			return () => clearInterval(timer);
+		function updateTimer() {
+			const now = new Date();
+			const hoursLeft = 23 - now.getHours();
+			const minutesLeft = 59 - now.getMinutes();
+			const secondsLeft = 59 - now.getSeconds();
+			setTimeLeft(`${hoursLeft.toString().padStart(2, '0')}:${minutesLeft.toString().padStart(2, '0')}:${secondsLeft.toString().padStart(2, '0')}`);
+
+			if (delay === 0) {
+				delay = 1000;
+			}
+
+			timeoutId = setTimeout(updateTimer, delay);
 		}
-	}, [userScanTime, time])
+
+		if (userScanTime === time) {
+			updateTimer();
+		}
+
+		return () => {
+			if (timeoutId) {
+				clearTimeout(timeoutId);
+			}
+		};
+	}, [userScanTime, time]);
 
 	return (
 		<>

@@ -70,8 +70,9 @@ const ShopPage = () => {
 		}
 	};
 
-	const handleYesClick = () => {
-		handleRequestSend(user?.id as string, currentItem?._id as string);
+	const handleYesClick = async () => {
+		await handleRequestSend(user?.id as string, currentItem?._id as string);
+		await getUserData(user?.id as string);
 		setCurrentItem(null);
 	};
 

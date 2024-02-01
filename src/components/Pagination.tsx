@@ -33,6 +33,7 @@ const Pagination = ({ currentPage, totalPages, handlePageClick }: PaginationProp
 			previousLinkClassName='text-red-500 text-lg font-bold flex items-center justify-center transition-transform duration-100 active:scale-90'
 			activeClassName="text-white bg-red-500 hover:text-white"
 			pageClassName='cursor-pointer w-[25px] sm:w-[30px] h-[25px] sm:h-[30px] rounded-lg text-[13px] sm:text-sm font-medium sm:font-semibold text-black hover:text-red-500 flex items-center justify-center duration-300 border border-transparent hover:border-red-500 transition-all active:scale-[85%]'
+			pageLinkClassName='w-full h-full flex items-center justify-center'
 		/>
 	)
 }

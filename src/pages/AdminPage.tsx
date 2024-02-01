@@ -1,4 +1,4 @@
-import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 
 import { useMyContext } from '../providers/ContextProvider';
@@ -65,7 +65,10 @@ const AdminPage = () => {
 		setIsLoading(false);
 	}, [location.pathname, isLoading]);
 
+
 	const fetchRequests = async (requiredPage: number = 1) => {
+
+		getPendingRequests(requiredPage).then((data) => setTotalPendingRequests(data.totalPendingRequest))
 
 		let response: Promise<IRequestResponse> | null = null;
 
@@ -80,9 +83,6 @@ const AdminPage = () => {
 
 			if (location.pathname.includes('requests')) {
 				setPendingRequests(data.requests);
-				if (data.totalPendingRequest) {
-					setTotalPendingRequests(data.totalPendingRequest)
-				}
 			} else if (location.pathname.includes('history')) {
 				setRequests(data.requests.sort((a: IRequest, b: IRequest) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()));
 			}
@@ -178,7 +178,7 @@ const AdminPage = () => {
 						<div className={`w-full flex flex-col pb-[20px] justify-start ${!products || products.length === 0 && "justify-center items-center"} gap-[20px] min-h-[525px] max-h-[525px] overflow-y-auto`}>
 							{products && products.length !== 0 ?
 								products.map((item, index) => (
-									<ProductsItem key={index + item._id} product={item} setIsLoading={setIsLoading} />
+									<ProductsItem key={index + item._id} product={item} setIsLoading={setIsLoading} invalidateFns={[fetchProducts, fetchRequests]} />
 								))
 								: <h2 className='text-3xl text-white font-bold text-center'>There are no products so far</h2>
 							}
@@ -187,6 +187,7 @@ const AdminPage = () => {
 					<Route path="products/create" element={
 						<CreateProducts setIsLoading={setIsLoading} />
 					} />
+					<Route path='*' element={<Navigate to="/admin/requests" />} />
 				</Routes>
 			</div>
 		</div>
