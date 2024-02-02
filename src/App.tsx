@@ -13,7 +13,7 @@ function App() {
 
 	return (
 		<div className='font-montserrat'>
-			{/* <Router>
+			<Router>
 				<Routes>
 					<Route path="/" element={<QrPage />} />
 					<Route path="/redirect" element={<RedirectPage />} />
@@ -21,11 +21,11 @@ function App() {
 					<Route path="/shop" element={<ShopPage />} />
 					<Route path="/statistic/:id" element={<StatisticPage />} />
 					<Route path="/login" element={<LoginPage />} />
+					<Route path="/profile" element={<ProfilePage />} />
 					<Route path="/admin/*" element={<AdminPage />} />
 					<Route path="*" element={<Navigate to="/" />} />
 				</Routes>
-			</Router> */}
-			<ProfilePage />
+			</Router>
 		</div>
 	);
 }
