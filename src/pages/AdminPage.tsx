@@ -107,27 +107,27 @@ const AdminPage = () => {
 	}
 
 	return (
-		<div className="w-full min-h-screen flex flex-col pt-10 bg-red-500">
+		<div className="w-full min-h-screen flex flex-col pt-10">
 
 			<Popup />
 
 			<div className='appContainer'>
-				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500 p-2 rounded-xl m-4 top-0 left-0 cursor-pointer"> Back to QR-page</Link>
+				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-mainOrange p-2 rounded-xl m-4 top-0 left-0 cursor-pointer"> Back to QR-page</Link>
 			</div>
 
-			<h2 className="text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500  mt-10 mb-8 py-[20px]">Admin page</h2>
+			<h2 className="text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-mainOrange  mt-10 mb-8 py-[20px]">Admin page</h2>
 
 			<div className="appContainer flex flex-col gap-10 px-4 sm:px-3">
 				<div className='flex gap-[20px] text-xl text-white justify-end'>
 					<Link to='requests' className={`${location.pathname === '/admin/requests' && "font-bold"} admin-link`}>
 						Requests
-						<span className='absolute bg-red-900 h-[18px] w-[18px] text-[10px] flex items-center justify-center top-[-2px] right-[-12px] rounded-full'>{totalPendingRequests}</span>
+						<span className='absolute bg-mainOrange text-midDarkGrey font-bold h-[18px] w-[18px] text-[10px] flex items-center justify-center top-[-2px] right-[-12px] rounded-full'>{totalPendingRequests}</span>
 					</Link>
-					<Link to="history" className={`${location.pathname === '/admin/history' && "font-bold"} admin-link`}>History</Link>
 					<Link to="products" className={`${location.pathname === '/admin/products' && "font-bold"} admin-link`}>
 						Products
-						<span className='absolute bg-red-900 h-[18px] w-[18px] text-[10px] flex items-center justify-center top-[-2px] right-[-12px] rounded-full'>{products.length}</span>
+						<span className='absolute bg-mainOrange text-midDarkGrey font-bold h-[18px] w-[18px] text-[10px] flex items-center justify-center top-[-2px] right-[-12px] rounded-full'>{products.length}</span>
 					</Link>
+					<Link to="history" className={`${location.pathname === '/admin/history' && "font-bold"} admin-link`}>History</Link>
 					<Link to="products/create" className={`${location.pathname === '/admin/products/create' && "font-bold"} admin-link`}>Create</Link>
 				</div>
 
@@ -147,7 +147,7 @@ const AdminPage = () => {
 										/>
 									</>
 								)
-								: <h2 className='text-3xl text-white font-bold text-center bg-red-'>There are no requests so far</h2>
+								: <h2 className='text-3xl text-white font-bold text-center'>There are no requests so far</h2>
 							}
 
 						</div>

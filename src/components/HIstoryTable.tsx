@@ -29,12 +29,12 @@ const HistoryTable = () => {
 
 	return (
 		<div className='rounded-xl bg-white w-full py-5 px-3 flex gap-4 flex-col items-center border-[8px] border-white'>
-			<h2 className="text-[34px] text-red-500 underline underline-offset-8 font-bold">History</h2>
+			<h2 className="text-[34px] text-darkGrey underline underline-offset-8 font-bold">History</h2>
 			{data.length > 0 ?
 				<table className="w-full">
 					<tbody className="flex flex-col gap-2">
 						{data.map((item, index) => (
-							<tr key={item._id} className="w-full bg-red-200 flex justify-between text-[8px] sm:text-[10px] md:text-lg lg:text-2xl py-3 px-4 rounded-xl">
+							<tr key={item._id} className="w-full font-medium bg-mainOrange flex justify-between text-[8px] sm:text-[10px] md:text-lg lg:text-xl py-3 px-4 rounded-xl">
 								<td>{index + 1}</td>
 								<td>total scans: {item.totalScans}</td>
 								<td>date: {item.date.slice(0, 10).split("-").reverse().join("/")}</td>
@@ -42,7 +42,7 @@ const HistoryTable = () => {
 						))}
 					</tbody>
 				</table>
-				: <h2 className="text-[20px] text-red-500">Empty</h2>
+				: <h2 className="text-[20px] text-mainOrange">Empty history</h2>
 			}
 		</div>
 	)

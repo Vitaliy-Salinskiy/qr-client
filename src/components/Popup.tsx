@@ -43,7 +43,7 @@ const Popup = () => {
 			</div>
 			<div className=" flex flex-col transition-all duration-1000 justify-between items-start">
 				{isVisible && response.length !== 0 &&
-					<p className='h-[48px] text-md text-gray-500 font-medium text-ellipsis'>{response[0]}</p>
+					<p className='h-[48px] text-md text-midDarkGrey font-medium text-ellipsis'>{response[0]}</p>
 				}
 			</div>
 		</div >

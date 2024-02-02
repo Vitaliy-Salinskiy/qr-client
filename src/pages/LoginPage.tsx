@@ -29,7 +29,7 @@ const LoginPage = () => {
 	}
 
 	return (
-		<div className="bg-red-500">
+		<div>
 
 			<Popup />
 
@@ -37,17 +37,17 @@ const LoginPage = () => {
 				<div className="min-h-screen flex flex-col justify-center items-center py-16 gap-10 text-white font-bold">
 
 					<div className='bg-white p-4 flex flex-col gap-3 rounded-lg w-[320px]'>
-						<h2 className='text-red-500 text-center text-xl font-medium'>Login</h2>
+						<h2 className='text-mainOrange text-center text-xl font-medium'>Login</h2>
 						<form onSubmit={handleSubmit(onSubmit)} className='w-full flex flex-col gap-3'>
 							<div>
 								<input className='w-full border-b-2 border-gray-400 text-black rounded-sm outline-none px-[5px] py-[2px] font-normal' placeholder='user name' type="text" {...register('username')} />
-								{errors.username?.message && <p className='text-red-500 font-medium text-[14px] ml-1'>{errors.username?.message}</p>}
+								{errors.username?.message && <p className='text-mainOrange font-medium text-[14px] ml-1'>{errors.username?.message}</p>}
 							</div>
 							<div>
 								<input className='w-full border-b-2 border-gray-400 text-black rounded-sm outline-none px-[5px] py-[2px] font-normal' placeholder='password' {...register('password')} type="password" />
-								{errors.password?.message && <p className='text-red-500 font-medium text-[14px] ml-1'>{errors.password?.message}</p>}
+								{errors.password?.message && <p className='text-mainOrange font-medium text-[14px] ml-1'>{errors.password?.message}</p>}
 							</div>
-							<button type='submit' className='bg-red-500 text-white rounded-md py-[1px] font-medium'>Submit</button>
+							<button type='submit' className='bg-mainOrange text-white rounded-md py-[2px] font-medium'>Submit</button>
 						</form>
 					</div>
 				</div>

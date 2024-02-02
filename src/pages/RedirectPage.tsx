@@ -80,7 +80,7 @@ const RedirectPage = () => {
 	}
 
 	return (
-		<div className="bg-red-500">
+		<div>
 			<div className="container mx-auto px-4">
 				<div className="min-h-screen flex justify-center items-center">
 					<h1 className="text-[32px] md:text-[48px] xl:text-[56px] 2xl:text-[64px] text-white font-bold text-center leading-[110%]">Processing your data...</h1>

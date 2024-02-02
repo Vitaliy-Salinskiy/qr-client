@@ -9,7 +9,7 @@ import { ContextProvider } from './providers/ContextProvider.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<ContextProvider>
-		<SkeletonTheme baseColor="#fff" highlightColor="rgb(248, 113, 113)">
+		<SkeletonTheme baseColor="#fff" highlightColor="#F5A006">
 			<App />
 		</SkeletonTheme>
 	</ContextProvider>

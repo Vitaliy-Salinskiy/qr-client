@@ -5,14 +5,14 @@
 @tailwind utilities;
 
 body {
-	background: #ef4444;
+	background: #3F3D56;
 	min-width: 320px;
 	overflow-x: hidden;
 }
 
 ::selection {
 	background: #ffffff;
-	color: #ef4444;
+	color: #F5A006;
 }
 
 ::-webkit-scrollbar {
@@ -20,7 +20,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: #dc2626;
+	background-color: #3F3D56;
 }
 
 ::-webkit-scrollbar-track {
@@ -33,7 +33,7 @@ body {
 	}
 
 	.product-input {
-		@apply w-full px-4 py-2 mt-2 text-red-500 font-bold bg-white border-[2px] rounded-lg shadow-sm appearance-none focus:outline-none
+		@apply w-full px-4 py-2 mt-2 text-mainOrange font-bold bg-white border-[2px] rounded-lg shadow-sm appearance-none focus:outline-none
 	}
 
 	.admin-link {

@@ -7,12 +7,13 @@ import ShopPage from './pages/ShopPage';
 import AdminPage from './pages/AdminPage';
 import LoginPage from './pages/LoginPage';
 import StatisticPage from './pages/StatisticPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
 
 	return (
 		<div className='font-montserrat'>
-			<Router>
+			{/* <Router>
 				<Routes>
 					<Route path="/" element={<QrPage />} />
 					<Route path="/redirect" element={<RedirectPage />} />
@@ -23,7 +24,8 @@ function App() {
 					<Route path="/admin/*" element={<AdminPage />} />
 					<Route path="*" element={<Navigate to="/" />} />
 				</Routes>
-			</Router>
+			</Router> */}
+			<ProfilePage />
 		</div>
 	);
 }
