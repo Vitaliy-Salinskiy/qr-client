@@ -7,6 +7,7 @@ import { GoodItem } from '../components/GoodItem';
 import { IProduct, IUser } from '../interfaces';
 import { getProducts, getUser, createRequest } from '../utils';
 import Popup from '../components/Popup';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 const ShopPage = () => {
 
@@ -15,7 +16,7 @@ const ShopPage = () => {
 	const [user, setUser] = useState<IUser>();
 	const [products, setProducts] = useState<IProduct[]>([]);
 	const [currentItem, setCurrentItem] = useState<IProduct | null>();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	const initialRender = useRef<boolean>(true);
 
@@ -45,7 +46,11 @@ const ShopPage = () => {
 
 	const fetchData = async () => {
 		setIsLoading(true);
-		await getProducts().then(data => setProducts(data)).finally(() => setIsLoading(false));
+		await getProducts().then(data => setProducts(data)).finally(() => {
+			setTimeout(() => {
+				setIsLoading(false);
+			}, 1500);
+		})
 	}
 
 	const getUserData = async (id: string) => {
@@ -111,10 +116,16 @@ const ShopPage = () => {
 
 			<div className='appContainer mt-20 mb-10'>
 				<div className="flex flex-wrap justify-around items-center gap-[20px] md:gap-[30px]">
-					{products && products.length !== 0 ? products.map((item: IProduct, index: number) => (
-						<GoodItem key={index} product={item} setCurrItem={setCurrentItem} />
-					))
-						: <h2 className='text-[34px] text-white font-bold'>There are no products so far</h2>}
+					{isLoading
+						? Array(5).fill(0).map((_, index) => (
+							<Skeleton key={index} className='h-[240px] w-[150px] bg-white flex flex-col justify-around items-center rounded-xl border-mainOrange transition-all duration-300 border-[1px] cursor-pointer hover:border-[5px]' />
+						))
+						: products && products.length !== 0
+							? products.map((item: IProduct, index: number) => (
+								<GoodItem key={index} product={item} setCurrItem={setCurrentItem} />
+							))
+							: <h2 className='text-[34px] text-white font-bold'>There are no products so far</h2>
+					}
 				</div>
 			</div>
 
