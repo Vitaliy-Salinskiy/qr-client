@@ -1,8 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+	font-family: font-regular;
+	src: url('./assets/fonts/Montserrat-Regular.woff2');
+}
+@font-face {
+	font-family: font-medium;
+	src: url('./assets/fonts/Montserrat-Medium.woff2');
+}
+@font-face {
+	font-family: font-semibold;
+	src: url('./assets/fonts/Montserrat-SemiBold.woff2');
+}
+@font-face {
+	font-family: font-bold;
+	src: url('./assets/fonts/Montserrat-Bold.woff2');
+}
+  
+.font-regular {
+	font-family: font-regular;
+}
+.font-medium {
+	font-family: font-medium;
+}
+.font-semibold {
+	font-family: font-semibold;
+}
+.font-bold {
+	font-family: font-bold;
+}
 
 body {
 	background: #3F3D56;
@@ -36,7 +64,7 @@ body {
 	}
 
 	.admin-link {
-		@apply text-base cursor-pointer transition-all duration-100 relative;
+		@apply text-[13px] sm:text-lg md:text-xl cursor-pointer transition-all duration-100 relative;
 	}
 }
 

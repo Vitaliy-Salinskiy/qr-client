@@ -39,7 +39,7 @@ export const RequestItem = ({ req, changeable = false, setIsLoading }: RequestIt
 				<h3 className={`hidden  ${changeable ? "lg:flex" : "md:flex"} text-md text-gray-500`}>id: {req.userId.id}</h3>
 				<div className='flex flex-col gap-[5px] sm:flex-row sm:gap-[20px] text-center whitespace-nowrap'>
 					<h2 className='text-base sm:text-xl font-bold'>{req.productId?.name}</h2>
-					<h2 className='font-bold text-base sm:text-xl text-mainOrange'>{req.productId?.price} Points</h2>
+					<h2 className='font-bold text-base sm:text-xl text-mainOrange'>{req.productId?.price} балів</h2>
 				</div>
 				{changeable &&
 					<div className='flex flex-col gap-1 md:gap-4 md:flex-row justify-center items-center text-center whitespace-nowrap'>

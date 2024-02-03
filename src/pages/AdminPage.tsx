@@ -34,7 +34,7 @@ const AdminPage = () => {
 				fetchProducts();
 			})
 			.catch(() => {
-				setResponse((prevState) => [...prevState, "You are not authorized to view this page"])
+				setResponse((prevState) => [...prevState, "Ви не авторизовані для перегляду цієї сторінки"])
 				navigate('/login')
 			})
 	}, []);
@@ -118,7 +118,7 @@ const AdminPage = () => {
 			<h2 className="text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-mainOrange  mt-10 mb-8 py-[20px]">Сторінка адміністратора</h2>
 
 			<div className="appContainer flex flex-col gap-10 px-4 sm:px-3">
-				<div className='flex gap-[20px] text-xl text-white justify-end'>
+				<div className='flex gap-[20px] text-lg text-white justify-end'>
 					<Link to='requests' className={`${location.pathname === '/admin/requests' && "font-bold"} admin-link`}>
 					Запити
 						<span className='absolute bg-mainOrange text-midDarkGrey font-bold h-[18px] w-[18px] text-[10px] flex items-center justify-center top-[-2px] right-[-12px] rounded-full'>{totalPendingRequests}</span>

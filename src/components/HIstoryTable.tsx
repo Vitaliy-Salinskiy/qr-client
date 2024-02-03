@@ -45,7 +45,7 @@ const HistoryTable = () => {
 					{Array(3).fill(0).map((_, index) => (
 						<div className="w-full flex flex-col" key={index}>
 							<SkeletonTheme baseColor="#F5A006" highlightColor="#3F3D56">
-								<Skeleton className="w-full flex font-medium flex justify-between text-[8px] sm:text-[10px] md:text-lg lg:text-xl py-3 px-4 rounded-xl" />
+								<Skeleton className="w-full flex font-medium justify-between text-[8px] sm:text-[10px] md:text-lg lg:text-xl py-3 px-4 rounded-xl" />
 							</SkeletonTheme>
 						</div>
 
@@ -55,8 +55,8 @@ const HistoryTable = () => {
 					? data.map((item, index) => (
 						<tr key={item._id} className="w-full font-medium bg-mainOrange flex justify-between text-[8px] sm:text-[10px] md:text-lg lg:text-xl py-3 px-4 rounded-xl">
 							<td>{index + 1}</td>
-							<td>загальні скани: {item.totalScans}</td>
-							<td>дата: {item.date.slice(0, 10).split("-").reverse().join("/")}</td>
+							<td>Загальні кількість: {item.totalScans}</td>
+							<td>Дата: {item.date.slice(0, 10).split("-").reverse().join("/")}</td>
 						</tr>
 					))
 					: <tr><td>Немає даних</td></tr>

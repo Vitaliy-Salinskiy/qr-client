@@ -63,9 +63,9 @@ const ShopPage = () => {
 		if (userId) {
 			try {
 				await createRequest(userId, productId);
-				setResponse((prevState) => [...prevState, "Request has been successfully sent"]);
+				setResponse((prevState) => [...prevState, "Запит успішно відправлено"]);
 			} catch (error) {
-				setResponse((prevState) => [...prevState, "You do not have enough points"]);
+				setResponse((prevState) => [...prevState, "Вам не вистачає балів"]);
 				setCurrentItem(null);
 			} finally {
 				setIsLoading(false);

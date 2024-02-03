@@ -35,7 +35,7 @@ const RedirectPage = () => {
 						return;
 					} else {
 						if (data && (!data?.name && !data?.surname)) {
-							setResponse((prevState) => [...prevState, "You have to enter valid name and surname to get a point"]);
+							setResponse((prevState) => [...prevState, "Щоб отримати бал, потрібно ввести дійсне ім’я та прізвище"]);
 						}
 						navigate("/");
 						return;
@@ -73,7 +73,7 @@ const RedirectPage = () => {
 			navigate("/profile");
 			return data;
 		} catch (err) {
-			setResponse((prevState) => [...prevState, "You have already scanned today"]);
+			setResponse((prevState) => [...prevState, "Ви вже сканували сьогодні"]);
 			navigate("/");
 			return err;
 		}

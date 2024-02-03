@@ -12,7 +12,7 @@ import ProfilePage from './pages/ProfilePage';
 function App() {
 
 	return (
-		<div className='font-montserrat'>
+		<div className='font-regular'>
 			<Router>
 				<Routes>
 					<Route path="/" element={<QrPage />} />
