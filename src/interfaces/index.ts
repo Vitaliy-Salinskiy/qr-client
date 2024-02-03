@@ -47,6 +47,13 @@ export interface IRequestResponse {
 	totalPendingRequest?: number
 }
 
+export interface IAdmin {
+	_id: string;
+	username: string;
+	password: string;
+	__v: number;
+}
+
 export interface ILoginDto {
 	username: string;
 	password: string;

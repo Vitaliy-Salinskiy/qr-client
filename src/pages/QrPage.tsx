@@ -4,6 +4,7 @@ import QRCode from 'qrcode.react';
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMediaQuery } from 'react-responsive';
+import Skeleton from "react-loading-skeleton";
 
 import { useMyContext } from "../providers/ContextProvider";
 import LinkButton from "../components/LinkButton";
@@ -12,7 +13,6 @@ import { createUser, getScansValue } from "../utils";
 import Timer from "../components/Timer";
 import qrWhite from "../assets/images/qr-code-white.png";
 import shopWhite from "../assets/images/shop-white.png";
-import Skeleton from "react-loading-skeleton";
 
 function QrPage() {
 

@@ -70,7 +70,7 @@ const RedirectPage = () => {
 			if (data?.message && response) {
 				setResponse((prevState) => [...prevState, data.message]);
 			}
-			navigate("/");
+			navigate("/profile");
 			return data;
 		} catch (err) {
 			setResponse((prevState) => [...prevState, "You have already scanned today"]);

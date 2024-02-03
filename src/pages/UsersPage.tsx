@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
+import { motion } from 'framer-motion';
 
 import { useMyContext } from '../providers/ContextProvider';
 import LeadersTable from '../components/LeadersTable'
@@ -23,7 +24,9 @@ const UsersPage = () => {
 		<div className="">
 			<div className="container mx-auto px-4 max-w-screen-2xl">
 				<div className="min-h-screen flex gap-9 flex-col justify-start items-center py-16 text-white">
-					<LinkButton to="/">Back To QR</LinkButton>
+					<motion.div animate={{ y: ["-400%", "0%"] }} transition={{ type: "spring", duration: 0.6 }} className='w-full flex'>
+						<LinkButton to="/">Back To QR</LinkButton>
+					</motion.div>
 					<LeadersTable />
 				</div>
 			</div>

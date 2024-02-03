@@ -6,7 +6,6 @@
 
 body {
 	background: #3F3D56;
-	min-width: 320px;
 	overflow-x: hidden;
 }
 
@@ -20,11 +19,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: #3F3D56;
+	background-color: #F5A006;
 }
 
 ::-webkit-scrollbar-track {
-	background-color: #dcdcdc;
+	background-color: #fff;
 }
 
 @layer components {
