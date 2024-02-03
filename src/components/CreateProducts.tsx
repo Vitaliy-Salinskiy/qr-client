@@ -85,17 +85,17 @@ const CreateProducts = ({ setIsLoading }: CreateProductsProps) => {
 								<div className='h-[200px] w-[200px] md:w-[300px] md:h-[300px] border-[5px] border-dashed rounded-xl flex justify-center items-center border-mainOrange p-2'>
 									<img src={selectedFileUrl} alt="Selected file" className='max-h-[200px] max-w-[200px] object-cover' />
 								</div>
-								<p className='w-[240px] sm:w-[400px] text-center text-[18px] font-bold sm:text-3xl text-midDarkGrey'>Your selected photo</p>
+								<p className='w-[240px] sm:w-[400px] text-center text-[18px] font-bold sm:text-3xl text-midDarkGrey'>Вибране фото</p>
 							</>
 						) : isDragActive ? (
 							<>
-								<p className='w-[240px] sm:w-[400px] text-center font-medium text-[26px] sm:text-5xl text-midDarkGrey'>Select a photo or drag it here</p>
-								<p className='w-[240px] sm:w-[400px] text-center text-[14px] font-medium sm:text-xl text-midDarkGrey'>Drop the file here ...</p>
+								<p className='w-[240px] sm:w-[400px] text-center font-medium text-[26px] sm:text-5xl text-midDarkGrey'>Виберіть фотографію або перетягніть її сюди</p>
+								<p className='w-[240px] sm:w-[400px] text-center text-[14px] font-medium sm:text-xl text-midDarkGrey'>Перетягніть файл сюди...</p>
 							</>
 						) : (
 							<>
-								<p className='w-[240px] sm:w-[400px] text-center font-medium text-[26px] sm:text-5xl text-midDarkGrey'>Select a photo or drag it here</p>
-								<p className='w-[240px] sm:w-[400px] text-center text-[14px] font-medium sm:text-xl text-midDarkGrey'>Only *.jpeg, *.jpg, *.webp and *.png images will be accepted</p>
+								<p className='w-[240px] sm:w-[400px] text-center font-medium text-[26px] sm:text-5xl text-midDarkGrey'>Виберіть фотографію або перетягніть її сюди</p>
+								<p className='w-[240px] sm:w-[400px] text-center text-[14px] font-medium sm:text-xl text-midDarkGrey'>Приймаються лише зображення *.jpeg, *.jpg, *.webp і *.png</p>
 							</>
 						)}
 					</div>
@@ -114,7 +114,7 @@ const CreateProducts = ({ setIsLoading }: CreateProductsProps) => {
 						<input placeholder='Price' {...register("price")} type="number" className='product-input' id='price' min={1} max={125} />
 						{errors.price?.message && <p className='font-medium text-[14px] mt-2 text-white ml-2'>{errors.price?.message}</p>}
 					</div>
-					<button className='bg-white text-mainOrange font-bold px-4 py-2 rounded shadow'>Create Product</button>
+					<button className='bg-white text-mainOrange font-bold px-4 py-2 rounded shadow'>Створити продукт</button>
 				</form>
 
 			</div>

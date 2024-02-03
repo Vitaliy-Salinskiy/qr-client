@@ -39,7 +39,7 @@ const ProductsItem = ({ product, setIsLoading, invalidateFns }: ProductsItemProp
 			</div>
 			<div className="hidden md:block md:max-w-[30%] text-center text-[16px]">{product._id}</div>
 			<div className="font-bold text-mainOrange md:w-[10%] text-center text-sm md:text-lg sm:text-lg sm:font-medium">{product.price} points</div>
-			<button className="w-[70px] text-sm sm:w-[120px] h-[26px] sm:h-[30px] sm:text-lg border border-darkGrey bg-darkGrey hover:bg-transparent outline-none text-white hover:text-darkGrey rounded-md transition-colors disabled:opacity-75" onClick={() => handleRemove()} disabled={isDisabled}>Remove</button>
+			<button className="w-[70px] text-sm sm:w-[120px] h-[26px] sm:h-[30px] sm:text-lg border border-darkGrey bg-darkGrey hover:bg-transparent outline-none text-white hover:text-darkGrey rounded-md transition-colors disabled:opacity-75" onClick={() => handleRemove()} disabled={isDisabled}>Видалити</button>
 		</div>
 	)
 }

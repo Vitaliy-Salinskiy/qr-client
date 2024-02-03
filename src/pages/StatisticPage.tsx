@@ -7,7 +7,7 @@ const StatisticPage = () => {
 
 			<div className="container mx-auto px-[20px] items-start">
 				<div className="min-h-screen flex flex-col justify-start items-start py-16 gap-10 text-white font-bold">
-					<LinkButton to="/">Back To QR</LinkButton>
+					<LinkButton to="/">Назад до QR</LinkButton>
 					<HistoryTable />
 				</div>
 			</div>

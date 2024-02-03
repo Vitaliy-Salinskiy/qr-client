@@ -30,7 +30,7 @@ const LeadersTable = ({ isExtended = true }: LeadersTableProps) => {
 
 	return (
 		<div className='rounded-xl bg-white w-full py-5 px-3 flex gap-4 flex-col items-center border-[8px] border-white'>
-			<motion.h2 animate={{ scale: [0.1, 1] }} transition={{ type: "spring", duration: 0.7 }} className="text-[34px] text-darkGrey underline underline-offset-8 font-bold">Top Users</motion.h2>
+			<motion.h2 animate={{ scale: [0.1, 1] }} transition={{ type: "spring", duration: 0.7 }} className="text-[34px] text-darkGrey underline underline-offset-8 font-bold">Топ користувачів</motion.h2>
 			{data.length > 0 ?
 				<table className="w-full">
 					<tbody className="flex flex-col gap-2">
@@ -62,7 +62,7 @@ const LeadersTable = ({ isExtended = true }: LeadersTableProps) => {
 										}
 										{
 											isExtended && (
-												<td className="hidden sm:block">last scan: {item.lastScanned?.slice(0, 10).split("-").reverse().join("/")}</td>
+												<td className="hidden sm:block">останнє сканування: {item.lastScanned?.slice(0, 10).split("-").reverse().join("/")}</td>
 											)
 										}
 										<td>scans: {item.timesScanned}</td>
@@ -71,7 +71,7 @@ const LeadersTable = ({ isExtended = true }: LeadersTableProps) => {
 							))}
 					</tbody>
 				</table>
-				: !isLoading && data.length === 0 && <h2 className="text-[20px] text-mainOrange">You have the chance to be the first</h2>
+				: !isLoading && data.length === 0 && <h2 className="text-[20px] text-mainOrange">У вас є шанс бути першим</h2>
 			}
 
 		</div>

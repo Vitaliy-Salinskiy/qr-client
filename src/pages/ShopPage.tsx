@@ -7,7 +7,7 @@ import { GoodItem } from '../components/GoodItem';
 import { IProduct, IUser } from '../interfaces';
 import { getProducts, getUser, createRequest } from '../utils';
 import Popup from '../components/Popup';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import Skeleton  from 'react-loading-skeleton';
 
 const ShopPage = () => {
 
@@ -89,26 +89,26 @@ const ShopPage = () => {
 			<Popup />
 
 			<div className='w-full appContainer flex justify-between items-center px-2'>
-				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-mainOrange p-2 rounded-xl cursor-pointer"> Back to QR-page</Link>
+				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-mainOrange p-2 rounded-xl cursor-pointer"> Назад на QR-сторінку</Link>
 
 				{user?.name && user?.surname &&
 					<div className='text-midDarkGrey text-lg bg-white py-1 px-2 rounded-lg font-bold shadow-white shadow-sm'><span className='text-mainOrange'>{user?.name} {user?.surname} </span>: {user?.timesScanned} points</div>
 				}
 			</div>
 
-			<h2 className="text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-midDarkGrey mt-6 py-[20px]">Shop</h2>
+			<h2 className="text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-midDarkGrey mt-6 py-[20px]">Магазин</h2>
 
 			{currentItem ? (
 				<div className="w-full h-screen flex items-center justify-center backdrop-blur-sm fixed top-0">
 					<div className="max-w-[300px] bg-white shadow-sm shadow-white rounded-lg flex flex-col justify-around items-center gap-[20px] p-[20px]">
-						<h2 className='max-w-[280px] text-center whitespace-normal'>Are you sure to buy <span className='text-mainOrange'>{currentItem.name}</span>?</h2>
+						<h2 className='max-w-[280px] text-center whitespace-normal'>Ви впевнені, що купите <span className='text-mainOrange'>{currentItem.name}</span>?</h2>
 						<div className='flex gap-[20px]'>
 							<button className='w-[70px] h-[30px] border-2 border-mainOrange bg-mainOrange hover:bg-transparent outline-none text-white hover:text-mainOrange rounded-md transition-colors disabled:opacity-75'
 								onClick={handleYesClick}
-							>Yes</button>
+							>Так</button>
 							<button className='w-[70px] h-[30px] border-2 border-midDarkGrey bg-midDarkGrey hover:bg-transparent outline-none text-white hover:text-midDarkGrey rounded-md transition-colors disabled:opacity-75'
 								onClick={handleNoClick}
-							>No</button>
+							>Ні</button>
 						</div>
 					</div>
 				</div>

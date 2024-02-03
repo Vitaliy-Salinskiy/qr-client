@@ -38,7 +38,7 @@ const HistoryTable = () => {
 
 	return (
 		<div className='rounded-xl bg-white w-full py-5 px-3 flex gap-4 flex-col items-center border-[8px] border-white'>
-			<h2 className="text-[34px] text-darkGrey underline underline-offset-8 font-bold">History</h2>
+			<h2 className="text-[34px] text-darkGrey underline underline-offset-8 font-bold">Історія</h2>
 			{isLoading
 				?
 				<div className="w-full">
@@ -55,11 +55,11 @@ const HistoryTable = () => {
 					? data.map((item, index) => (
 						<tr key={item._id} className="w-full font-medium bg-mainOrange flex justify-between text-[8px] sm:text-[10px] md:text-lg lg:text-xl py-3 px-4 rounded-xl">
 							<td>{index + 1}</td>
-							<td>total scans: {item.totalScans}</td>
-							<td>date: {item.date.slice(0, 10).split("-").reverse().join("/")}</td>
+							<td>загальні скани: {item.totalScans}</td>
+							<td>дата: {item.date.slice(0, 10).split("-").reverse().join("/")}</td>
 						</tr>
 					))
-					: <tr><td>No data available</td></tr>
+					: <tr><td>Немає даних</td></tr>
 			}
 		</div>
 	)

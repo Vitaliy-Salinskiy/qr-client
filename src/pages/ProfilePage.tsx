@@ -94,11 +94,11 @@ const ProfilePage = () => {
 						}
 					</div>
 					<div className="flex flex-col justify-center items-center gap-[10px]">
-						<h2 className="mt-[20px] text-lg">Your last scan</h2>
-						<p className="text-xl font-bold">{isLoading ? "Wait a minute" : userData?.name ? userData?.lastScanned.split("T")[0].split("-").reverse().join("/") : "You haven't scanned yet"}</p>
+						<h2 className="mt-[20px] text-lg">Ваше останнє сканування</h2>
+						<p className="text-xl font-bold">{isLoading ? "Wait a minute" : userData?.name ? userData?.lastScanned.split("T")[0].split("-").reverse().join("/") : "Ви ще не сканували"}</p>
 					</div>
 					<Link to="/" className="bg-midDarkGrey text-lg font-bold text-mainOrange w-full text-center py-2 uppercase cursor-pointer transition-all">
-						Go to QR page
+					Перейти на сторінку QR
 					</Link>
 				</div>
 			</div>

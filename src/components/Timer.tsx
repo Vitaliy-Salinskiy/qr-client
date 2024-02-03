@@ -54,7 +54,7 @@ const Timer = () => {
 		<>
 			{userScanTime && userScanTime === time && timeLeft ?
 				<div className="absolute bg-white-opacity-40 inset-0 rounded-xl flex justify-center items-center backdrop-blur-sm bg-white-opacity-50">
-					{timeLeft && <p className='text-2xl xl:text-3xl text-darkGrey max-w-[270px] text-center'>You have already scanned today: {timeLeft}</p>}
+					{timeLeft && <p className='text-2xl xl:text-3xl text-darkGrey max-w-[270px] text-center'>Ви вже сканували сьогодні: {timeLeft}</p>}
 				</div>
 				: null
 			}

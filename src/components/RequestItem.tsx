@@ -54,14 +54,14 @@ export const RequestItem = ({ req, changeable = false, setIsLoading }: RequestIt
 					className='w-[100px] sm:w-[120px] h-[26px] sm:h-[30px] border border-mainOrange bg-mainOrange hover:bg-transparent outline-none text-white hover:text-mainOrange rounded-md transition-colors disabled:opacity-75'
 					onClick={handleAllow}
 				>
-					Accept
+					Прийняти
 				</button>
 				<button
 					disabled={isDisabled}
 					className='w-[100px] sm:w-[120px] h-[26px] sm:h-[30px] border border-darkGrey bg-darkGrey hover:bg-transparent outline-none text-white hover:text-darkGrey rounded-md transition-colors disabled:opacity-75'
 					onClick={handleDeny}
 				>
-					Decline
+					Відхилити
 				</button>
 			</div>
 		</div>

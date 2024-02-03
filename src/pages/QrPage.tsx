@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
-import QRCode from 'qrcode.react';
+import QRCode from "qrcode.react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMediaQuery } from 'react-responsive';
@@ -117,10 +117,10 @@ function QrPage() {
 										)) : null
 									)}
 								</div>
-								<h4 className="text-[32px] text-center">Total ScPoints</h4>
+								<h4 className="text-[32px] text-center">Загальна кількість ScPoints</h4>
 							</motion.div>
 							<motion.div animate={{ x: ["200%", "0%"] }} transition={{ duration: 0.5 }} className="flex justify-center mx-auto items-center w-[300px] sm:w-[340px]">
-								<LinkButton to="/users">See users</LinkButton>
+								<LinkButton to="/users">Переглянути користувачів</LinkButton>
 							</motion.div>
 						</motion.div>
 					</div>
