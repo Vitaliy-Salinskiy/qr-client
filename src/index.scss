@@ -56,11 +56,11 @@ body {
 
 @layer components {
 	.appContainer {
-		@apply container mx-auto
+		@apply container mx-auto;
 	}
 
 	.product-input {
-		@apply w-full px-4 py-2 mt-2 text-mainOrange font-bold bg-white border-[2px] rounded-lg shadow-sm appearance-none focus:outline-none
+		@apply w-full px-4 py-2 mt-2 text-mainOrange font-bold bg-white border-[2px] rounded-lg shadow-sm appearance-none focus:outline-none;
 	}
 
 	.admin-link {

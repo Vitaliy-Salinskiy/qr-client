@@ -37,7 +37,7 @@ const LeadersTable = ({ isExtended = true }: LeadersTableProps) => {
 						{isLoading
 							? (
 								Array(3).fill(0).map((_, index) => (
-									<SkeletonTheme baseColor="#F5A006" highlightColor="#3F3D56" key={index}>
+									<SkeletonTheme baseColor="#F5A006" highlightColor="#fadba7" key={index}>
 										<motion.div
 											animate={{ opacity: [0, 1], height: [0, 52], scale: [0.8, 1] }}
 											transition={{

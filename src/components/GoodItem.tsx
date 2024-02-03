@@ -12,23 +12,23 @@ interface GoodItemProps {
 export const GoodItem = ({ product, setCurrItem }: GoodItemProps) => {
 	return (
 		<div
-			className="h-[240px] w-[150px] bg-white flex flex-col justify-around items-center rounded-xl border-mainOrange transition-all duration-300 border-[1px] cursor-pointer hover:border-[5px]"
+			className="max-h-[300px] w-[190px] z-10 hover:shadow-lightGrey hover:shadow-sm bg-white flex flex-col justify-center py-[10px] gap-[10px] items-center rounded-xl transition-all duration-300 cursor-pointer hover:scale-110"
 			onClick={() => setCurrItem(product)}
 		>
 
-			<div className='w-full h-[130px] px-2 py-0'>
+			<div className='w-full h-[130px] px-2 py-0 flex justify-center items-center'>
 				<img
 					src={`${baseUlr}/${product.image}`}
 					alt="good img"
-					className='object-cover h-full w-full rounded-md'
+					className='object-cover h-full w-full rounded-md bg-midDarkGrey'
 					onError={(e) => {
 						(e.target as HTMLImageElement).src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEcTP7Xdiuel5OammWjMZJwcerzXu7D0DZaw&usqp=CAU';
 					}}
 				/>
 			</div>
 
-			<h3 className='w-full bg-mainOrange text-white text-xl flex justify-center text-center'>{product.name}</h3>
-			<h2 className='text-2xl text-mainOrange font-bold'>{product.price} points</h2>
+			<h3 className='w-[calc(100%-16px)] px-[2px] bg-midDarkGrey text-white text-xl flex justify-center text-center rounded-md'>{product.name}</h3>
+			<h2 className='text-2xl text-mainOrange font-bold'>{product.price} балів</h2>
 		</div>
 	);
 }

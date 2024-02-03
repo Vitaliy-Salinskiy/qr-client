@@ -38,17 +38,16 @@ const HistoryTable = () => {
 
 	return (
 		<div className='rounded-xl bg-white w-full py-5 px-3 flex gap-4 flex-col items-center border-[8px] border-white'>
-			<h2 className="text-[34px] text-darkGrey underline underline-offset-8 font-bold">Історія</h2>
+			<h2 className="text-[34px] text-darkGrey underline underline-offset-8 font-bold">Історія сканувань</h2>
 			{isLoading
 				?
 				<div className="w-full">
 					{Array(3).fill(0).map((_, index) => (
 						<div className="w-full flex flex-col" key={index}>
-							<SkeletonTheme baseColor="#F5A006" highlightColor="#3F3D56">
+							<SkeletonTheme baseColor="#F5A006" highlightColor="#fadba7">
 								<Skeleton className="w-full flex font-medium justify-between text-[8px] sm:text-[10px] md:text-lg lg:text-xl py-3 px-4 rounded-xl" />
 							</SkeletonTheme>
 						</div>
-
 					))}
 				</div>
 				: data.length > 0

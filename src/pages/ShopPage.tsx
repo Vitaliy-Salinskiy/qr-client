@@ -8,6 +8,8 @@ import { IProduct, IUser } from '../interfaces';
 import { getProducts, getUser, createRequest } from '../utils';
 import Popup from '../components/Popup';
 import Skeleton  from 'react-loading-skeleton';
+import { SkeletonTheme } from 'react-loading-skeleton';
+import { useMediaQuery } from 'react-responsive';
 
 const ShopPage = () => {
 
@@ -43,6 +45,18 @@ const ShopPage = () => {
 			fetchData();
 		}
 	}, []);
+
+	const isTwoXlScreen = useMediaQuery({
+		query: '(min-width: 1530px)'
+	});
+
+	const isXlScreen = useMediaQuery({
+		query: '(min-width: 1024px) and (max-width: 1530px)'
+	});	
+
+	const isMobile = useMediaQuery({
+		query: '(max-width: 768px)'
+	});
 
 	const fetchData = async () => {
 		setIsLoading(true);
@@ -83,23 +97,25 @@ const ShopPage = () => {
 		setCurrentItem(null);
 	};
 
+	const skeletonCount = isMobile ? 4 : (isXlScreen && !isTwoXlScreen ? 8 : (isTwoXlScreen ? 8 : 6));
+
 	return (
 		<div className="pt-5">
 
 			<Popup />
 
 			<div className='w-full appContainer flex justify-between items-center px-2'>
-				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-mainOrange p-2 rounded-xl cursor-pointer"> Назад на QR-сторінку</Link>
+				<Link to='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-mainOrange p-2 rounded-xl cursor-pointer">На головну</Link>
 
 				{user?.name && user?.surname &&
-					<div className='text-midDarkGrey text-lg bg-white py-1 px-2 rounded-lg font-bold shadow-white shadow-sm'><span className='text-mainOrange'>{user?.name} {user?.surname} </span>: {user?.timesScanned} points</div>
+					<div className='text-midDarkGrey text-sm sm:text-lg bg-white py-1 px-2 rounded-lg font-bold shadow-white shadow-sm'><span className='text-mainOrange'>{user?.name} {user?.surname} </span>: {user?.timesScanned} points</div>
 				}
 			</div>
 
 			<h2 className="text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-midDarkGrey mt-6 py-[20px]">Магазин</h2>
 
 			{currentItem ? (
-				<div className="w-full h-screen flex items-center justify-center backdrop-blur-sm fixed top-0">
+				<div className="w-full h-screen flex items-center justify-center backdrop-blur-sm fixed top-0 z-20">
 					<div className="max-w-[300px] bg-white shadow-sm shadow-white rounded-lg flex flex-col justify-around items-center gap-[20px] p-[20px]">
 						<h2 className='max-w-[280px] text-center whitespace-normal'>Ви впевнені, що купите <span className='text-mainOrange'>{currentItem.name}</span>?</h2>
 						<div className='flex gap-[20px]'>
@@ -114,18 +130,20 @@ const ShopPage = () => {
 				</div>
 			) : null}
 
-			<div className='appContainer mt-20 mb-10'>
-				<div className="flex flex-wrap justify-around items-center gap-[20px] md:gap-[30px]">
-					{isLoading
-						? Array(5).fill(0).map((_, index) => (
-							<Skeleton key={index} className='h-[240px] w-[150px] bg-white flex flex-col justify-around items-center rounded-xl border-mainOrange transition-all duration-300 border-[1px] cursor-pointer hover:border-[5px]' />
-						))
-						: products && products.length !== 0
-							? products.map((item: IProduct, index: number) => (
-								<GoodItem key={index} product={item} setCurrItem={setCurrentItem} />
+			<div className='appContainer mt-20 mb-10 flex justify-center'>
+				<div className="flex flex-wrap justify-around items-center gap-[20px] md:gap-[30px] px-[20px] md:max-w-[768px] lg:max-w-[1024px]">
+					<SkeletonTheme baseColor="#fff" highlightColor="#3F3D56">
+						{isLoading
+							? Array(skeletonCount).fill(0).map((_, index) => (
+								<Skeleton key={index} className='h-[230px] w-[190px] bg-white flex flex-col justify-around items-center rounded-xl cursor-pointer' />
 							))
-							: <h2 className='text-[34px] text-white font-bold'>There are no products so far</h2>
-					}
+							: products && products.length !== 0
+								? products.map((item: IProduct, index: number) => (
+									<GoodItem key={index} product={item} setCurrItem={setCurrentItem} />
+								))
+								: <h2 className='text-[34px] text-white font-bold'>There are no products so far</h2>
+						}
+					</SkeletonTheme>
 				</div>
 			</div>
 

@@ -13,6 +13,7 @@ import { createUser, getScansValue } from "../utils";
 import Timer from "../components/Timer";
 import qrWhite from "../assets/images/qr-code-white.png";
 import shopWhite from "../assets/images/shop-white.png";
+import profileWhite from "../assets/images/profile.png";
 
 function QrPage() {
 
@@ -117,7 +118,7 @@ function QrPage() {
 										)) : null
 									)}
 								</div>
-								<h4 className="text-[32px] text-center">Загальна кількість ScPoints</h4>
+								<h4 className="text-[32px] text-center">Загальна кількість балів</h4>
 							</motion.div>
 							<motion.div animate={{ x: ["200%", "0%"] }} transition={{ duration: 0.5 }} className="flex justify-center mx-auto items-center w-[300px] sm:w-[340px]">
 								<LinkButton to="/users">Переглянути користувачів</LinkButton>
@@ -131,10 +132,13 @@ function QrPage() {
 							y: isMobile ? ["100%", "0%"] : []
 						}}
 						transition={{ type: "spring", duration: 1 }}
-						className="w-[95px] flex justify-center gap-[5px] p-[5px] bg-white fixed shadow-mainOrange drop-shadow-lg rounded-t-3xl shadow-sm md:rounded-3xl bottom-0 left-[50%] ml-[-47.5px] md:bottom-[40px] md:right-[40px] md:left-auto"
+						className="w-[135px] flex justify-center gap-[5px] p-[5px] bg-white fixed shadow-mainOrange drop-shadow-lg rounded-t-3xl shadow-sm md:rounded-3xl bottom-0 left-[50%] ml-[-47.5px] md:bottom-[40px] md:right-[40px] md:left-auto"
 					>
 						<Link to={`statistic/${id}`} className="h-[40px] w-[40px] flex justify-center items-center bg-mainOrange rounded-full shadow-mainOrange shadow-sm cursor-pointer transition-all duration-300 hover:scale-125 hover:translate-y-[-15px] hover:translate-x-[-8px]">
 							<img height={25} width={25} src={qrWhite} alt="qr image" />
+						</Link>
+						<Link to="profile" className="h-[40px] w-[40px] flex justify-center items-center bg-mainOrange rounded-full shadow-mainOrange shadow-sm cursor-pointer transition-all duration-300 hover:scale-125 hover:translate-y-[-15px]">
+							<img height={25} width={25} src={profileWhite} alt="profile image" />
 						</Link>
 						<Link to="shop" className="h-[40px] w-[40px] flex justify-center items-center bg-mainOrange rounded-full shadow-mainOrange shadow-sm cursor-pointer transition-all duration-300 hover:scale-125 hover:translate-y-[-15px] hover:translate-x-[8px]">
 							<img height={25} width={25} src={shopWhite} alt="shop image" />
