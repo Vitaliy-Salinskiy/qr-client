@@ -58,9 +58,9 @@ const HistoryTable = () => {
 							<td>Дата: {item.date.slice(0, 10).split("-").reverse().join("/")}</td>
 						</tr>
 					))
-					: <tr><td>Немає даних</td></tr>
+					: <p className="text-mainOrange">Немає даних</p>
 			}
-		</div>
+		</div >
 	)
 }
 

@@ -6,28 +6,34 @@
 	font-family: font-regular;
 	src: url('./assets/fonts/Montserrat-Regular.woff2');
 }
+
 @font-face {
 	font-family: font-medium;
 	src: url('./assets/fonts/Montserrat-Medium.woff2');
 }
+
 @font-face {
 	font-family: font-semibold;
 	src: url('./assets/fonts/Montserrat-SemiBold.woff2');
 }
+
 @font-face {
 	font-family: font-bold;
 	src: url('./assets/fonts/Montserrat-Bold.woff2');
 }
-  
+
 .font-regular {
 	font-family: font-regular;
 }
+
 .font-medium {
 	font-family: font-medium;
 }
+
 .font-semibold {
 	font-family: font-semibold;
 }
+
 .font-bold {
 	font-family: font-bold;
 }
@@ -76,4 +82,48 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"] {
 	-moz-appearance: textfield;
+}
+
+
+.bhdLno{
+	width: 900px !important;
+	height: 900px !important;
+	max-width: 900px !important;
+	max-height: 900px !important;
+}
+
+@media screen and (max-width: 1024px) {
+	.bhdLno{
+		width: 700px !important;
+		height: 700px !important;
+		max-width: 700px !important;
+		max-height: 700px !important;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.bhdLno{
+		width: 550px !important;
+		height: 550px !important;
+		max-width: 550px !important;
+		max-height: 550px !important;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.bhdLno{
+		width: 400px !important;
+		height: 400px !important;
+		max-width: 490px !important;
+		max-height: 490px !important;
+	}
+}
+
+@media screen and (max-width: 420px) {
+	.bhdLno{
+		width: 300px !important;
+		height: 300px !important;
+		max-width: 300px !important;
+		max-height: 300px !important;
+	}
 }

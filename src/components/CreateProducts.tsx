@@ -78,7 +78,7 @@ const CreateProducts = ({ setIsLoading }: CreateProductsProps) => {
 			<div className='appContainer flex flex-col gap-5 pb-10'>
 
 				<div className='flex justify-center items-center gap-2 bg-white rounded-2xl sm:rounded-md text-midDarkGrey border-dashed border-4 border-gray-500 relative'>
-					<div {...getRootProps({ className: "w-full h-full flex flex-col gap-[25px] justify-center border-dashed border-[3px] cursor-pointer border-white rounded-xl h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] flex justify-center items-center text-white p-2 sm:p-5 overflow-y-auto" })}>
+					<div {...getRootProps({ className: "w-full h-full flex flex-col gap-[10px] sm:gap-[25px] justify-center border-dashed border-[3px] cursor-pointer border-white rounded-xl min-h-[300px] sm:min-h-[400px] md:min-h-[500px] lg:min-h-[600px] flex justify-center items-center text-white p-2 sm:p-5 overflow-y-auto" })}>
 						<input {...getInputProps()} />
 						{selectedFileUrl ? (
 							<>
@@ -89,12 +89,12 @@ const CreateProducts = ({ setIsLoading }: CreateProductsProps) => {
 							</>
 						) : isDragActive ? (
 							<>
-								<p className='w-[240px] sm:w-[400px] text-center font-medium text-[26px] sm:text-5xl text-midDarkGrey'>Виберіть фотографію або перетягніть її сюди</p>
+								<p className='w-[275px] sm:w-[486px] text-center font-medium text-[26px] sm:text-5xl leading-[110%] text-midDarkGrey'>Виберіть фотографію або перетягніть її сюди</p>
 								<p className='w-[240px] sm:w-[400px] text-center text-[14px] font-medium sm:text-xl text-midDarkGrey'>Перетягніть файл сюди...</p>
 							</>
 						) : (
 							<>
-								<p className='w-[240px] sm:w-[400px] text-center font-medium text-[26px] sm:text-5xl text-midDarkGrey'>Виберіть фотографію або перетягніть її сюди</p>
+								<p className='w-[275px] sm:w-[486px] text-center font-medium text-[26px] sm:text-5xl leading-[110%] text-midDarkGrey'>Виберіть фотографію або перетягніть її сюди</p>
 								<p className='w-[240px] sm:w-[400px] text-center text-[14px] font-medium sm:text-xl text-midDarkGrey'>Приймаються лише зображення *.jpeg, *.jpg, *.webp і *.png</p>
 							</>
 						)}
