@@ -116,17 +116,17 @@ const WheelPage = () => {
 
               <button
                 onClick={handleSpinClick}
-                className="hidden md:flex flex-col items-center justify-center py-5 px-[50px] lg:px-[75px] md:text-[28px] lg:text-[35px] leading-[120%] text-white bg-mainOrange rounded-[20px]"
+                className="hidden md:flex flex-col items-center justify-center py-3 px-[50px] lg:px-[75px] md:text-[28px] lg:text-[35px] leading-[120%] text-white bg-mainOrange rounded-[25px] transition-all duration-300 hover:scale-110 hover:shadow-sm hover:shadow-mainOrange"
               >
                 Крутити
               </button>
             </div>
           </div>
 
-          <div>
+          <div className="w-full flex justify-center">
             <button
               onClick={handleSpinClick}
-              className="md:hidden flex flex-col items-center justify-center py-5 px-[75px] md:text-[28px] leading-[120%] text-white bg-mainOrange rounded-[20px]"
+              className="mb-[10px] md:hidden flex flex-col items-center justify-center py-3 w-[80%] outline-none md:text-[28px] leading-[120%] text-white bg-mainOrange rounded-[20px] transition-all duration-300 hover:scale-110 hover:shadow-sm hover:shadow-mainOrange"
             >
               Крутити
             </button>

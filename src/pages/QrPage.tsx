@@ -6,19 +6,21 @@ import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import Skeleton from "react-loading-skeleton";
 
-import { useMyContext } from "../providers/ContextProvider";
 import LinkButton from "../components/LinkButton";
 import { createUser, getScansValue } from "../utils";
 import Timer from "../components/Timer";
 import qrWhite from "../assets/images/qr-code-white.png";
 import shopWhite from "../assets/images/shop-white.png";
 import profileWhite from "../assets/images/profile.png";
+import { useStore } from "../store/store";
+import Popup from "../components/Popup";
 
 function QrPage() {
   const [size, setSize] = useState<number>(310);
   const [scans, setScans] = useState<string[]>([]);
-  const { id, setId, response } = useMyContext();
   const [loading, setLoading] = useState(true);
+
+  const { id, setId, response } = useStore();
 
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 1024px)",
@@ -57,6 +59,8 @@ function QrPage() {
 
   return (
     <div className="pt-20">
+      <Popup />
+
       <motion.div
         animate={{ x: ["-100%", "0%"], scale: [0.2, 1] }}
         transition={{ type: "spring", duration: 1 }}

@@ -29,7 +29,8 @@
     "react-responsive": "^9.0.2",
     "react-router-dom": "^6.21.2",
     "sass": "^1.69.7",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.10",
