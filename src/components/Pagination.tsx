@@ -11,12 +11,12 @@ const Pagination = ({ currentPage, totalPages, handlePageClick }: PaginationProp
 	return (
 		<ReactPaginate
 			previousLabel={
-				<div className='w-[25px] sm:w-[30px] h-[25px] sm:h-[30px] transition-colors duration-300 bg-mainOrange rounded-lg text-white flex justify-center items-center border-2 border-mainOrange hover:bg-transparent hover:text-mainOrange'>
+				<div className='pag-arrow'>
 					<IoIosArrowForward className='rotate-180' />
 				</div>
 			}
 			nextLabel={
-				<div className='w-[25px] sm:w-[30px] h-[25px] sm:h-[30px] transition-colors duration-300 bg-mainOrange rounded-lg text-white flex justify-center items-center border-2 border-mainOrange hover:bg-transparent hover:text-mainOrange'>
+				<div className='pag-arrow'>
 					<IoIosArrowForward />
 				</div>
 			}

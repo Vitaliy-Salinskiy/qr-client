@@ -12,7 +12,7 @@ interface GoodItemProps {
 export const GoodItem = ({ product, setCurrItem }: GoodItemProps) => {
 	return (
 		<div
-			className="max-h-[300px] w-[190px] z-10 hover:shadow-lightGrey hover:shadow-sm bg-white flex flex-col justify-center py-[10px] gap-[10px] items-center rounded-xl transition-all duration-300 cursor-pointer hover:scale-110"
+			className="good-item"
 			onClick={() => setCurrItem(product)}
 		>
 

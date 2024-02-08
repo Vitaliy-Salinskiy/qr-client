@@ -33,7 +33,7 @@ export const RequestItem = ({ req, changeable = false, setIsLoading }: RequestIt
 		}
 	};
 	return (
-		<div className="w-full h-[120px] bg-white rounded-xl p-4 flex flex-col justify-between items-center">
+		<div className="req-item">
 			<div className="w-full flex justify-between gap-[10px]">
 				<h2 className='text-base sm:text-lg font-medium'>{req.userId?.name + " " + req.userId?.surname}</h2>
 				<h3 className={`hidden  ${changeable ? "lg:flex" : "md:flex"} text-md text-gray-500`}>id: {req.userId.id}</h3>

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import QRCode from "qrcode.react";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import Skeleton from "react-loading-skeleton";
@@ -9,11 +8,9 @@ import Skeleton from "react-loading-skeleton";
 import LinkButton from "../components/LinkButton";
 import { createUser, getScansValue } from "../utils";
 import Timer from "../components/Timer";
-import qrWhite from "../assets/images/qr-code-white.png";
-import shopWhite from "../assets/images/shop-white.png";
-import profileWhite from "../assets/images/profile.png";
 import { useStore } from "../store/store";
 import Popup from "../components/Popup";
+import Navigation from "../components/Navigation";
 
 function QrPage() {
   const [size, setSize] = useState<number>(310);
@@ -24,10 +21,6 @@ function QrPage() {
 
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 1024px)",
-  });
-
-  const isMobile = useMediaQuery({
-    query: "(max-width: 768px)",
   });
 
   useEffect(() => {
@@ -154,38 +147,7 @@ function QrPage() {
             </motion.div>
           </div>
 
-          <motion.div
-            animate={{
-              x: isMobile ? [] : ["220%", "0%"],
-              y: isMobile ? ["100%", "0%"] : [],
-            }}
-            transition={{ type: "spring", duration: 1 }}
-            className="w-[135px] flex justify-center gap-[5px] p-[5px] bg-white fixed shadow-mainOrange drop-shadow-lg rounded-t-3xl shadow-sm md:rounded-3xl bottom-0 left-[50%] ml-[-47.5px] md:bottom-[40px] md:right-[40px] md:left-auto"
-          >
-            <Link
-              to={`statistic/${id}`}
-              className="h-[40px] w-[40px] flex justify-center items-center bg-mainOrange rounded-full shadow-mainOrange shadow-sm cursor-pointer transition-all duration-300 hover:scale-125 hover:translate-y-[-15px] hover:translate-x-[-8px]"
-            >
-              <img height={25} width={25} src={qrWhite} alt="qr image" />
-            </Link>
-            <Link
-              to="profile"
-              className="h-[40px] w-[40px] flex justify-center items-center bg-mainOrange rounded-full shadow-mainOrange shadow-sm cursor-pointer transition-all duration-300 hover:scale-125 hover:translate-y-[-15px]"
-            >
-              <img
-                height={25}
-                width={25}
-                src={profileWhite}
-                alt="profile image"
-              />
-            </Link>
-            <Link
-              to="shop"
-              className="h-[40px] w-[40px] flex justify-center items-center bg-mainOrange rounded-full shadow-mainOrange shadow-sm cursor-pointer transition-all duration-300 hover:scale-125 hover:translate-y-[-15px] hover:translate-x-[8px]"
-            >
-              <img height={25} width={25} src={shopWhite} alt="shop image" />
-            </Link>
-          </motion.div>
+          <Navigation id={id} />
         </div>
       </div>
     </div>

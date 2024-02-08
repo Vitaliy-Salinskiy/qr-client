@@ -52,10 +52,10 @@ const ProfilePage = () => {
 					</div>
 
 					<div className="max-w-[640px] w-full flex justify-between items-center flex-wrap gap-[10px] md:px-[10px] mt-[20px] md:justify-center">
-						<Link to="/users" className="h-[100px] w-[100px] p-[15px] bg-[#2b2942] md:bg-midDarkGrey rounded-lg">
+						<Link to="/users" className="profile-button">
 							<img src={history_image} alt="profile-history-link" />
 						</Link>
-						<Link to="/shop" className="h-[100px] w-[100px] p-[15px] bg-[#2b2942] md:bg-midDarkGrey rounded-lg">
+						<Link to="/shop" className="profile-button">
 							<img src={shop_image} alt="profile-shop-link" />
 						</Link>
 					</div>

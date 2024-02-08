@@ -72,6 +72,26 @@ body {
 	.admin-link {
 		@apply text-[13px] sm:text-lg md:text-xl cursor-pointer transition-all duration-100 relative;
 	}
+
+	.nav-item {
+		@apply h-[40px] w-[40px] flex justify-center items-center bg-mainOrange rounded-full shadow-mainOrange shadow-sm cursor-pointer transition-all duration-300;
+	}
+
+	.pag-arrow {
+		@apply w-[25px] sm:w-[30px] h-[25px] sm:h-[30px] transition-colors duration-300 bg-mainOrange rounded-lg text-white flex justify-center items-center border-2 border-mainOrange hover:bg-transparent hover:text-mainOrange;
+	}
+
+	.profile-button {
+		@apply h-[100px] w-[100px] p-[15px] bg-[#2b2942] md:bg-midDarkGrey rounded-lg;
+	}
+
+	.good-item {
+		@apply max-h-[300px] w-[190px] z-10 hover:shadow-lightGrey hover:shadow-sm bg-white flex flex-col justify-center py-[10px] gap-[10px] items-center rounded-xl transition-all duration-300 cursor-pointer hover:scale-110;
+	}
+
+	.req-item {
+		@apply w-full h-[120px] bg-white rounded-xl p-4 flex flex-col justify-between items-center;
+	}
 }
 
 input[type="number"]::-webkit-inner-spin-button,
