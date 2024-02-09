@@ -2,19 +2,18 @@ import { useEffect, useState } from "react";
 import { Wheel } from "react-custom-roulette";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
+
+import { addScansByPrize, getUser } from "../utils";
+import { useStore } from "../store/store";
+import { IUser } from "../interfaces";
+import { wheelOptions } from "../constants";
+import Popup from "../components/Popup";
 
 const WheelPage = () => {
-  const data = [
-    { id: 1, option: "0", value: "You won 0" },
-    { id: 2, option: "1", value: "You won 1" },
-    { id: 3, option: "2", value: "You won 2" },
-    { id: 4, option: "3", value: "You won 3" },
-    { id: 5, option: "4", value: "You won 4" },
-    { id: 6, option: "5", value: "You won 5" },
-    { id: 7, option: "6", value: "You won 6" },
-    { id: 8, option: "7", value: "You won 7" },
-  ];
-
+  const { id, setResponse } = useStore();
+  const [user, setUser] = useState<IUser>();
+  const [allowedToSpin, setAllowedToSpin] = useState<boolean>(false);
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [arrowPosition, setArrowPosition] = useState({
@@ -28,35 +27,75 @@ const WheelPage = () => {
 
   const isLaptop = useMediaQuery({ query: "(max-width: 1024px)" });
   const isDesktop = useMediaQuery({ query: "(min-width: 768px)" });
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  const isTablet = useMediaQuery({ query: "(max-width: 768px)" });
+  const isSmallTablet = useMediaQuery({ query: "(max-width: 640px)" });
   const isMobile = useMediaQuery({ query: "(max-width: 420px)" });
 
   useEffect(() => {
     if (isMobile) {
       setArrowPosition({ x: 12, y: 10, styles: { borderX: 15, borderY: 25 } });
-    } else if (isTabletOrMobile) {
-      setArrowPosition({ x: 12, y: 9, styles: { borderX: 20, borderY: 40 } });
+    } else if (isSmallTablet) {
+      setArrowPosition({ x: 14, y: 10, styles: { borderX: 18, borderY: 32 } });
+    } else if (isTablet) {
+      setArrowPosition({ x: 14, y: 10, styles: { borderX: 24, borderY: 43 } });
     } else if (isLaptop) {
       setArrowPosition({ x: 12, y: 11, styles: { borderX: 30, borderY: 50 } });
     } else if (isDesktop) {
-      setArrowPosition({ x: 15, y: 10, styles: { borderX: 40, borderY: 70 } });
+      setArrowPosition({ x: 13, y: 10, styles: { borderX: 36, borderY: 65 } });
     }
-  }, [isTabletOrMobile, isDesktop, isMobile, isLaptop]);
+  }, [isTablet, isSmallTablet, isDesktop, isMobile, isLaptop]);
+
+  useEffect(() => {
+    if (!id) {
+      FingerprintJS.load()
+        .then((fp) => fp.get())
+        .then(async (result) => {
+          const data = await getUser(result.visitorId);
+          setUser(data);
+        });
+    } else {
+      getUser(id).then((data) => setUser(data));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!user?.wheelSpinDate) {
+      setAllowedToSpin(true);
+    } else {
+      const initialDate = new Date(user?.wheelSpinDate);
+
+      const diff = new Date().getTime() - initialDate.getTime();
+
+      const days = diff / (1000 * 60 * 60 * 24);
+
+      if (Number(days.toFixed(0)) >= 3) {
+        setAllowedToSpin(true);
+      } else {
+        setAllowedToSpin(false);
+      }
+    }
+  }, [user]);
 
   const handleSpinClick = () => {
     if (!mustSpin) {
-      const newPrizeNumber = Math.floor(Math.random() * data.length);
+      setAllowedToSpin(false);
+      const newPrizeNumber = Math.floor(Math.random() * wheelOptions.length);
       setPrizeNumber(newPrizeNumber);
       setMustSpin(true);
     }
   };
 
   const handlePrize = (prizeOption: any) => {
-    console.log("prize ", prizeOption);
+    if (user && prizeOption.value > 0) {
+      addScansByPrize(user.id, Number(prizeOption.value));
+    }
+    setResponse(prizeOption.message);
   };
 
   return (
     <div>
+      <Popup />
+
       <motion.div
         animate={{ x: ["-100%", "0%"], scale: [0.2, 1] }}
         transition={{ type: "spring", duration: 1 }}
@@ -72,16 +111,21 @@ const WheelPage = () => {
 
       <div className="appContainer mx-auto py-10">
         <div className="flex justify-center items-center flex-col gap-5 relative overflow-hidden">
-          <div>
+          <motion.div
+            animate={{ scale: [0.5, 1], rotate: [-360, 0] }}
+            transition={{
+              scale: { type: "spring", duration: 0.5 },
+              rotate: { type: "spring", duration: 1 },
+            }}
+          >
             <Wheel
               mustStartSpinning={mustSpin}
               prizeNumber={prizeNumber}
-              data={data}
+              data={wheelOptions}
               spinDuration={0.1}
               onStopSpinning={() => {
-                handlePrize(data[prizeNumber]);
+                handlePrize(wheelOptions[prizeNumber]);
                 setMustSpin(false);
-                handlePrize;
               }}
               backgroundColors={["#262534"]}
               outerBorderColor="#F5A006"
@@ -115,18 +159,20 @@ const WheelPage = () => {
               </h2>
 
               <button
+                disabled={!allowedToSpin || !user}
                 onClick={handleSpinClick}
-                className="hidden md:flex flex-col items-center justify-center py-3 px-[50px] lg:px-[75px] md:text-[28px] lg:text-[35px] leading-[120%] text-white bg-mainOrange rounded-[25px] transition-all duration-300 hover:scale-110 hover:shadow-sm hover:shadow-mainOrange"
+                className={`disabled:opacity-60 disabled:hover:!scale-100 hidden md:flex flex-col items-center justify-center py-3 px-[50px] lg:px-[68px] md:text-[26px] lg:text-[33px] leading-[120%] text-white bg-mainOrange rounded-[25px] transition-all duration-300 hover:scale-110 hover:shadow-sm hover:shadow-mainOrange`}
               >
                 Крутити
               </button>
             </div>
-          </div>
+          </motion.div>
 
           <div className="w-full flex justify-center">
             <button
+              disabled={!allowedToSpin || !user}
               onClick={handleSpinClick}
-              className="mb-[10px] md:hidden flex flex-col items-center justify-center py-3 w-[80%] outline-none md:text-[28px] leading-[120%] text-white bg-mainOrange rounded-[20px] transition-all duration-300 hover:scale-110 hover:shadow-sm hover:shadow-mainOrange"
+              className="disabled:opacity-60 disabled:hover:!scale-0 mb-[10px] md:hidden flex flex-col items-center justify-center py-3 w-[80%] outline-none md:text-[28px] leading-[120%] text-white bg-mainOrange rounded-[20px] transition-all duration-300 hover:scale-110 hover:shadow-sm hover:shadow-mainOrange"
             >
               Крутити
             </button>

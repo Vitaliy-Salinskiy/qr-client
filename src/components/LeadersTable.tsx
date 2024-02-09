@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { motion } from "framer-motion";
 
-import { fetchData } from "../utils";
+import { fetchData, formatDate } from "../utils";
 import { IUser } from "../interfaces";
 import { useStore } from "../store/store";
 
@@ -86,12 +86,7 @@ const LeadersTable = ({ isExtended = true }: LeadersTableProps) => {
                         )}
                         {isExtended && (
                           <div className="hidden sm:block">
-                            останнє сканування:{" "}
-                            {item.lastScanned
-                              ?.slice(0, 10)
-                              .split("-")
-                              .reverse()
-                              .join("/")}
+                            останнє сканування: {formatDate(item.lastScanned)}
                           </div>
                         )}
                         <div>scans: {item.timesScanned}</div>

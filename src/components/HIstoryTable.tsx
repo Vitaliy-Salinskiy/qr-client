@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { motion } from "framer-motion";
 
-import { getUser } from "../utils";
+import { formatDate, getUser } from "../utils";
 import { IScanHistory, IUser } from "../interfaces";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useStore } from "../store/store";
@@ -76,9 +76,7 @@ const HistoryTable = () => {
           >
             <span>{index + 1}</span>
             <span>Загальні кількість: {item.totalScans}</span>
-            <span>
-              Дата: {item.date.slice(0, 10).split("-").reverse().join("/")}
-            </span>
+            <span>Дата: {formatDate(item.date)}</span>
           </motion.div>
         ))
       ) : (
