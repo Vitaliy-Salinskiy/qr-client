@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { IProduct } from "../interfaces";
-import { deleteProduct } from "../utils";
+import { deleteProduct, playPop } from "../utils";
 import { useStore } from "../store/store";
 
 interface ProductsItemProps {
@@ -19,6 +19,7 @@ const ProductsItem = ({
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   const handleRemove = async () => {
+    playPop();
     setIsLoading(true);
     setIsDisabled(true);
     await deleteProduct(product._id)

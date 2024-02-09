@@ -9,6 +9,7 @@ import { useStore } from "../store/store";
 import { IUser } from "../interfaces";
 import { wheelOptions } from "../constants";
 import Popup from "../components/Popup";
+import { Link } from "react-router-dom";
 
 const WheelPage = () => {
   const { id, setResponse } = useStore();
@@ -96,16 +97,25 @@ const WheelPage = () => {
     <div>
       <Popup />
 
+      <div className="w-full appContainer flex justify-between items-center px-2 my-5">
+        <Link
+          to="/"
+          className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-midDarkGrey p-2 rounded-xl cursor-pointer"
+        >
+          На головну
+        </Link>
+      </div>
+
       <motion.div
         animate={{ x: ["-100%", "0%"], scale: [0.2, 1] }}
         transition={{ type: "spring", duration: 1 }}
-        className="mt-20 text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-midDarkGrey py-[20px]"
+        className="text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-midDarkGrey py-[20px]"
       >
         <motion.h1
           animate={{ scale: [0.8, 1] }}
           transition={{ type: "spring", delay: 0.5 }}
         >
-          Lucky Wheel
+          Колесо Фортуни
         </motion.h1>
       </motion.div>
 

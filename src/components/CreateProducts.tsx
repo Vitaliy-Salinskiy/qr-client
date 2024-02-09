@@ -6,7 +6,7 @@ import { z } from "zod";
 
 import Popup from "./Popup";
 import { IProductDto } from "../interfaces";
-import { createProduct } from "../utils";
+import { createProduct, playPop } from "../utils";
 import { useStore } from "../store/store";
 
 interface CreateProductsProps {
@@ -74,6 +74,7 @@ const CreateProducts = ({ setIsLoading }: CreateProductsProps) => {
       setError("Please select a file");
     }
     if (data && selectedFile) {
+      playPop();
       setIsLoading(true);
       const formData = new FormData();
       formData.append("image", selectedFile);
@@ -175,7 +176,7 @@ const CreateProducts = ({ setIsLoading }: CreateProductsProps) => {
               </p>
             )}
           </div>
-          <button className="bg-white text-mainOrange font-bold px-4 py-2 rounded shadow">
+          <button className="bg-white text-midDarkGrey font-bold px-4 py-2 rounded shadow">
             Створити продукт
           </button>
         </form>

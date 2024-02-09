@@ -37,7 +37,7 @@ const HistoryTable = () => {
   }, [id]);
 
   return (
-    <div className="rounded-xl bg-white w-full py-5 px-3 flex gap-4 flex-col items-center border-[8px] border-white">
+    <div className="rounded-xl text-darkGrey bg-white w-full py-5 px-3 flex gap-4 flex-col items-center border-[8px] border-white">
       <h2 className="text-[34px] text-darkGrey underline underline-offset-8 font-bold">
         Історія сканувань
       </h2>

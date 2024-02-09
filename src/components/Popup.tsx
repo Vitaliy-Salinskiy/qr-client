@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { useStore } from "../store/store";
 
-import message_icon from "../assets/images/mail.png";
+import { mail } from "../assets/images/index";
 
 const Popup = () => {
   const { response, removeResponse } = useStore();
@@ -36,7 +36,7 @@ const Popup = () => {
       style={!isVisible ? { right: "-100%" } : { right: "20px" }}
     >
       <div className="w-[85px] h-[55px] flex justify-center items-center">
-        <img height={50} width={50} src={message_icon} alt="mail" />
+        <img height={50} width={50} src={mail} alt="mail" />
       </div>
       <div className=" flex flex-col transition-all duration-1000 justify-between items-start">
         {response && (

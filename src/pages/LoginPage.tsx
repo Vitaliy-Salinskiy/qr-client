@@ -47,7 +47,7 @@ const LoginPage = () => {
       <div className="container mx-auto px-[20px] max-w-screen-lg">
         <div className="min-h-screen flex flex-col justify-center items-center py-16 gap-10 text-white font-bold">
           <div className="bg-white p-4 flex flex-col gap-3 rounded-lg w-[320px]">
-            <h2 className="text-mainOrange text-center text-xl font-medium">
+            <h2 className="text-midDarkGrey text-center text-xl font-medium">
               Логін
             </h2>
             <form
@@ -82,7 +82,7 @@ const LoginPage = () => {
               </div>
               <button
                 type="submit"
-                className="bg-mainOrange text-white rounded-md py-[2px] font-medium"
+                className="bg-midDarkGrey text-white rounded-md py-[2px] font-medium"
               >
                 Надіслати
               </button>

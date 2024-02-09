@@ -1,4 +1,5 @@
 import axios from "axios";
+import popEffect from "../assets/audio/pop.mp3";
 
 import { IAdmin, ILoginDto, IProduct, IRequest, IUser } from "../interfaces";
 
@@ -128,3 +129,10 @@ export const getProfile = async (): Promise<IAdmin> => {
 export const formatDate = (date: string): string => {
   return date.slice(0, 10).split("-").reverse().join("/");
 };
+
+const pop = new Audio(popEffect);
+pop.volume = 0.15;
+
+export const playPop = () => {
+  pop.play();
+}

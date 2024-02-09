@@ -51,7 +51,7 @@ function QrPage() {
   }, [isDesktopOrLaptop]);
 
   return (
-    <div className="pt-20">
+    <div>
       <Popup />
 
       <motion.div
@@ -133,9 +133,9 @@ function QrPage() {
                       ))
                     : null}
                 </div>
-                <h4 className="text-[32px] text-center">
+                <h2 className="text-[32px] text-center">
                   Загальна кількість балів
-                </h4>
+                </h2>
               </motion.div>
               <motion.div
                 animate={{ x: ["200%", "0%"] }}

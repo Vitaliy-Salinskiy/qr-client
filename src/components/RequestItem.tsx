@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { IRequest } from "../interfaces";
-import { allowRequest, denyRequest, formatDate } from "../utils";
+import { allowRequest, denyRequest, formatDate, playPop } from "../utils";
 
 interface RequestItemProps {
   req: IRequest;
@@ -18,6 +18,7 @@ export const RequestItem = ({
 
   const handleAllow = async () => {
     if (setIsLoading) {
+      playPop();
       setIsLoading(true);
       setIsDisabled(true);
       await allowRequest(req._id).finally(() => setIsDisabled(false));
@@ -27,6 +28,7 @@ export const RequestItem = ({
 
   const handleDeny = async () => {
     if (setIsLoading) {
+      playPop();
       setIsLoading(true);
       setIsDisabled(true);
       await denyRequest(req._id).finally(() => setIsDisabled(false));

@@ -2,14 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { useMediaQuery } from "react-responsive";
 
 import { GoodItem } from "../components/GoodItem";
 import { IProduct, IUser } from "../interfaces";
-import { getProducts, getUser, createRequest } from "../utils";
+import { getProducts, getUser, createRequest, playPop } from "../utils";
 import Popup from "../components/Popup";
-import Skeleton from "react-loading-skeleton";
-import { SkeletonTheme } from "react-loading-skeleton";
-import { useMediaQuery } from "react-responsive";
 import { useStore } from "../store/store";
 
 const ShopPage = () => {
@@ -93,12 +92,14 @@ const ShopPage = () => {
   };
 
   const handleYesClick = async () => {
+    playPop();
     await handleRequestSend(user?.id as string, currentItem?._id as string);
     await getUserData(user?.id as string);
     setCurrentItem(null);
   };
 
   const handleNoClick = () => {
+    playPop();
     setCurrentItem(null);
   };
 
@@ -117,7 +118,7 @@ const ShopPage = () => {
       <div className="w-full appContainer flex justify-between items-center px-2">
         <Link
           to="/"
-          className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-mainOrange p-2 rounded-xl cursor-pointer"
+          className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-midDarkGrey p-2 rounded-xl cursor-pointer"
         >
           На головну
         </Link>

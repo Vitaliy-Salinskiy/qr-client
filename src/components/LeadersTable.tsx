@@ -76,7 +76,7 @@ const LeadersTable = ({ isExtended = true }: LeadersTableProps) => {
                         key={item.id}
                         className={`w-full ${
                           id === item.id ? "bg-mainOrange" : "bg-[#fabf55]"
-                        } flex text-lightGrey font-medium justify-between text-[14px] sm:text-[14px] md:text-lg lg:text-xl py-3 px-4 rounded-xl`}
+                        } flex text-darkGrey font-medium justify-between text-[14px] sm:text-[14px] md:text-lg lg:text-xl py-3 px-4 rounded-xl`}
                       >
                         <div>{index + 1}</div>
                         {item.name && item.surname && (
