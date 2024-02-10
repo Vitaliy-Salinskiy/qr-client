@@ -32,7 +32,7 @@ const Popup = () => {
 
   return (
     <div
-      className="z-20 w-[80%] sm:min-w-[320px] sm:max-w-[375px] min-h-[85px] p-[10px] cursor-pointer bg-white fixed transition-all overflow-hidden duration-500 bottom-[30px] right-[-100%] rounded-lg shadow-white drop-shadow-sm shadow-sm flex items-center gap-[20px]"
+      className="z-20 w-[80%] sm:min-w-[320px] sm:max-w-[355px] min-h-[85px] p-[10px] cursor-pointer bg-white fixed transition-all overflow-hidden duration-500 bottom-[30px] right-[-100%] rounded-lg shadow-white drop-shadow-sm shadow-sm flex items-center gap-[20px]"
       style={!isVisible ? { right: "-100%" } : { right: "20px" }}
     >
       <div className="w-[85px] h-[55px] flex justify-center items-center">
