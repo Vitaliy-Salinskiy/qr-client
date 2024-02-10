@@ -35,78 +35,75 @@ const LeadersTable = ({ isExtended = true }: LeadersTableProps) => {
       >
         Дошка лідерів
       </motion.h2>
-      {data.length > 0 ? (
-        <div className="w-full">
-          <div className="flex flex-col gap-2">
-            {isLoading
-              ? Array(3)
-                  .fill(0)
-                  .map((_, index) => (
-                    <SkeletonTheme
-                      baseColor="#F5A006"
-                      highlightColor="#fadba7"
-                      key={index}
+      <div className="w-full">
+        <div className="flex flex-col gap-2">
+          {isLoading
+            ? Array(3)
+                .fill(0)
+                .map((_, index) => (
+                  <SkeletonTheme
+                    baseColor="#F5A006"
+                    highlightColor="#fadba7"
+                    key={index}
+                  >
+                    <motion.div
+                      animate={{
+                        opacity: [0, 1],
+                        height: [0, 52],
+                        scale: [0.8, 1],
+                      }}
+                      transition={{
+                        opacity: { type: "spring", delay: 0.15 * index },
+                        scale: { type: "spring", delay: 0.15 * index },
+                        height: {
+                          duration: 0.1 * index,
+                          type: "spring",
+                          delay: 0.075 * index,
+                        },
+                      }}
                     >
-                      <motion.div
-                        animate={{
-                          opacity: [0, 1],
-                          height: [0, 52],
-                          scale: [0.8, 1],
-                        }}
-                        transition={{
-                          opacity: { type: "spring", delay: 0.15 * index },
-                          scale: { type: "spring", delay: 0.15 * index },
-                          height: {
-                            duration: 0.1 * index,
-                            type: "spring",
-                            delay: 0.075 * index,
-                          },
-                        }}
-                      >
-                        <Skeleton className="h-[52px] rounded-xl" />
-                      </motion.div>
-                    </SkeletonTheme>
-                  ))
-              : data.map(
-                  (item, index) =>
-                    item.timesScanned > 0 && (
-                      <motion.div
-                        animate={{ opacity: [0, 1], scale: [0.8, 1] }}
-                        transition={{ type: "spring", delay: 0.2 * index }}
-                        key={item.id}
-                        className={`w-full ${
-                          id === item.id ? "bg-mainOrange" : "bg-[#fabf55]"
-                        } flex text-darkGrey font-medium justify-between text-[14px] sm:text-[14px] md:text-lg lg:text-xl py-3 px-4 rounded-xl`}
-                      >
-                        <div>{index + 1}</div>
-                        {item.name && item.surname && (
-                          <div>
-                            {item.name} {item.surname}
-                          </div>
-                        )}
-                        {isExtended && (
-                          <div className="hidden sm:block">
-                            останнє сканування: {formatDate(item.lastScanned)}
-                          </div>
-                        )}
-                        <div>scans: {item.timesScanned}</div>
-                      </motion.div>
-                    )
-                )}
-          </div>
+                      <Skeleton className="h-[52px] rounded-xl" />
+                    </motion.div>
+                  </SkeletonTheme>
+                ))
+            : data.length > 0
+            ? data.map(
+                (item, index) =>
+                  item.timesScanned > 0 && (
+                    <motion.div
+                      animate={{ opacity: [0, 1], scale: [0.8, 1] }}
+                      transition={{ type: "spring", delay: 0.2 * index }}
+                      key={item.id}
+                      className={`w-full ${
+                        id === item.id ? "bg-mainOrange" : "bg-[#fabf55]"
+                      } flex text-darkGrey font-medium justify-between text-[14px] sm:text-[14px] md:text-lg lg:text-xl py-3 px-4 rounded-xl`}
+                    >
+                      <div>{index + 1}</div>
+                      {item.name && item.surname && (
+                        <div>
+                          {item.name} {item.surname}
+                        </div>
+                      )}
+                      {isExtended && (
+                        <div className="hidden sm:block">
+                          останнє сканування: {formatDate(item.lastScanned)}
+                        </div>
+                      )}
+                      <div>scans: {item.timesScanned}</div>
+                    </motion.div>
+                  )
+              )
+            : !isLoading && (
+                <motion.h2
+                  animate={{ scale: [0, 1] }}
+                  transition={{ type: "spring", duration: 0.5 }}
+                  className="text-[20px] mx-auto text-mainOrange"
+                >
+                  У вас є шанс бути першим
+                </motion.h2>
+              )}
         </div>
-      ) : (
-        !isLoading &&
-        data.length === 0 && (
-          <motion.h2
-            animate={{ scale: [0, 1] }}
-            transition={{ type: "spring", duration: 0.5 }}
-            className="text-[20px] text-mainOrange"
-          >
-            У вас є шанс бути першим
-          </motion.h2>
-        )
-      )}
+      </div>
     </div>
   );
 };

@@ -69,7 +69,8 @@ function QrPage() {
 
       <div className="container mx-auto  max-w-screen-lg">
         <div className="min-h-[calc(100vh-175px)] flex flex-col items-center py-16 gap-10 text-white font-bold">
-          <div className="flex gap-10 flex-col w-full items-center  lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex gap-10 flex-col w-full items-center  lg:flex-row lg:items-center lg:justify-between relative">
+            <div className="orange-gradient absolute w-full h-full top-1/2 -translate-y-1/2 right-0" />
             <div className="flex flex-col justify-center items-center gap-2">
               <motion.div
                 className="h-[300px] w-[300px] lg:h-[400px] lg:w-[400px] bg-white rounded-xl flex justify-center items-center border-[4px] border-gray-300 relative"

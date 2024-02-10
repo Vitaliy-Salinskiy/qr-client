@@ -147,3 +147,8 @@ input[type="number"] {
 		max-height: 300px !important;
 	}
 }
+
+.orange-gradient {
+	background: linear-gradient(180deg, rgba(188, 165, 255, 0) 0%, #F5A006 250%);
+	filter: blur(360px);
+  }
