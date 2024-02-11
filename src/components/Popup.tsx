@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { useStore } from "../store/store";
 
@@ -7,27 +7,40 @@ import { mail } from "../assets/images/index";
 const Popup = () => {
   const { response, removeResponse } = useStore();
   const [isVisible, setIsVisible] = useState(false);
+  const timeoutId = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setIsVisible(false);
 
-    let timeoutId: ReturnType<typeof setTimeout>;
-
     if (response.length > 0 && !isVisible) {
       setIsVisible(true);
-      timeoutId = setTimeout(() => {
+      timeoutId.current = setTimeout(() => {
         setIsVisible(false);
-        timeoutId = setTimeout(() => {
+        timeoutId.current = setTimeout(() => {
           removeResponse();
         }, 400);
       }, 3000);
     }
 
     return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
+      if (timeoutId.current) {
+        clearTimeout(timeoutId.current);
+        timeoutId.current = null;
       }
     };
+  }, [response]);
+
+  useEffect(() => {
+    if (response.length > 1) {
+      if (timeoutId.current) {
+        clearTimeout(timeoutId.current);
+        timeoutId.current = null;
+      }
+      setIsVisible(false);
+      timeoutId.current = setTimeout(() => {
+        removeResponse();
+      }, 200);
+    }
   }, [response]);
 
   return (
