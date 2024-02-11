@@ -10,13 +10,20 @@ import { qrCodeOrange, shopOrange } from "../assets/images/index";
 import { getUser } from "../utils";
 import { IUser } from "../interfaces";
 import Popup from "../components/Popup";
+import { useStore } from "../store/store";
 
 const ProfilePage = () => {
+  const { resetResponse } = useStore();
+
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState<IUser>();
 
   useEffect(() => {
     fetchUserData();
+
+    return () => {
+      resetResponse();
+    };
   }, []);
 
   const fetchUserData = () => {

@@ -12,7 +12,7 @@ import Popup from "../components/Popup";
 import { Link } from "react-router-dom";
 
 const WheelPage = () => {
-  const { id, setResponse } = useStore();
+  const { id, setResponse, resetResponse } = useStore();
   const [user, setUser] = useState<IUser>();
   const [allowedToSpin, setAllowedToSpin] = useState<boolean>(false);
   const [mustSpin, setMustSpin] = useState(false);
@@ -57,6 +57,10 @@ const WheelPage = () => {
     } else {
       getUser(id).then((data) => setUser(data));
     }
+
+    return () => {
+      resetResponse();
+    };
   }, []);
 
   useEffect(() => {

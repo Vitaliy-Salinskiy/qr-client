@@ -12,7 +12,7 @@ import Popup from "../components/Popup";
 import { useStore } from "../store/store";
 
 const ShopPage = () => {
-  const { setResponse, id, setId } = useStore();
+  const { setResponse, id, setId, resetResponse } = useStore();
 
   const [user, setUser] = useState<IUser>();
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -43,6 +43,10 @@ const ShopPage = () => {
       initialRender.current = false;
       fetchData();
     }
+
+    return () => {
+      resetResponse();
+    };
   }, []);
 
   const isTwoXlScreen = useMediaQuery({

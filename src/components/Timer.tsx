@@ -17,14 +17,19 @@ const Timer = () => {
       FingerprintJS.load()
         .then((fp) => fp.get())
         .then((result) => {
-          getUser(result.visitorId).then((data: IUser) => {
-            if (data.lastScanned) {
-              setUserScanTime(data.lastScanned.split("T")[0]);
-            }
-          });
+          fetchUserScanTime(result.visitorId);
         });
+    } else {
+      fetchUserScanTime(id);
     }
   }, []);
+
+  const fetchUserScanTime = async (id: string) => {
+    const data: IUser = await getUser(id);
+    if (data.lastScanned) {
+      setUserScanTime(data.lastScanned.split("T")[0]);
+    }
+  };
 
   useEffect(() => {
     let delay: number = 0;

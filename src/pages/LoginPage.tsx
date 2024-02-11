@@ -7,9 +7,10 @@ import { login } from "../utils";
 import { useNavigate } from "react-router-dom";
 import Popup from "../components/Popup";
 import { useStore } from "../store/store";
+import { useEffect } from "react";
 
 const LoginPage = () => {
-  const { response, setResponse } = useStore();
+  const { resetResponse, setResponse } = useStore();
   const navigate = useNavigate();
 
   const loginSchema = z.object({
@@ -34,11 +35,15 @@ const LoginPage = () => {
         navigate("/admin/requests");
       })
       .catch(async (err) => {
-        console.log("Login:", response);
-        await setResponse(err.response.data.message);
-        console.log("Login after:", response);
+        setResponse(err.response.data.message);
       });
   };
+
+  useEffect(() => {
+    return () => {
+      resetResponse();
+    };
+  }, []);
 
   return (
     <div>

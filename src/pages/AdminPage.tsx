@@ -280,10 +280,10 @@ const AdminPage = () => {
             path="products"
             element={
               <div
-                className={`w-full flex flex-col pb-[20px] justify-start ${
+                className={`w-full flex flex-col justify-start ${
                   !products ||
                   (products.length === 0 && "justify-center items-center")
-                } gap-[20px] min-h-[525px] max-h-[525px] overflow-y-auto`}
+                } gap-[20px] min-h-[525px] max-h-[525px] overflow-y-auto hide-scrollbar`}
               >
                 {products && products.length !== 0 ? (
                   products.map((item, index) => (

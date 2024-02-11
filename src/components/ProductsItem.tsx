@@ -39,7 +39,9 @@ const ProductsItem = ({
           alt={product._id + product.name}
           className="bg-mainOrange h-[45px] w-[45px] rounded-lg text-[6px]"
         />
-        <p className="text-[16px] max-w-[75px] sm:text-lg">{product.name}</p>
+        <p className="text-base max-w-[75px] sm:max-w-[125px] md:max-w-[175px] sm:text-lg overflow-hidden overflow-ellipsis whitespace-nowrap">
+          {product.name}
+        </p>
       </div>
       <div className="hidden md:block md:max-w-[30%] text-center text-[16px]">
         {product._id}

@@ -17,7 +17,7 @@ function QrPage() {
   const [scans, setScans] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const { id, setId, response } = useStore();
+  const { id, setId, response, resetResponse } = useStore();
 
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 1024px)",
@@ -28,7 +28,10 @@ function QrPage() {
       setLoading(false);
     }, 1200);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      resetResponse();
+    };
   }, []);
 
   useEffect(() => {
