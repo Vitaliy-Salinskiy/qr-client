@@ -1,18 +1,12 @@
-import ReactDOM from 'react-dom/client'
-import { QueryClient, QueryClientProvider } from "react-query"
-import { ReactQueryDevtools } from 'react-query/devtools'
+import ReactDOM from "react-dom/client";
+import "react-loading-skeleton/dist/skeleton.css";
+import { SkeletonTheme } from "react-loading-skeleton";
 
-import App from './App.tsx'
-import './index.scss'
-import { ContextProvider } from './providers/ContextProvider.tsx'
+import App from "./App.tsx";
+import "./index.scss";
 
-const queryClient = new QueryClient();
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-	<QueryClientProvider client={queryClient}>
-		<ContextProvider>
-			<App />
-		</ContextProvider>
-		<ReactQueryDevtools initialIsOpen={false} />
-	</QueryClientProvider>
-)
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <SkeletonTheme baseColor="#fff" highlightColor="#fadba7">
+    <App />
+  </SkeletonTheme>
+);

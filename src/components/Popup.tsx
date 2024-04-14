@@ -1,36 +1,65 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from "react";
 
-import message_icon from '../assets/images/mail.png'
-import { useMyContext } from '../providers/ContextProvider';
+import { useStore } from "../store/store";
+
+import { mail } from "../assets/images/index";
 
 const Popup = () => {
+  const { response, removeResponse } = useStore();
+  const [isVisible, setIsVisible] = useState(false);
+  const timeoutId = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-	const { response, setResponse } = useMyContext();
-	const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    setIsVisible(false);
 
-	useEffect(() => {
-		setTimeout(() => {
-			setIsVisible(true);
-			setTimeout(() => {
-				setIsVisible(false);
-				setTimeout(() => {
-					setResponse(null);
-				}, 1000)
-			}, 2000);
-		}, 1);
-	}, []);
+    if (response.length > 0 && !isVisible) {
+      setIsVisible(true);
+      timeoutId.current = setTimeout(() => {
+        setIsVisible(false);
+        timeoutId.current = setTimeout(() => {
+          removeResponse();
+        }, 400);
+      }, 3000);
+    }
 
-	return (
-		<div className='z-20 w-[80%] sm:w-[320px] min-h-[85px] p-[10px] cursor-pointer bg-white fixed transition-all overflow-hidden duration-500 bottom-[30px] right-[-100%] rounded-lg shadow-white drop-shadow-sm shadow-sm flex items-center gap-[20px]'
-			style={!isVisible ? { right: '-100%' } : { right: '20px' }}>
-			<div>
-				<img height={50} width={50} src={message_icon} alt="mail" />
-			</div>
-			<div className=" flex flex-col transition-all duration-1000 justify-between items-start"	>
-				<p className='h-[48px] text-md text-gray-500 font-medium text-ellipsis'>{response}</p>
-			</div>
-		</div >
-	)
-}
+    return () => {
+      if (timeoutId.current) {
+        clearTimeout(timeoutId.current);
+        timeoutId.current = null;
+      }
+    };
+  }, [response]);
+
+  useEffect(() => {
+    if (response.length > 1) {
+      if (timeoutId.current) {
+        clearTimeout(timeoutId.current);
+        timeoutId.current = null;
+      }
+      setIsVisible(false);
+      timeoutId.current = setTimeout(() => {
+        removeResponse();
+      }, 200);
+    }
+  }, [response]);
+
+  return (
+    <div
+      className="z-20 w-[80%] sm:min-w-[320px] sm:max-w-[355px] min-h-[85px] p-[10px] cursor-pointer bg-white fixed transition-all overflow-hidden duration-500 bottom-[30px] right-[-100%] rounded-lg shadow-white drop-shadow-sm shadow-sm flex items-center gap-[20px]"
+      style={!isVisible ? { right: "-100%" } : { right: "20px" }}
+    >
+      <div className="w-[85px] h-[55px] flex justify-center items-center">
+        <img height={50} width={50} src={mail} alt="mail" />
+      </div>
+      <div className=" flex flex-col transition-all duration-1000 justify-between items-start">
+        {response && (
+          <p className="h-[48px] text-md text-midDarkGrey font-medium text-ellipsis">
+            {response[0]}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default Popup;

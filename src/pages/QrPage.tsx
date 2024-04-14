@@ -1,134 +1,161 @@
-import { useEffect, useState } from "react"
-import FingerprintJS from "@fingerprintjs/fingerprintjs"
-import QRCode from 'qrcode.react';
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import QRCode from "qrcode.react";
+import { motion } from "framer-motion";
+import { useMediaQuery } from "react-responsive";
+import Skeleton from "react-loading-skeleton";
 
-import scansHistory from '../assets/images/scans-history.png'
-import shopIcon from '../assets/images/shop.png'
-import { useMyContext } from "../providers/ContextProvider";
 import LinkButton from "../components/LinkButton";
-import Popup from "../components/Popup";
-import { useCreateUser, useGetScansValue } from "../utils";
+import { createUser, getScansValue } from "../utils";
 import Timer from "../components/Timer";
-import qrWhite from "../assets/images/qr-code-white.png";
-import shopWhite from "../assets/images/shop-white.png";
+import { useStore } from "../store/store";
+import Popup from "../components/Popup";
+import Navigation from "../components/Navigation";
 
 function QrPage() {
+  const [size, setSize] = useState<number>(310);
+  const [scans, setScans] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  const { id, setId, response, resetResponse } = useStore();
 
-	const [size, setSize] = useState<number>(310);
-	const { message, setMessage, id, setId, response, setResponse } = useMyContext();
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 1024px)",
+  });
 
-	const { mutate: createUser } = useCreateUser();
-	const { data: scansResponse, refetch: refetchScans, isLoading: isScansLoading } = useGetScansValue();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1200);
 
-	useEffect(() => {
-		refetchScans()
-	}, [scansResponse])
+    return () => {
+      clearTimeout(timer);
+      resetResponse();
+    };
+  }, []);
 
-	useEffect(() => {
-		let timeoutId: any;
+  useEffect(() => {
+    if (id) {
+      getScansValue().then((data) => setScans(data));
+    }
+  }, [id, response]);
 
-		if (message !== null) {
-			timeoutId = setTimeout(() => {
-				setResponse(message);
-				setMessage(null)
-			}, 200);
-		}
+  useEffect(() => {
+    FingerprintJS.load()
+      .then((fp) => fp.get())
+      .then((result) => {
+        createUser(result.visitorId);
+        setId(result.visitorId);
+      });
+  }, []);
 
-		return () => {
-			if (timeoutId) {
-				clearTimeout(timeoutId);
-			}
-		};
-	}, [message]);
+  useEffect(() => {
+    setSize(isDesktopOrLaptop ? 340 : 230);
+  }, [isDesktopOrLaptop]);
 
-	useEffect(() => {
-		FingerprintJS.load()
-			.then(fp => fp.get())
-			.then(result => {
-				createUser(result.visitorId);
-				setId(result.visitorId);
-			})
-	}, [])
+  return (
+    <div>
+      <Popup />
 
-	useEffect(() => {
-		const handleResize = () => {
-			setSize(window.innerWidth >= 1024 ? 340 : 230);
-		};
-		window.addEventListener('resize', handleResize);
-		handleResize();
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	}, []);
+      <motion.div
+        animate={{ x: ["-100%", "0%"], scale: [0.2, 1] }}
+        transition={{ type: "spring", duration: 1 }}
+        className="mt-20 text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-midDarkGrey py-[20px]"
+      >
+        <motion.h1
+          animate={{ scale: [0.8, 1] }}
+          transition={{ type: "spring", delay: 0.5 }}
+        >
+          ScPoints Farmer
+        </motion.h1>
+      </motion.div>
 
-	return (
-		<div className="bg-red-500 relative">
+      <div className="container mx-auto  max-w-screen-lg">
+        <div className="min-h-[calc(100vh-175px)] flex flex-col items-center py-16 gap-10 text-white font-bold">
+          <div className="flex gap-10 flex-col w-full items-center  lg:flex-row lg:items-center lg:justify-between relative">
+            <div className="orange-gradient absolute w-full h-full top-1/2 -translate-y-1/2 right-0" />
+            <div className="flex flex-col justify-center items-center gap-2">
+              <motion.div
+                className="h-[300px] w-[300px] lg:h-[400px] lg:w-[400px] bg-white rounded-xl flex justify-center items-center border-[4px] border-gray-300 relative"
+                animate={{
+                  x: ["-70%", "0%"],
+                  rotate: [-180, 0],
+                  scale: [0, 1],
+                }}
+                transition={{
+                  type: "spring",
+                  delay: 0.1,
+                  duration: 1,
+                }}
+              >
+                <QRCode
+                  size={size}
+                  value={`${window.location.origin}/redirect`}
+                  bgColor="#fff"
+                  fgColor="#F5A006"
+                />
+                <Timer />
+              </motion.div>
+            </div>
 
-			{/* <div>
-				<button onClick={() => getData({ ignoreCache: true })}>
-					Reload data
-				</button>
-				<p>VisitorId: {isLoading ? 'Loading...' : data?.visitorId}</p>
-			</div> */}
+            <motion.div
+              animate={{ opacity: [0, 1], scale: [0.5, 1] }}
+              transition={{ type: "spring", duration: 0.4 }}
+              className="flex flex-col gap-[20px]"
+            >
+              <motion.div
+                animate={{ x: ["100%", "0%"] }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col gap-[10px]"
+              >
+                <div className="gap-3 flex justify-center">
+                  {loading
+                    ? Array(3)
+                        .fill(0)
+                        .map((_, index) => (
+                          <motion.div
+                            animate={{ scale: [0, 1] }}
+                            transition={{ delay: 0.2 * index, type: "spring" }}
+                            key={index}
+                          >
+                            <Skeleton className="text-[72px] xl:text-[110px] h-[90px] xl:h-[140px] w-[90px] xl:w-[140px] rounded-xl" />
+                          </motion.div>
+                        ))
+                    : scans && scans.length !== 0
+                    ? scans.map((item, index) => (
+                        <motion.div
+                          animate={{ scale: [0, 1] }}
+                          key={`${index}-${item}`}
+                          className={`bg-[#2b2942] text-mainOrange flex justify-center items-center rounded-xl ${
+                            scans.length > 3
+                              ? "text-[35px] h-[50px] w-[50px] lg:text-[60px] xl:text-[60px] lg:h-[90px] xl:h-[90px] lg:w-[90px] xl:w-[90px]"
+                              : "text-[72px] xl:text-[110px] h-[90px] xl:h-[140px] w-[90px] xl:w-[140px]"
+                          }`}
+                        >
+                          <p>{item}</p>
+                        </motion.div>
+                      ))
+                    : null}
+                </div>
+                <h2 className="text-[32px] text-center">
+                  Загальна кількість балів
+                </h2>
+              </motion.div>
+              <motion.div
+                animate={{ x: ["200%", "0%"] }}
+                transition={{ duration: 0.5 }}
+                className="flex justify-center mx-auto items-center w-[300px] sm:w-[340px]"
+              >
+                <LinkButton to="/users">Переглянути користувачів</LinkButton>
+              </motion.div>
+            </motion.div>
+          </div>
 
-			{response && <Popup />}
-
-			<div className="container mx-auto px-[20px] max-w-screen-lg">
-				<div className="min-h-screen flex flex-col items-center py-16 gap-10 text-white font-bold">
-
-					<h1 className="text-[36px] sm:text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500 absolute py-[20px]">ScPoints Farmer</h1>
-
-					<div className="text-[50px] text-transparent select-none">
-						empty
-					</div>
-
-					<div className="flex gap-10 flex-col w-full items-center mt-[40px] lg:flex-row lg:items-center lg:justify-between">
-
-						<div className="flex flex-col justify-center items-center gap-2">
-							<h3 className="text-[30px] text-center max-w-[225px]">Scan this code to get a point</h3>
-							<div className="h-[300px] w-[300px] lg:h-[400px] lg:w-[400px] bg-white rounded-xl flex justify-center items-center border-[4px] border-gray-300 relative">
-								<QRCode
-									size={size}
-									value={`${window.location.origin}/redirect`}
-									bgColor="#fff"
-									fgColor="#ef4444"
-								/>
-								<Timer />
-							</div>
-						</div>
-
-						<div className="flex flex-col gap-[20px]">
-
-							<div className="flex flex-col gap-[10px]">
-								<div className="gap-3 flex justify-center">
-									{scansResponse && !isScansLoading ? scansResponse.map((item: string, index: number) => (
-										<div key={`${index}-${item}`} className="text-[72px] xl:text-[110px] h-[90px] xl:h-[140px] w-[90px] xl:w-[140px] bg-[#a50d05] flex justify-center items-center rounded-xl">
-											<p>{item}</p>
-										</div>
-									)) : <p>Wait a minutew</p>}
-								</div>
-								<h4 className="text-[32px] text-center">Total ScPoints</h4>
-							</div>
-							<div className="flex justify-center mx-auto items-center w-[310px] sm:w-[340px]">
-								<LinkButton to="/users">See users</LinkButton>
-							</div>
-						</div>
-					</div>
-
-					<div className="w-[95px] flex justify-center gap-[5px] p-[5px] bg-white fixed shadow-red-500 drop-shadow-lg rounded-t-3xl shadow-sm md:rounded-3xl bottom-0 left-[50%] ml-[-47.5px] md:bottom-[40px] md:right-[40px] md:left-auto">
-						<Link to={`statistic/${id}`} className="h-[40px] w-[40px] flex justify-center items-center bg-red-500 rounded-full shadow-red-500 shadow-sm cursor-pointer border-2 border-white transition-all duration-300 hover:scale-125 hover:translate-y-[-15px] hover:translate-x-[-8px]">
-							<img height={25} width={25} src={qrWhite} alt="qr image" />
-						</Link>
-						<Link to="shop" className="h-[40px] w-[40px] flex justify-center items-center bg-red-500 rounded-full shadow-red-500 shadow-sm cursor-pointer border-2 border-white transition-all duration-300 hover:scale-125 hover:translate-y-[-15px] hover:translate-x-[8px]">
-							<img height={25} width={25} src={shopWhite} alt="shop image" />
-						</Link>
-					</div>
-				</div>
-			</div>
-		</div>
-	)
+          <Navigation id={id} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default QrPage;
